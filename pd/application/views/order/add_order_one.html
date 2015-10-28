@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pacific Delight Booking System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <base href="<?php echo base_url();?>public/" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+    <!-- page specific plugin styles -->
+    <!-- ace styles -->
+    <!-- ui css start-->
+    <link rel="stylesheet" href="assets/css/page/modules/ui.jqgrid.css" />
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+    <!-- ui css end-->
+    <!-- 业务css start-->
+    <link rel="stylesheet" type="text/css" href="assets/css/page/main.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/page/insertOrder.css" /> -->
+    <!-- 业务css end -->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {}
+        </script>
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a class="navbar-brand">
+                    <small>
+							<i class="icon-leaf"></i>
+						 Pacific Delight Booking System
+						</small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+            <div class="navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                        <li class="navbar-header">                          
+                                <span class="navbar-brand">
+                                    <i class="icon-phone"></i>(AU)800 667-88 (NZ)+64 93079555
+                                </span>
+                        </li>
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">                            
+                            <span class="user-info">
+                                    <small>Welcome</small>
+                                    <?php echo $_COOKIE["uin"] ?>
+                                </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="<?php echo site_url('Common/logout') ?>">
+                                    <i class="icon-off"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.ace-nav -->
+            </div>
+        </div>
+        <!-- navbar-container end  -->
+    </div>
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {}
+        </script>
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {}
+                </script>
+                <!-- nav start -->
+                <ul class="nav nav-list">
+                    <li class="active open">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="icon-file-alt"></i>
+                            <span class="menu-text">
+									Menu
+								</span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li class="active">
+                                <a href="<?php echo site_url('Order/index'); ?>">
+                                    <i class="icon-double-angle-right"></i>Book Tour
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Order_show/index'); ?>">
+                                    <i class="icon-double-angle-right"></i>Order List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Index/pwd'); ?>">
+                                    <i class="icon-double-angle-right"></i>Change Password
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- nav end -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+                <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {}
+                </script>
+            </div>
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            Home
+                        </li>
+                        <li>
+                            Book Tour
+                        </li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS 这里存放内容-->
+                            <div class="result-wrap">
+                                <div class="result-content" style="max-width:800px;">
+                                    <!-- fuelux-wizard start -->
+                                    <div class="col-xs-12">
+                                        <div class="row-fluid" data-target="#step-container">
+                                            <ul class="wizard-steps">
+                                                <li data-target="#step1" class="active"> <span class="step">1</span>
+                                                    <span class="title"> Choose Tour</span>
+                                                </li>
+                                                <li data-target="#step2"> <span class="step">2</span>
+                                                    <span class="title"> Tour Details</span>
+                                                </li>
+                                                <li data-target="#step3"> <span class="step">3</span>
+                                                    <span class="title"> Customer Details</span>
+                                                </li>
+                                                <li data-target="#step4"> <span class="step">4</span>
+                                                    <span class="title">Additional Service(Surcharged)</span>
+                                                </li>
+                                                <li data-target="#step5"> <span class="step">5</span>
+                                                    <span class="title"> Booking Success</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- fuelux-wizard end -->
+                                    <h4 class="smaller  header orange clearfix "> 
+
+										        <div class="col-xs-4">
+										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
+										        	 Special Offer
+                                                     </div>
+				    </h4>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <!-- PAGE CONTENT BEGINS 这里存放内容-->
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="table-responsive bigger-110">
+                                                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Route Name</th>
+                                                                    <th>Price</th>
+                                                                    <th>Sale</th>
+                                                                    <th>Commission</th>
+                                                                    <th>Start/end City</th>
+                                                                    <th>Tour Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            	
+                                                                    <td>1</td>
+                                                                    <td>
+                                                                        4日北岛罗吐鲁阿慢慢游
+                                                                        <br/> 4 Days Rutorua tour
+                                                                    </td>
+                                                                    <td>
+                                                                        <del><span class="bold">1433</span></del>
+                                                                    </td>
+                                                                    <td><span class="red bold">1299</span></td>
+                                                                    <td><span class="orange bold">150</span></td>
+                                                                    <td>CHC/AKL</td>
+                                                                    <td class="hidden-480">
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                        <br/>
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>
+                                                                        4日北岛罗吐鲁阿慢慢游
+                                                                        <br/> 4 Days Rutorua tour
+                                                                    </td>
+                                                                    <td>
+                                                                        <del><span class="bold">1433</span></del>
+                                                                    </td>
+                                                                    <td><span class="red bold">1299</span></td>
+                                                                    <td><span class="orange bold">150</span></td>
+                                                                    <td>CHC/AKL</td>
+                                                                    <td class="hidden-480">
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                        <br/>
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>
+                                                                        4日北岛罗吐鲁阿慢慢游
+                                                                        <br/> 4 Days Rutorua tour
+                                                                    </td>
+                                                                    <td>
+                                                                        <del><span class="bold">1433</span></del>
+                                                                    </td>
+                                                                    <td><span class="red bold">1299</span></td>
+                                                                    <td><span class="orange bold">150</span></td>
+                                                                    <td>CHC/AKL</td>
+                                                                    <td class="hidden-480">
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                        <br/>
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>
+                                                                        4日北岛罗吐鲁阿慢慢游
+                                                                        <br/> 4 Days Rutorua tour
+                                                                    </td>
+                                                                    <td>
+                                                                        <del><span class="bold">1433</span></del>
+                                                                    </td>
+                                                                    <td><span class="red bold">1299</span></td>
+                                                                    <td><span class="orange bold">150</span></td>
+                                                                    <td>CHC/AKL</td>
+                                                                    <td class="hidden-480">
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                        <br/>
+                                                                        <span class="label label-sm label-warning">06/08/2015</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.table-responsive -->
+                                                </div>
+                                                <!-- /span -->
+                                            </div>
+                                            <!-- /row -->
+                                            <h4 class="smaller  header green clearfix "> 
+
+										        <div class="col-xs-4">
+										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
+										        	 Tour List
+                                                     </div>
+				    </h4>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <!-- PAGE CONTENT BEGINS 这里存放内容-->
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="table-responsive bigger-110">
+                                                                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Route Name</th>
+                                                                            <th>Gross</th>
+                                                                            <th>Frequency</th>
+                                                                            <th>Start/End City</th>
+                                                                            <th>Flyer</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                        	<?php foreach($data as $k => $v){ ?>
+			                                                            	<tr>
+			                                                            		<td><?php echo $v['routeId']; ?></td>
+			                                                            		<td>
+			                                                            			<?php echo $v['routeChineseName']; ?>
+			                                                            			<br />
+			                                                            			<?php echo  $v['routeEnglishName']; ?>
+			                                                            		</td>
+			                                                            		<td>
+			                                                            			<span class="red bold"><?php echo ($v['AdultPrice'] / 100);?></span>
+			                                                            		</td>
+			                                                            		<td>
+			                                                            			<?php echo  $v['routeFrequency'];?>
+			                                                            		</td>
+			                                                            		<td>
+			                                                            			<?php echo  $v['city'];?>
+			                                                            		</td>
+			                                                            		<td>
+			                                                            			<a href="<?php echo $v['routePdfAu'];?>">中文版</a><br>
+			                                                            				<a href="<?php echo $v['routePdfnz'];?>">English Version</a>
+			                                                            		</td>
+			                                                            		<td>
+			                                                            			<a class="inter-order" data-id="<?php echo $v['routeId'];?>" data-routerName="<?php echo $v['routeChineseName']; ?>" data-routerEnName="<?php echo  $v['routeEnglishName']; ?>" href="<?php echo site_url('Order/index_next').'?id='.$v['routeId'] ;?>">
+			                                                            				<span class="label label-lg label-primary">Book</span>
+			                                                            			</a>
+			                                                            		</td>
+			                                                            	</tr>	
+			                                                            	<?php } ?>	
+                                                                          
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- /.table-responsive -->
+                                                        </div>
+                                                        <!-- /span -->
+                                                    </div>
+                                                    <!-- /row -->
+                                                    <!-- Sales Statistics -->
+                                                    <!-- Sales Statistics -->
+                                                    <!-- PAGE CONTENT ENDS 这里存放内容 -->
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                        <!-- /.page-content -->
+                                    </div>
+                                    <!-- /.main-content -->
+                                </div>
+                                <!-- /.main-container-inner -->
+                                <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                                    <i class="icon-double-angle-up icon-only bigger-110"></i>
+                                </a>
+                            </div>
+                            <!-- /.main-container -->
+                            <!-- basic scripts  -->
+                            <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+                              
+                            <script type="text/javascript" src="assets/js/avalon.min.js"></script>
+                           
+                            <script src="assets/js/bootstrap.min.js"></script>
+                         
+                            <script src="assets/js/ace-elements.min.js"></script>
+                            <script src="assets/js/ace.min.js"></script>
+
+                            <!-- 具体业务代码 -->
+                            <script src="assets/js/jStroage-0.4.12.min.js"></script>
+                            <script src="assets/js/page/agentInfo.js"></script>
+                        </div>
+</body>
+
+</html>

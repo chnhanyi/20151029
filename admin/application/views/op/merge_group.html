@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pacific Delight Booking system</title>
+    <base href="<?php echo base_url();?>public/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+    <!-- page specific plugin styles -->
+    <!-- ace styles -->
+    <!-- ui css start-->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+    <!-- ui css end-->
+    <!-- 业务css start-->
+    <link rel="stylesheet" type="text/css" href="assets/css/page/main.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/page/insertOrder.css" /> -->
+    <!-- 业务css end -->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {}
+        </script>
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+
+							<i class="icon-leaf"></i>Pacific Delight Booking System</small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+            <div class="navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo">
+                            <span class="user-info">
+
+									<small>Welcome</small>
+                                    <?php echo $_COOKIE["uin"] ?>
+
+								</span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="<?php echo site_url('Admin/logout') ?>">
+                                    <i class="icon-off"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.ace-nav -->
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {}
+        </script>
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+                <span class="menu-text"></span>
+            </a>
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {}
+                </script>
+                <!-- nav start -->
+                <ul class="nav nav-list">
+                    <li class="active open">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="icon-file-alt"></i>
+                            <span class="menu-text">
+									Menu
+								</span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li class="active">
+                                <a href="<?php echo site_url('Group/index'); ?>">
+                                    <i class="icon-double-angle-right"></i>Order List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/index'); ?>">
+                                    <i class="icon-double-angle-right"></i>Group List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/add_group'); ?>">
+                                    <i class="icon-double-angle-right"></i>Add Group
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/merge_group'); ?>">
+                                    <i class="icon-double-angle-right"></i>Merge Group
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/add_special'); ?>">
+                                    <i class="icon-double-angle-right"></i>Special Group
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- nav end -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+                <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {}
+                </script>
+            </div>
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            Home
+                        </li>
+                        <li>
+                            Add Group
+                        </li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS 这里存放内容-->
+                            <div class="result-wrap">
+                                <div class="result-content" style="max-width:800px;">
+                                    <h4 class="smaller  header green clearfix "> 
+
+										        <div class="col-xs-2">
+
+										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
+
+										        	 Group Info
+
+										         </div>
+									         </h4>
+                                    <section class="t-step clearfix">
+                                        <div class="form-horizontal t-content col-xs-12" role="form">
+                                            <!--  南北岛线路名称 Tour Name start -->
+                                            <div class="form-group" ms-controller="tour_south_north">
+                                                <label class="col-sm-4 control-label no-padding-right green" for="form-field-1">South & North Tour Name </label>
+                                                <div class="col-sm-8">
+                                                    <!-- <input type="text"   placeholder="Username" class="col-xs-10 col-sm-5"> -->
+                                                    <div class="col-xs-10 col-sm-8">
+                                                        <select name="r_id" id="r_id" ms-attr-value="router_id" ms-on-change="change" class="t-can_disabled form-control">
+                                                            <option value="0">Please Select a South & North Tour</option>                                                            
+                                                            <?php foreach($data as $v) :?>
+                                                                <option value="<?php echo $v['r_id'];?>">
+                                                                    <?php echo $v['r_cName'];?>
+                                                                </option>
+                                                                <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  南北岛线路名称 Tour Name end  -->
+                                            <div class="hr hr-18 dotted hr-double"></div>
+
+                                            <!--  选择南岛团 TourDate start  -->
+                                            <div class="form-group" ms-controller="tour_north">
+                                                <label class="col-sm-4 control-label no-padding-right blue" for="form-field-1">South Tour Group </label>
+                                                <div class="col-sm-8">                                                    
+                                                    <div class="col-xs-10">
+                                                        <select name="r_Sid" id="r_Sid" ms-attr-value="r_Sid" ms-on-change="change" class="t-can_disabled form-control">
+                                                            <option value="0">Please Select a South Tour Group </option>                                                           
+                                                            <?php foreach($datas as $v) :?>
+                                                                <option value="<?php echo $v['t_id'];?>">
+                                                                    <?php echo $v['r_cName']."/".$v['t_tourCode']."/".$v['t_date']."/".$v['t_vacancy'];?>
+                                                                </option>
+                                                                <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--选择南岛团TourDate end  -->
+                                            <div class="hr hr-18 dotted hr-double"></div>
+                                            <!--  选择北岛团 Tour Name start -->
+                                            <div class="form-group" ms-controller="tour_north">
+                                                <label class="col-sm-4 control-label no-padding-right orange" for="form-field-1">North Tour Group</label>
+                                                <div class="col-sm-8">
+                                                    <!-- <input type="text"   placeholder="Username" class="col-xs-10 col-sm-5"> -->
+                                                    <div class="col-xs-10">
+                                                        <select name="r_Nid" id="r_Nid" ms-attr-value="r_Nid" ms-on-change="change" class="t-can_disabled form-control">
+                                                            <option value="0">Please Select a North Tour Group </option>                                                            
+                                                            <?php foreach($datan as $v) :?>
+                                                                <option value="<?php echo $v['t_id'];?>">
+                                                                    <?php echo $v['r_cName']."/".$v['t_tourCode']."/".$v['t_date']."/".$v['t_vacancy'];?>
+                                                                </option>
+                                                                <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  选择北岛团 Tour Name end  -->
+
+
+                                            <div class="hr hr-18 dotted hr-double"></div>
+                                            <!-- 第一步操作 start  -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
+                                                <div class="col-sm-3 pull-right">
+                                                    <button class="btn btn-lg btn-primary t-can_disabled" id="mergeGroup"><i class="icon-ok "></i>Submit</button>
+                                                </div>
+                                            </div>
+                                            <!--第一步操作 end  -->
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PAGE CONTENT ENDS 这里存放内容 -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content -->
+    </div>
+    <!-- /.main-content -->
+    </div>
+    <!-- /.main-container-inner -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+    </a>
+    </div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="assets/js/avalon.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+    <!-- 通用业务代码 -->
+    <script src="assets/js/seajs-2.3.0/seajs.js"></script>
+    <script src="assets/js/page/app.js"></script>
+    <!-- 具体业务代码 -->
+    <script src="assets/js/page/modules/laydate.js"></script> 
+             <script>
+						  	$('#mergeGroup').click(function(e) {
+								 if(confirm("Tour Name and Tour Date are Correct?")){
+						        //e.preventDefault();
+								var groupData = {
+									    r_id:$('#r_id').val(),																			 
+										r_Nid:$('#r_Nid').val(),
+										r_Sid:$('#r_Sid').val(),									
+									};
+								$.post("<?php echo site_url('Group/insert_Mgroup');?>",groupData, function (data) {
+									if(data['retCode']==-1){
+											//没有通过输入验证											
+											var txt= data['data'];
+											alert(txt);																			
+										}else if(data['retCode']==1){
+											//添加成功
+											var txt= data['data'];
+											alert(txt);											
+											//重定位到公司列表页
+											location.href="<?php echo site_url('Group/index') ;?>";
+										}
+								},"json");
+								 }
+						    });
+						  </script>
+
+   
+    </div>
+</body>
+
+</html>

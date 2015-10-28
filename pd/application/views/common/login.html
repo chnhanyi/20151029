@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+
+		<title>登录</title>
+		<base href="<?php echo base_url();?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="public/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="public/assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+	  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+	<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- ace styles -->
+
+		<!-- ui css start-->
+
+		<link rel="stylesheet" href="public/assets/css/page/modules/ui.jqgrid.css" />
+
+		<link rel="stylesheet" href="public/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-skins.min.css" />
+		<!-- ui css end-->
+
+		<!-- 业务css start-->
+		<link rel="stylesheet" type="text/css" href="public/assets/css/page/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="assets/css/page/insertOrder.css" /> -->
+		<!-- 业务css end -->
+
+		<!--[if lte IE 8]>
+	  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="public/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+	<script src="assets/js/html5shiv.js"></script>
+	<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+
+	<body>
+		<div id="headerWrapper">
+
+			<div id="header">
+				<div class="navbar navbar-default" id="navbar">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('navbar', 'fixed');
+						} catch (e) {
+						}
+					</script>
+
+					<div class="navbar-container" id="navbar-container">
+						<div class="navbar-header pull-left">
+							<a href="javascript:void(0)" class="navbar-brand"> <small>
+
+						<i class="icon-leaf"></i>  PD管理系统 </small> </a>
+							<!-- /.brand -->
+						</div>
+						<!-- /.navbar-header -->
+
+						<!--    <div id="userinfo">
+		        
+		    </div> -->
+
+						<!-- /.container -->
+					</div>
+				</div>
+
+			</div>
+			<div class="main-container" id="main-container">
+				<script>
+					try {
+						ace.settings.check('main-container', 'fixed');
+					} catch (e) {
+					}
+				</script>
+
+				<div class="main-container-inner">
+					<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+						<span class="menu-text"></span> </a>
+
+					<!-- 主要内容 -->
+					<div id="main-content" class="main-content">
+
+						<div class="row">
+							<div class="col-sm-10 col-sm-offset-1">
+								<div class="login-container">
+									<div class="center">
+										<h1>
+
+					<i class="icon-leaf green"></i> <span class="red">PD旅行社</span>  
+
+				</h1>
+										<h4 class="blue">&copy; 用户登录</h4>
+									</div>
+
+									<div class="space-6"></div>
+
+									<div class="position-relative">
+										<div id="login-box" class="login-box visible widget-box no-border">
+											<div class="widget-body">
+												<div class="widget-main">
+													<h4 class="header blue lighter bigger">
+
+								<i class="icon-coffee green"></i> 请输入您的信息
+
+							</h4>
+
+													<div class="space-6"></div>
+													<form action="index.php/Common/login" method="post" id="loginform">
+														<fieldset>
+															<label class="block clearfix"> <span class="block input-icon input-icon-right"> <input
+
+											id="username" name="username" type="text"
+
+											class="form-control" placeholder="username" /> <i
+
+											class="icon-user"></i> </span> </label>
+															<label class="block clearfix">
+																<span class="block input-icon input-icon-right"> <input
+
+											id="password" name="pwd" type="password"
+
+											class="form-control" placeholder="password" /> <i
+
+											class="icon-lock"></i></span>
+															</label>
+															<label class="block clearfix">
+																<span class="block input-icon input-icon-right"> 
+																	永久登录<input id="forcheck" name="forcheck" type="checkbox"/></span>
+															</label>
+															<div class="space"></div>
+
+															<div class="clearfix">
+																<a class="width-35 pull-right btn btn-sm btn-primary" id="subbt">
+																	<i class="icon-key"></i> 登录
+																</a>
+															</div>
+
+															<div class="space-4"></div>
+														</fieldset>
+													</form>
+
+												</div>
+												<!-- /widget-main -->
+
+											</div>
+											<!-- /widget-body -->
+										</div>
+										<!-- /login-box -->
+
+									</div>
+									<!-- /position-relative -->
+								</div>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+
+						<!-- basic scripts -->
+						<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>
+						<script type="text/javascript" src="public/assets/js/avalon.min.js"></script>
+						<script src="public/assets/js/bootstrap.min.js"></script>
+						<!--
+		  <script src="assets/js/typeahead-bs2.min.js"></script>
+		  -->
+						<!-- page specific plugin scripts -->
+						<!-- ace scripts -->
+
+						<script src="public/assets/js/ace-elements.min.js"></script>
+						<script src="public/assets/js/ace.min.js"></script>
+						<script>
+							$(function(){
+								$("#subbt").on("click",function(){
+									var data = {};
+									data['username'] = $("#username").val();
+									data['pwd'] = $("#password").val();
+									data['forcheck']  = $("#forcheck").is(":checked") ? 1:0;
+									
+									$.post("index.php/Common/login",data,function(data){
+									if(data['retCode']==0){
+										 location.href="<?php echo site_url('Order/index') ;?>";
+									}else{
+										alert("登录失败")
+									}
+									},'json')
+								})
+							})
+						</script>
+                        <script> 
+						     document.onkeydown = function(evt){    
+							  var evt = window.event?window.event:evt;
+							   if(evt.keyCode==13){ 	    
+							        var data = {};
+									data['username'] = $("#username").val();
+									data['pwd'] = $("#password").val();
+									data['forcheck']  = $("#forcheck").is(":checked") ? 1:0;
+									
+									$.post("index.php/Common/login",data,function(data){
+									if(data['retCode']==0){
+										 location.href="<?php echo site_url('Order/index') ;?>";
+									}else{
+										alert("登录失败")
+									}
+									},'json')
+								}									
+							 }
+                        </script>
+
+					</div>
+
+				</div>
+
+				<a href="javascript:void(0)" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="icon-double-angle-up icon-only bigger-110"></i> </a>
+
+			</div>
+	</body>
+
+</html>

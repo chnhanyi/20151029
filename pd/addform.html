@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="public/assets/js/jquery-1.10.2.min.js"></script>
+	</head>
+	<body>
+		<button id="test">提交</button>
+		<script>
+			$("#test").click(function(){
+				var data = {"guest_list":[{"g_firstname":"Lisi","g_lastname":"Lis","g_gender":"1","g_naiton":"Chinese without AUS PR","g_birth":"25/05/1900","g_passport":"M1234231","g_guestType":"1"}],"room_people":{"list":[{"room_type":"1","guests":"1.LisiLis ","no_focus":false}],"peoples":[{"name":"LisiLis","checked":false,"index":1}]},"router_id":"3","cur_date":"04/12/2015","is_share":1,"adult_fees":64500,"adult_num":1,"adult_price":64500,"infant_fees":0,"infant_num":0,"infant_price":40000,"child_1_num":0,"child_1_price":45200,"child_2_num":0,"child_2_price":60000,"child_3_num":0,"child_3_price":60000,"total_people":1,"difference":5000,"discount":0.15,"fees_amount":69500,"brokerage":9675,"real_fees_amount":59825,"room_request":{"double_room_num":0,"triple_room_num":0,"single_room_num":1,"twin_room_num":0,"single_room_difference_price":5000},"flightInfo":{"arrive":[{"g_arriveDate":"09/10/2015","a_flightno":"CZ123","a_time":"9:40-14:50","a_route":"MEL-AKL","arrivedName":"0"}]},"contact":{"contactor":"ZHANG SAN","mobile":"1006-123009878","email":"zhangsan@qq.com"},"additional_service":{"is_not_need":true,"early":{"num":0,"accommodations":false,"breakfest":false,"airport":false},"later":{"num":0,"accommodations":false,"breakfest":false,"airport":false}},"remark":{"remark":"dasdasdasd","agree":"false","agent_reference":"dssdsaddasdadasd"}}
+				$.ajax({
+					type:"post",
+					url:"/index.php/Order/add_order",
+					async:true,
+					data:data,
+					success:function(d){
+						console.log(d);
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

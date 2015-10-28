@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Pacific Delight Booking System</title>
+        <base href="<?php echo base_url();?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="public/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="public/assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="public/assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		 
+		<!-- ace styles -->
+
+		<!-- ui css start-->
+		
+		<link rel="stylesheet" href="public/assets/css/page/modules/ui.jqgrid.css" />
+
+
+		<link rel="stylesheet" href="public/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-skins.min.css" />
+		<!-- ui css end-->
+
+		<!-- 业务css start-->
+		<link rel="stylesheet" type="text/css" href="public/assets/css/page/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="public/assets/css/page/insertOrder.css" /> -->
+		<!-- 业务css end -->
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="public/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="public/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="public/assets/js/html5shiv.js"></script>
+		<script src="public/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+							<i class="icon-leaf"></i>Pacific Delight Booking System</small>
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="public/assets/avatars/user.jpg" alt="Jason's Photo">
+								<span class="user-info">
+									<small>Welcome,</small>
+									<?php echo $_COOKIE["uin"] ?>
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+								<li>
+									<a href="#">
+										<i class="icon-off"></i>
+										Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div>
+			</div><!-- navbar-container end  -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+                     <!-- nav start -->
+					 
+					<ul class="nav nav-list">
+						<li class="active open">
+							<a href="javascript:void(0)" class="dropdown-toggle">
+								<i class="icon-file-alt"></i>
+								<span class="menu-text">
+									Menu
+								</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+                               <li >
+									<a href="<?php echo site_url('Order/index'); ?>">
+										<i class="icon-double-angle-right"></i>Order List
+									</a>
+								</li>
+                                <li  class="active">
+									<a href="<?php echo site_url('Group/index'); ?>">
+										<i class="icon-double-angle-right"></i>Group List
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url('Group/add_group'); ?>">
+										<i class="icon-double-angle-right"></i>Add Group
+									</a>
+								</li>                                
+                                <li >
+									<a href="<?php echo site_url('Group/merge_group'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('Group/add_special'); ?>">
+										<i class="icon-double-angle-right"></i>Special Group
+									</a>
+								</li>	
+							</ul>
+						</li>						
+					</ul>
+					<!-- nav end -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								Home
+							</li>
+
+							<li>
+								Group List
+							</li>
+						</ul><!-- .breadcrumb -->
+
+					 
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS 这里存放内容-->
+									<div class="result-wrap">
+									  <div class="result-content">
+
+									  	     <div class="col-xs-12">
+											    
+											    <div class="row ynf-table-nav" id="ynf_table_nav">
+
+											           <div class="input-group col-xs-4 ynf-bd-r-1">
+											             <div class="control-group clearfix select-input-search" data-y-role="select_input_search" >
+											                    <div class="col-xs-5">
+											                        <select class="form-control" data-y-role ="search_select" >											                            <
+											                            <option value="tour_code"> Tour Name</option>
+											                            <option value="tour_code"> Tour Code</option>
+											                        </select>
+											                        </select>
+											                    </div>
+											                    <div class="col-xs-7 input-group"  style="padding-left:0px">
+											                        <input type="text" data-y-role="search_input" class="form-control search-query" placeholder="">
+											                        <span class="input-group-btn">
+											                            <button type="button" data-y-role="search_btn"  class="btn btn-purple btn-sm">&nbsp;<i class="icon-search icon-on-right bigger-110"></i></button>
+											                        </span>
+
+											                    </div>
+											                </div>
+											           </div>
+
+											          <div class="col-xs-4 ynf-time-range-search  ynf-bd-r-1" >
+
+											            <div class="col-xs-4 ynf-search-time-begin" sidx="tour_date" >
+											              <div class="input-group">
+											                <span class="input-group-addon">
+											                  <i class="icon-calendar bigger-110"></i>
+											                </span>
+
+											                <div class="col-xs-4 ynf-padding-l-0">
+											                  <input class="date-picker ynf-input"  type="text" data-date-format="dd/mm/yyyy" placeholder="Start Date" >
+											               </div>	
+											              </div>
+											            </div>
+											            <div class="col-xs-4 ynf-search-time-end" sidx="end_date" >
+											              <div class="input-group">
+											                 <span class="input-group-addon">
+											                    <i class="icon-arrow-right c-blue icon-on-right bigger-110"></i>
+											                </span>
+											                <div class="col-xs-4 ynf-padding-l-0">
+											                  <input class="date-picker ynf-input"  type="text" data-date-format="dd/mm/yyyy" placeholder="End Date" >
+											               </div>
+											              </div>
+											            </div>										            
+
+											             <div class="pull-right">
+											                <button data-y-role="time_range_search_btn"  class="btn btn-success btn-sm">Search</button>
+											            </div>
+
+											        </div>
+
+											        <!-- 审核状态 start -->
+											        <div class="col-xs-2  ynf-bd-r-1">
+										                <select class="form-control" id="" data-y-role="search_filter" sidx="order_status">
+										                      <option value="">Order Status </option>
+                                                              <option value="1">Waiting for Process</option>
+										                      <option value="2">Processing</option>
+										                      <option value="3">processed</option>	
+										                  </select>
+                                                   </div>
+												<!-- 审核状态 end -->
+
+											        </div>
+											    
+											    
+											    <table id="ynf_list"></table>
+											    <div id="ynf_list_pager"></div>
+											</div>
+               
+									   
+									 </div>
+								   </div>
+
+
+								<!-- PAGE CONTENT ENDS 这里存放内容 -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				 
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+		<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="public/assets/js/avalon.min.js"></script>
+		<script src="public/assets/js/bootstrap.min.js"></script>
+		<!--
+		  <script src="public/assets/js/typeahead-bs2.min.js"></script>
+		  -->
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+
+		<script src="public/assets/js/ace-elements.min.js"></script>
+		<script src="public/assets/js/ace.min.js"></script>
+
+		<!-- 通用业务代码 -->
+		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>
+		<script src="public/assets/js/page/app.js"></script>
+		<!-- 具体业务代码 -->
+		<script src="public/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="public/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+		 <script >
+		   (function(){
+		       var table = { } ; 
+		       table.url = "index.php/Group/group_list";
+		       table.editurl = "index.php/Group/group_list";
+		       YNF_CONFIG.table = table ; 
+
+		   })();
+		  
+		 </script>
+		<script src="public/assets/js/page/modules/jquery.jqGrid.js"></script>
+		<script src="public/assets/js/page/modules/grid.locale-en.js"></script>
+
+		<script src="public/assets/js/page/jquery.ynf.js"></script>
+		<script src="public/assets/js/page/group_list.js"></script>
+	 </div>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Pacific Delight Booking system</title>
+		<base href="<?php echo base_url();?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="public/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="public/assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="public/assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- ace styles -->
+
+		<!-- ui css start-->
+
+		<link rel="stylesheet" href="public/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-skins.min.css" />
+		<!-- ui css end-->
+
+		<!-- 业务css start-->
+		<link rel="stylesheet" type="text/css" href="public/assets/css/page/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="public/assets/css/page/insertOrder.css" /> -->
+		<!-- 业务css end -->
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="public/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="public/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="public/assets/js/html5shiv.js"></script>
+		<script src="public/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch (e) {}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+
+							<i class="icon-leaf"></i>Pacific Delight Booking System</small>
+					</a>
+					<!-- /.brand -->
+				</div>
+				<!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="public/assets/avatars/user.jpg" alt="Jason's Photo">
+								<span class="user-info">
+
+									<small>Welcome</small>
+                                    <?php echo $_COOKIE["uin"] ?>
+
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+								<li>
+									<a href="<?php echo site_url('Common/logout') ?>">
+										<i class="icon-off"></i> Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<!-- /.ace-nav -->
+				</div>
+
+			</div>
+			<!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch (e) {}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('sidebar', 'fixed')
+						} catch (e) {}
+					</script>
+					<!-- nav start -->
+						<ul class="nav nav-list">
+						<li class="active open">
+							<a href="javascript:void(0)" class="dropdown-toggle">
+								<i class="icon-file-alt"></i>
+								<span class="menu-text">
+									Menu
+								</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+                                <li>
+									<a href="<?php echo site_url('Order/manager'); ?>">
+										<i class="icon-double-angle-right"></i> Order List
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('News/index'); ?>">
+										<i class="icon-double-angle-right"></i> News List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('News/add_news'); ?>">
+										<i class="icon-double-angle-right"></i> Add News
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Route/index'); ?>">
+										<i class="icon-double-angle-right"></i> Route List
+									</a>
+								</li>
+								<li class="active">
+									<a href="<?php echo site_url('Route/add_route'); ?>">
+										<i class="icon-double-angle-right"></i> Add Route
+									</a>
+								</li>
+                                 <li>
+									<a href="<?php echo site_url('Company/index'); ?>">
+										<i class="icon-double-angle-right"></i> Company List
+									</a>
+								</li>
+								<li  >
+									<a href="<?php echo site_url('Company/add_company'); ?>">
+										<i class="icon-double-angle-right"></i> Add Company
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Agent/agent_list'); ?>">
+										<i class="icon-double-angle-right"></i> Agent List
+									</a>
+								</li>
+                                <li>
+									<a href="<?php echo site_url('Agent/add_agent'); ?>">
+										<i class="icon-double-angle-right"></i> Add Agent
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Staff/staff_list'); ?>">
+										<i class="icon-double-angle-right"></i> Staff List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Staff/add_staff'); ?>">
+										<i class="icon-double-angle-right"></i> Add Staff
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('Statistics/index'); ?>">
+										<i class="icon-double-angle-right"></i> Sales Statistics
+									</a>
+								</li>                                  
+							</ul>
+						</li>
+					</ul>
+					<!-- nav end -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try {
+							ace.settings.check('sidebar', 'collapsed')
+						} catch (e) {}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try {
+								ace.settings.check('breadcrumbs', 'fixed')
+							} catch (e) {}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								Home
+							</li>
+
+							<li>
+								Add Route
+							</li>
+						</ul><!-- .breadcrumb -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS 这里存放内容-->
+
+								<div class="result-wrap">
+									<div class="result-content" style="max-width:800px;">
+										   
+										<h4 class="smaller  header green clearfix "> 
+
+										        <div class="col-xs-2">
+
+										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
+
+										        	 Route Info
+
+										         </div>
+									         </h4>
+
+										<section class="t-step clearfix">
+											<div class="form-horizontal t-content col-xs-12" role="form">
+
+												
+												<!--  线路中文名称 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 线路名称(中文) </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" name="cName" id="cName">
+														</div>
+													</div>
+												</div>
+												<!--  线路中文名称 Tour Name end  -->  
+                                                
+                                                <!--  线路英文名称 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Tour Name（English） </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" name="eName" id="eName">
+													     </div>
+													</div>
+												</div>
+												<!--  线路英文名称 Tour Name end  -->                                                     
+                                                
+
+												<!--  所属公司 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Ownership</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<select name="ltd" id="ltd">
+                                                              <option value ="1" selected>Pacific Delight</option>
+                                                              <option value ="2">Trans Continental</option>
+                                                            </select>
+														</div>
+													</div>
+												</div>
+												<!--  所属公司 Tour Name end  --> 
+                                                
+                                                <!--  线路类型 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Route Type</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<select name="type" id="type">
+                                                              <option value ="1" selected>North Island</option>
+                                                              <option value ="2">South Island</option>
+                                                              <option value ="3">North + South</option>
+                                                            </select>
+														</div>
+													</div>
+												</div>
+												<!--  线路类型 Tour Name end  --> 
+
+												<!--  线路代码 Tour Code start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Route Code</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" placeholder="只加南团或北团，南北团不要加" name="code" id="code">
+														</div>
+													</div>
+												</div>
+												<!--  线路代码 Tour Code end  --> 
+                                                
+                                                <!--  发团时间 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Frequency </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" placeholder="Every Friday" name="frequency" id="frequency">
+														</div>
+													</div>
+												</div>
+												<!--  发团时间 TourCode end  -->    
+
+										
+                                                <!--  抵达和离开城市 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Start/End City </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" placeholder="AKL/CHC" name="city" id="city">
+														</div>
+													</div>
+												</div>
+												<!--  抵达和离开城市 TourCode end  -->                                                  
+
+                                               
+                                                
+                                        <!-- 价格信息  start-->
+
+										<section class="t-step" ms-controller="price info" >
+											<div class="hr hr-18 dotted t-bd-green"></div>
+
+											<h4 class="smaller  header green clearfix "> 
+
+                                                <div class="col-xs-8">
+                                
+                                                     <i class="icon-hand-right icon-animated-hand-pointer"></i>
+                                                      Price Info
+                                                 </div>
+                                                 
+                                             </h4>
+											<p class="col-sm-10 center bigger-120 bold">Australia Price</p>
+											                                                
+                                                <!--  au成人价格 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right" for="form-field-1">Adult Price </label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="auAdultPrice" id="auAdultPrice">
+														</div>
+													</div>
+												</div>
+												<!--  成人价格 TourCode end  -->  
+                                                
+                                                                                                 
+                                                <!--  au儿童A 价格TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right green" for="form-field-1"> Child A(2﹤age≤4, without bed) Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="au" id="auChildPrice1">
+														</div>
+													</div>
+												</div>
+												<!-- au 儿童 A 价格 TourCode end  -->                                                  
+                                                                                              
+                                                <!--  au儿童 B 价格 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right blue" for="form-field-1"> Child B(2﹤age≤12, with bed) Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="cName" id="auChildPrice2">
+														</div>
+													</div>
+												</div>
+												<!--  儿童 B 价格 TourCode end  -->                                                 
+                                              
+                                                
+                                                
+                                                <!--  au婴儿 价格TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right green" for="form-field-1"> Infant Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="au" id="auInfantPrice">
+														</div>
+													</div>
+												</div>
+												<!--  婴儿 价格 TourCode end  -->  
+                                                
+                                                 <!--   au单人房差TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right red" for="form-field-1"> Single Supplement Surcharge</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="cName" id="auSinglePrice">
+														</div>
+													</div>
+												</div>
+												<!--  单人房差 TourCode end  -->  
+                                                                                  
+                                                                                                											
+                                              <div class="hr hr-18 dotted hr-double"></div>
+											<p class="col-sm-10 center bigger-120 bold">New Zealand Price</p>
+                                                
+                                                <!--  nz成人价格 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right" for="form-field-1" > Adult Price </label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="nzAdultPrice">
+														</div>
+													</div>
+												</div>
+												<!--  成人价格 TourCode end  -->                                                 
+                                                
+                                                 
+                                                <!--  nz儿童A 价格TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right green" for="form-field-1"> Child A(2﹤age≤4, without bed) Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="nzChildPrice1">
+														</div>
+													</div>
+												</div>
+												<!--  儿童 A 价格 TourCode end  -->  
+                                                                                                                                                
+                                                <!--  nz儿童 B 价格 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right blue" for="form-field-1"> Child B(2﹤age≤12, with bed) Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="nzChildPrice2">
+														</div>
+													</div>
+												</div>
+												<!--  儿童 B 价格 TourCode end  -->  
+
+                                                
+                                                <!--  nz婴儿 价格TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right green" for="form-field-1"> Infant Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="nz" id="nzInfantPrice">
+														</div>
+													</div>
+												</div>
+												<!--  婴儿 价格 TourCode end  --> 
+                                                
+                                                 <!--   nz单人房差TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right red" for="form-field-1"> Single Supplement Surcharge</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="nzSinglePrice">
+														</div>
+													</div>
+												</div>
+												<!--  单人房差 TourCode end  -->  
+                                                
+                                                                                               
+                                                <div class="hr hr-18 dotted hr-double green"></div>
+                                                
+                                                
+                                                <p class="col-sm-10 center bigger-120 bold">South East Asia Price</p>
+                                                
+                                                <!--  sa成人价格 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right" for="form-field-1"> Adult Price </label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="saAdultPrice">
+														</div>
+													</div>
+												</div>
+												<!--  成人价格 TourCode end  -->  
+                                                
+                                                                                                
+                                                <!--  sa儿童A 价格TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right green" for="form-field-1"> Child A(2﹤age≤4, without bed) Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="saChildPrice1">
+														</div>
+													</div>
+												</div>
+												<!--  儿童 A 价格 TourCode end  -->  
+                                                                                               
+                                                
+                                                <!--  sa儿童 B 价格 TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right blue" for="form-field-1"> Child B(2﹤age≤12, with bed) Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="saChildPrice2">
+														</div>
+													</div>
+												</div>
+												<!--  儿童 B 价格 TourCode end  -->  
+
+                                                
+                                                <!--  sa婴儿 价格TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right green" for="form-field-1"> Infant Price</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" name="sa" id="saInfantPrice">
+														</div>
+													</div>
+												</div>
+												<!--  婴儿 价格 TourCode end  -->
+                                                
+                                                 <!--   单人房差TourCode start -->
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-5 control-label no-padding-right red" for="form-field-1"> Single Supplement Surcharge</label>
+
+													<div class="col-sm-7">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="saSinglePrice">
+														</div>
+													</div>
+												</div>
+												<!--  单人房差 TourCode end  -->  
+                                                                                                
+										</section>
+
+										<!--价格信息   end-->
+                                        
+                                        <!--海报信息   start-->                                        
+										<section class="t-step" >
+											<div class="hr hr-18 dotted t-bd-green"></div>
+
+											<h4 class="smaller  header green clearfix "> 
+
+                                                <div class="col-xs-8">
+                                
+                                                     <i class="icon-hand-right icon-animated-hand-pointer"></i>
+                                                      Upload Flyer
+                                                 </div>
+                                                 
+                                             </h4>
+											                                                
+                                                <!--  澳洲海报 TourCode start -->
+                                                
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Australia Flyer</label>
+
+													<div class="col-sm-5">
+														<div class="col-xs-10 col-sm-8">                                    
+                                                                    <span>Select file...</span>
+                                                                    <!-- The file input field used as target for the file upload widget -->
+                                                                    <input id="fileupload" type="file" name="files[]" multiple> 
+														</div>
+                                                        <!-- The global progress bar -->
+                                                        <div id="progress" class="progress col-sm-5">
+                                                            <div class="progress-bar progress-bar-success"></div>
+                                                        </div>                                                      
+													</div>
+												</div>
+												<!--  澳洲海报 TourCode end  --> 
+                                                
+                                                <!--  新西兰海报 TourCode start -->
+                                                
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1">New Zealand Flyer</label>
+
+													<div class="col-sm-5">
+														<div class="col-xs-10 col-sm-8">                                    
+                                                                    <span>Select file...</span>
+                                                                    <!-- The file input field used as target for the file upload widget -->
+                                                                    <input id="fileupload" type="file" name="files[]" multiple> 
+														</div>
+                                                        <!-- The global progress bar -->
+                                                        <div id="progress" class="progress col-sm-5">
+                                                            <div class="progress-bar progress-bar-success"></div>
+                                                        </div>                                                      
+													</div>
+												</div>
+												<!--  新西兰海报 TourCode end  -->   
+                                                
+                                                <!--  东南亚海报 TourCode start -->
+                                                
+												<div class="form-group" ms-controller="agent_reference">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1">South East Asia Flyer</label>
+
+													<div class="col-sm-5">
+														<div class="col-xs-10 col-sm-8">                                    
+                                                                    <span>Select file...</span>
+                                                                    <!-- The file input field used as target for the file upload widget -->
+                                                                    <input id="fileupload" type="file" name="files[]" multiple> 
+														</div>
+                                                        <!-- The global progress bar -->
+                                                        <div id="progress" class="progress col-sm-5">
+                                                            <div class="progress-bar progress-bar-success"></div>
+                                                        </div>                                                      
+													</div>
+												</div>
+												<!--  东南亚海报 TourCode end  -->        
+                        
+										</section>
+
+										<!--海报信息   end-->
+                                                
+                                                
+												<!--  -->
+                                                <div class="hr hr-18 dotted hr-double"></div>
+
+												<!-- 第一步操作 start  -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
+													<div class="col-sm-3 pull-right">
+														<button class="btn btn-lg btn-primary t-can_disabled" id="addRoute"><i class="icon-ok "></i>Submit</button>														
+													</div>
+												</div>
+												<!--第一步操作 end  -->
+
+											</div>
+
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- PAGE CONTENT ENDS 这里存放内容 -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.page-content -->
+		</div>
+		<!-- /.main-content -->
+
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<i class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+		</div>
+		<!-- /.main-container -->
+
+		<!-- basic scripts -->
+		<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="public/assets/js/avalon.min.js"></script>
+		<script src="public/assets/js/bootstrap.min.js"></script>
+
+
+		<script src="public/assets/js/ace-elements.min.js"></script>
+		<script src="public/assets/js/ace.min.js"></script>
+
+		<!-- 通用业务代码 -->
+		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>
+		<script src="public/assets/js/page/app.js"></script>
+		<!-- 具体业务代码 -->
+		<script src="public/assets/js/page/modules/laydate.js"></script>
+		<script src="public/assets/js/page/modules/jquery.date_input.pack.js"></script>
+        <script src="public/assets/js/vendor/jquery.ui.widget.js"></script>
+		<script src="public/assets/js/jquery.iframe-transport.js"></script>
+        <script src="public/assets/js/jquery.fileupload.js"></script>
+        <script>
+				$(function () {
+					'use strict';
+					// Change this to the location of your server-side upload handler:
+					var url = 'public/upload/';
+					$('#fileupload').fileupload({
+						url: url,
+						dataType: 'json',
+						done: function (e, data) {
+							$.each(data.result.files, function (index, file) {
+								$('<p/>').text(file.name).appendTo('#files');
+							});
+						},
+						progressall: function (e, data) {
+							var progress = parseInt(data.loaded / data.total * 100, 10);
+							$('#progress .progress-bar').css(
+								'width',
+								progress + '%'
+							);
+						}
+					}).prop('disabled', !$.support.fileInput)
+						.parent().addClass($.support.fileInput ? undefined : 'disabled');
+				});
+		</script>
+		<script>
+						  	$('#addRoute').click(function(e) {
+						        //e.preventDefault();
+								var routeData = {
+										cName:$('#cName').val(),
+										eName:$('#eName').val(),
+										ltd:$('#ltd').val(),
+										type:$('#type').val(),										
+										frequency:$('#frequency').val(),
+										city:$('#city').val(),
+										code:$('#code').val(),
+										pdf_au:$('#pdf_au').val(),									
+										pdf_nz:$('#pdf_nz').val(),
+										pdf_sa:$('#pdf_sa').val(),
+										auAdultPrice:$('#auAdultPrice').val(),									
+										auChildPrice1:$('#auChildPrice1').val(),
+										auChildPrice2:$('#auChildPrice2').val(),																			
+										auInfantPrice:$('#auInfantPrice').val(),
+										auSinglePrice:$('#auSinglePrice').val(),
+										nzAdultPrice:$('#nzAdultPrice').val(),									
+										nzChildPrice1:$('#nzChildPrice1').val(),
+										nzChildPrice2:$('#nzChildPrice2').val(),																			
+										nzInfantPrice:$('#nzInfantPrice').val(),
+										nzSinglePrice:$('#nzSinglePrice').val(),
+										saAdultPrice:$('#saAdultPrice').val(),									
+										saChildPrice1:$('#saChildPrice1').val(),
+										saChildPrice2:$('#saChildPrice2').val(),																			
+										saInfantPrice:$('#saInfantPrice').val(),
+										saSinglePrice:$('#saSinglePrice').val(),
+										
+									};
+								$.post("<?php echo site_url('Route/insert_route');?>",routeData, function (data) {
+									if(data['retCode']==-1){
+											//没有通过输入验证											
+											var txt= data['data'];
+											alert(txt);
+											//window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);										
+										}else if(data['retCode']==1){
+											//添加成功
+											var txt= data['data'];
+											alert(txt);
+											//window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);	
+											//重定位到列表页
+											location.href="<?php echo site_url('Route/index') ;?>";
+										}
+								},"json");
+						    });
+						  </script>
+
+		</div>
+	</body>
+
+</html>

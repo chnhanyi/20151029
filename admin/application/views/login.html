@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Pacific Delight Agent Booking System</title>
+		<base href="<?php echo base_url();?>public/" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+	  <link rel="stylesheet" href="css/font-awesome-ie7.min.css" />
+	<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- ace styles -->
+
+		<!-- ui css start-->
+
+		<link rel="stylesheet" href="assets/css/page/modules/ui.jqgrid.css" />
+
+		<link rel="stylesheet" href="assets/css/ace.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+		<!-- ui css end-->
+
+		<!-- 业务css start-->
+		<link rel="stylesheet" type="text/css" href="assets/css/page/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="css/page/insertOrder.css" /> -->
+		<!-- 业务css end -->
+
+		<!--[if lte IE 8]>
+	  <link rel="stylesheet" href="css/ace-ie.min.css" />
+	<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+	<script src="js/html5shiv.js"></script>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+
+	<body>
+		<div id="headerWrapper">
+
+			<div id="header">
+				<div class="navbar navbar-default" id="navbar">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('navbar', 'fixed');
+						} catch (e) {
+						}
+					</script>
+
+					<div class="navbar-container" id="navbar-container">
+						<div class="navbar-header pull-left">
+							<a href="javascript:void(0)" class="navbar-brand"> <small>
+
+						<i class="icon-leaf"></i>Pacific Delight Booking System V1.0</small> </a>
+							<!-- /.brand -->
+						</div>
+						<!-- /.navbar-header -->
+
+						<!--    <div id="userinfo">
+		        
+		    </div> -->
+
+						<!-- /.container -->
+					</div>
+				</div>
+
+			</div>
+			<div class="main-container" id="main-container">
+				<script>
+					try {
+						ace.settings.check('main-container', 'fixed');
+					} catch (e) {
+					}
+				</script>
+
+				<div class="main-container-inner">
+					<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+						<span class="menu-text"></span> </a>
+
+					<!-- 主要内容 -->
+					<div id="main-content" class="main-content">
+
+						<div class="row">
+							<div class="col-sm-10 col-sm-offset-1">  
+                            <div class="center">
+                                    <img src="assets/images/ilogo.jpg" />     
+							</div>  
+                                                 	
+								<div class="login-container">                                
+									
+									<div class="space-6"></div>
+
+									<div class="position-relative">
+										<div id="login-box" class="login-box visible widget-box no-border">
+											<div class="widget-body">
+												<div class="widget-main">
+													<h4 class="header blue lighter bigger">
+
+								<i class="icon-coffee green"></i>Please Input UserName&Password:
+
+							</h4>
+
+													<div class="space-6"></div>
+													
+															<label class="block clearfix"> <span class="block input-icon input-icon-right"> 														
+															<input name="a_userName" id="a_userName" type="text"
+
+											class="form-control" placeholder="username" /> <i
+
+											class="icon-user"></i> </span> </label>
+															<label class="block clearfix">
+																<span class="block input-icon input-icon-right"> <input
+
+											id="a_password" name="a_password" type="password"
+
+											class="form-control" placeholder="password" /> <i
+
+											class="icon-lock"></i></span>
+															</label>
+															<label class="block clearfix">
+																<span class="block input-icon input-icon-right"> 
+																	Auto-login in this computer<input id="for_login" name="for_login" type="checkbox" ></span>
+															</label>
+															<div class="space"></div>
+                                                            <p class="tip red bigger bold"></p>
+															<div class="clearfix">
+                                                               <button type="button" class="width-35 pull-right btn btn-sm btn-primary" id="submitBtn">Log In</button>																
+															</div>
+
+															<div class="space-4"></div>
+														
+
+												</div>
+												<!-- /widget-main -->
+
+											</div>
+											<!-- /widget-body -->
+										</div>
+										<!-- /login-box -->
+
+									</div>
+									<!-- /position-relative -->
+								</div>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+
+						<!-- basic scripts -->
+						<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+						<script src="assets/js/bootstrap.min.js"></script>
+						<!--
+		  <script src="js/typeahead-bs2.min.js"></script>
+		  -->
+						<!-- page specific plugin scripts -->
+						<!-- ace scripts -->
+
+						<script src="assets/js/ace-elements.min.js"></script>
+						<script src="assets/js/ace.min.js"></script>                    
+                        
+                       
+						  <script>
+						  	$('#submitBtn').click(function(e) {	
+							    
+							  
+								var loginData = {
+										username:$('#a_userName').val(),
+										pwd:$('#a_password').val(),
+										forcheck:$("#for_login").is(":checked") ? 1 : 0
+									};
+								$.post("<?php echo site_url('Admin/login');?>",loginData, function (data) {
+										if(data['retCode']==-1){
+											//没有通过输入验证											
+											$('.tip').append(data['data']).show(300).delay(3000).hide(300);
+										}else if(data['retCode']==0){
+											//账号被冻结，无法使用
+											$('.tip').append("Your Account is Frozen!").show(300).delay(3000).hide(300);											
+										}else if(data['retCode']==1 && data['status']==1){
+											//Manager
+											location.href="<?php echo site_url('Order/manager') ;?>";
+										}else if(data['retCode']==2 && data['status']==1){
+											//Operator
+										 	location.href="<?php echo site_url('Order/index') ;?>";
+										}else if(data['retCode']==3 && data['status']==1){
+											//Accoutant
+											location.href="<?php echo site_url('Order/account') ;?>";											
+										}else {
+											$('.tip').append("Wrong Username or Password, Login Failed!").show(300).delay(3000).hide(300);
+										}
+								},"json");
+									
+						    });
+						  </script>
+                        <script> 
+						     document.onkeydown = function(evt){    
+							  var evt = window.event?window.event:evt;    
+							   if(evt.keyCode==13){ 			        
+								   var loginData = {
+											username:$('#a_userName').val(),											 
+											pwd:$('#a_password').val(),
+											forcheck:$("#for_login").is(":checked") ? 1 : 0
+										};									
+									$.post("<?php echo site_url('Admin/login');?>",loginData, function (data) {
+										if(data['status']==0){
+											//账号被冻结，无法使用
+											alert("Your Account is Frozen!")
+										}else if(data['retCode']==1 & data['status']==1){
+											//Manager
+											location.href="<?php echo site_url('Order/manager') ;?>";
+										}else if(data['retCode']==2 & data['status']==1){
+											//Operator
+										 	location.href="<?php echo site_url('Order/index') ;?>";
+										}else if(data['retCode']==3 & data['status']==1){
+											//Accoutant
+											location.href="<?php echo site_url('Account/index') ;?>";											
+										}else {
+											alert("Login Failed!")
+										}
+									},'json')   
+								}
+							 }
+                        </script>
+
+					</div>
+
+				</div>
+
+				<a href="javascript:void(0)" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="icon-double-angle-up icon-only bigger-110"></i> </a>
+
+			</div>
+	</body>
+
+</html>

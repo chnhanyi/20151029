@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Pacific Delight Booking system</title>
+		<base href="<?php echo base_url();?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="public/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="public/assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="public/assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- ace styles -->
+
+		<!-- ui css start-->
+
+		<link rel="stylesheet" href="public/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="public/assets/css/ace-skins.min.css" />
+		<!-- ui css end-->
+
+		<!-- 业务css start-->
+		<link rel="stylesheet" type="text/css" href="public/assets/css/page/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="public/assets/css/page/insertOrder.css" /> -->
+		<!-- 业务css end -->
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="public/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="public/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="public/assets/js/html5shiv.js"></script>
+		<script src="public/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch (e) {}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+
+							<i class="icon-leaf"></i>Pacific Delight Booking System</small>
+					</a>
+					<!-- /.brand -->
+				</div>
+				<!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="public/assets/avatars/user.jpg" alt="Jason's Photo">
+								<span class="user-info">
+
+									<small>Welcome</small>
+                                    <?php echo $_COOKIE["uin"] ?>
+
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+								<li>
+									<a href="<?php echo site_url('Common/logout') ?>">
+										<i class="icon-off"></i> Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<!-- /.ace-nav -->
+				</div>
+
+			</div>
+			<!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch (e) {}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('sidebar', 'fixed')
+						} catch (e) {}
+					</script>
+					<!-- nav start -->
+						<ul class="nav nav-list">
+						<li class="active open">
+							<a href="javascript:void(0)" class="dropdown-toggle">
+								<i class="icon-file-alt"></i>
+								<span class="menu-text">
+									Menu
+								</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+                                <li>
+									<a href="<?php echo site_url('Order/manager'); ?>">
+										<i class="icon-double-angle-right"></i> Order List
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('News/index'); ?>">
+										<i class="icon-double-angle-right"></i> News List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('News/add_news'); ?>">
+										<i class="icon-double-angle-right"></i> Add News
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Route/index'); ?>">
+										<i class="icon-double-angle-right"></i> Route List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Route/add_route'); ?>">
+										<i class="icon-double-angle-right"></i> Add Route
+									</a>
+								</li>
+                                 <li>
+									<a href="<?php echo site_url('Company/index'); ?>">
+										<i class="icon-double-angle-right"></i> Company List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Company/add_company'); ?>">
+										<i class="icon-double-angle-right"></i> Add Company
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Agent/index'); ?>">
+										<i class="icon-double-angle-right"></i> Agent List
+									</a>
+								</li>
+                                <li>
+									<a href="<?php echo site_url('Agent/add_agent'); ?>">
+										<i class="icon-double-angle-right"></i> Add Agent
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Staff/index'); ?>">
+										<i class="icon-double-angle-right"></i> Staff List
+									</a>
+								</li>
+								<li  class="active">
+									<a href="<?php echo site_url('Staff/add_staff'); ?>">
+										<i class="icon-double-angle-right"></i> Add Staff
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('Statistics/index'); ?>">
+										<i class="icon-double-angle-right"></i> Sales Statistics
+									</a>
+								</li>                                  
+							</ul>
+						</li>
+					</ul>
+					<!-- nav end -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try {
+							ace.settings.check('sidebar', 'collapsed')
+						} catch (e) {}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try {
+								ace.settings.check('breadcrumbs', 'fixed')
+							} catch (e) {}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								Home
+							</li>
+
+							<li>
+								Add Staff
+							</li>
+						</ul><!-- .breadcrumb -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS 这里存放内容-->
+
+								<div class="result-wrap">
+									<div class="result-content" style="max-width:800px;">
+										   
+										<h4 class="smaller  header green clearfix "> 
+
+										        <div class="col-xs-4">
+
+										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
+										        	 Staff Info
+										         </div>
+									         </h4>
+
+										<section class="t-step clearfix">
+											<div class="form-horizontal t-content col-xs-12" role="form">
+                                              <!--  员工名字 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Staff Name </label>
+
+													<div class="col-sm-9">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" placeholder="peter" ms-duplex="tour_code" id="name">
+														</div>
+													</div>
+												</div>
+												<!--  员工名字 Tour Name end  -->  
+                                                
+                                                 <!--  密码 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Password </label>
+
+													<div class="col-sm-9">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" id="pwd">
+													     </div>
+													</div>
+												</div>
+												<!--  密码 Tour Name end  -->
+                                                
+                                                <!--  电子邮箱 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Email </label>
+
+													<div class="col-sm-9">
+														<div class="col-xs-10 col-sm-5">
+															<input type="text" class="form-control t-can_disabled" ms-duplex="tour_code" id="email">
+													     </div>
+													</div>
+												</div>
+												<!--  电子邮箱 Tour Name end  -->
+                                                
+                                                <!--  员工类别 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Type</label>
+
+													<div class="col-sm-9">
+														<div class="col-xs-10 col-sm-6">
+															<select id="type">
+                                                              <option value ="2">Operater</option>
+                                                              <option value ="3">Accountant</option>                                                                             
+                                                            </select>
+														</div>
+													</div>
+												</div>
+												<!--  员工类别   Tour Name end  -->    
+                                                
+                                                <!--  账号状态 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Status</label>
+
+													<div class="col-sm-9">
+														<div class="col-xs-10 col-sm-6">
+															<select id="status">
+                                                              <option value ="0">Frozen</option>  
+                                                              <option value ="1">Active</option>                                        
+                                                            </select>
+														</div>
+													</div>
+												</div>
+												<!--  账号状态  Tour Name end  -->                                                  
+                                                                                               
+                                                                                                                                       
+												<!--  -->
+                                                <div class="hr hr-18 dotted hr-double"></div>
+
+												<!-- 第一步操作 start  -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
+													<div class="col-sm-3 pull-right">
+														<button class="btn btn-lg btn-primary t-can_disabled" id="addStaff"><i class="icon-ok "></i>Submit</button>														
+													</div>
+												</div>
+												<!--第一步操作 end  -->
+
+											</div>
+
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- PAGE CONTENT ENDS 这里存放内容 -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.page-content -->
+		</div>
+		<!-- /.main-content -->
+
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<i class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+		</div>
+		<!-- /.main-container -->
+
+		<!-- basic scripts -->
+		<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="public/assets/js/avalon.min.js"></script>
+		<script src="public/assets/js/bootstrap.min.js"></script>
+		<!--
+		  <script src="public/assets/js/typeahead-bs2.min.js"></script>
+		  -->
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+
+		<script src="public/assets/js/ace-elements.min.js"></script>
+		<script src="public/assets/js/ace.min.js"></script>
+
+		<!-- 通用业务代码 -->
+		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>
+		<script src="public/assets/js/page/app.js"></script>
+		<!-- 具体业务代码 -->
+		<script src="public/assets/js/page/modules/laydate.js"></script>
+		<script>
+						  	$('#addStaff').click(function(e) {
+						        //e.preventDefault();
+								var staffData = {										
+										name:$('#name').val(),
+										pwd:$('#pwd').val(),										
+										email:$('#email').val(),										
+										type:$("#type").val(),
+										status:$('#status').val(),
+									};
+								$.post("<?php echo site_url('Staff/insert_staff');?>",staffData, function (data) {
+									if(data['retCode']==-1){
+											//没有通过输入验证											
+											var txt= data['data'];
+											alert(txt);
+											//window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);										
+										}else if(data['retCode']==1){
+											//添加成功
+											var txt= data['data'];
+											alert(txt);
+											//window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);	
+											//重定位到列表页
+											location.href="<?php echo site_url('Staff/index') ;?>";
+										}
+								},"json");
+						    });
+						  </script>
+
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pacific Delight Booking System</title>
+    <base href="<?php echo base_url();?>public/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+    <!-- page specific plugin styles -->
+    <!-- ace styles -->
+    <!-- ui css start-->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+    <!-- ui css end-->
+    <!-- 业务css start-->
+    <link rel="stylesheet" type="text/css" href="assets/css/page/main.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/page/insertOrder.css" /> -->
+    <!-- 业务css end -->
+    <!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {}
+        </script>
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+							<i class="icon-leaf"></i>
+							Pacific Delight Booking System
+						</small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+            <div class="navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo">
+                            <span class="user-info">
+									<small>Welcome,</small>
+									Jason
+								</span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class="icon-off"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.ace-nav -->
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {}
+        </script>
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {}
+                </script>
+                <!-- nav start -->
+                <ul class="nav nav-list">
+                    <li class="active open">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="icon-file-alt"></i>
+                            <span class="menu-text">
+									Menu
+								</span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li class="active">
+                                <a href="<?php echo site_url('Group/index'); ?>">
+                                    <i class="icon-double-angle-right"></i>Order List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/index'); ?>">
+                                    <i class="icon-double-angle-right"></i>Group List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/add_group'); ?>">
+                                    <i class="icon-double-angle-right"></i>Add Group
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/merge_group'); ?>">
+                                    <i class="icon-double-angle-right"></i>Merge Group
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('Group/add_special'); ?>">
+                                    <i class="icon-double-angle-right"></i>Special Group
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- nav end -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+                <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {}
+                </script>
+            </div>
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="#">Index</a>
+                        </li>
+                        <li>
+                            <a href="#">Order List</a>
+                        </li>
+                        <li class="active">Order Details</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS 这里存放内容-->
+                            <div class="result-wrap">
+                                <div class="result-content" style="max-width:800px;">
+                                    <h4 class="smaller  header green clearfix "> 
+										        <div class="col-xs-3">
+										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
+										        	 Tour Info
+										         </div> 
+									         </h4>
+                                    <section class="t-step clearfix" ms-controller="tour_order">
+                                        <div class="form-horizontal t-content col-xs-12" role="form">
+                                            <input type="hidden" name="id" id="o_sn" ms-duplex="o_sn">
+                                            <!--  线路名称 Tour Name start -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 线路名称 </label>
+                                                <div class="col-sm-9">
+                                                    <div class="col-xs-10 col-sm-8">
+                                                        <div class="t-info-data">{{router_cName}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  线路名称 Tour Name end  -->
+                                             <!--  线路名称 Tour Name start -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tour Name </label>
+                                                <div class="col-sm-9">
+                                                    <div class="col-xs-10 col-sm-8">
+                                                        <div class="t-info-data">{{router_eName}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  线路名称 Tour Name end  -->
+                                            <!--  旅游团代码 Tour code start -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tour Code </label>
+                                                <div class="col-sm-9">
+                                                    <div class="col-xs-10 col-sm-8">
+                                                        <div class="t-info-data">{{tour_code}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  旅游团代码 Tour code end  -->
+                                            <!--  出行日期 TourDate start  -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> TourDate </label>
+                                                <div class="col-sm-9">
+                                                    <!-- <input type="text"   placeholder="Username" class="col-xs-10 col-sm-5"> -->
+                                                    <div class="col-xs-10 col-sm-5">
+                                                        <div class="right_title1" id="J_Example">
+                                                            <div class="t-info-data"> {{cur_date}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--出行日期 TourDate end  -->
+                                            <!-- 人数 Adult start  -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Number of Pax</label>
+                                                <div class="col-sm-9">
+                                                    <div class="t-info-data"> {{people_text}}</div>
+                                                </div>
+                                            </div>
+                                            <!--人数 Adult end  -->
+                                            <!-- 房间 room start  -->
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">No. of Rooms</label>
+                                                <div class="col-sm-9">
+                                                    <div class="t-info-data"> {{room_text}} </div>
+                                                </div>
+                                            </div>
+                                            <!--房间 room end  -->
+                                            <!-- 是否拼房 Share Room -->
+                                            <div class="form-group" >
+                                                <label class="col-sm-5 control-label no-padding-right" for="form-field-1">Share Room with Other Single(If Have)</label>
+                                                <div class="col-sm-7">
+                                                    <div class="t-info-data"> {{share_text}} </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--是否拼房 Share Room   -->
+                                        <div class="hr hr-18 dotted hr-double"></div>
+                                        <!-- 第四步 联系信息 Contact Info start  -->
+                                        <section class="t-step" ms-controller="tour_order">
+                                            <div class="hr hr-18 dotted hr-double t-bd-green"></div>
+                                            <h4 class="smaller  header green clearfix "> 
+                                                    <div class="col-xs-3">                                            
+                                                         <i class="icon-hand-right icon-animated-hand-pointer"></i>                                            
+                                                          Contacts Info                                            
+                                                     </div>                                            
+                                             </h4>
+                                            <table class="table table-striped table-bordered table-hover">
+                                                <tr class="front">
+                                                    <td>
+                                                        <div class="blue"> Contacts
+                                                        </div>
+                                                        <div class="t-info-data">{{contact.contacts}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="blue"> Mobile
+                                                        </div>
+                                                        <div class="t-info-data">{{contact.mobile}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="blue"> Email
+                                                        </div>
+                                                        <div class="t-info-data">{{contact.email}}</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </section>
+                                        <!-- 第四步 联系信息 Contact Info end  -->
+                                        <!-- 第二步 游客信息  start-->
+                                        <div class="guestInfo t-step" ms-controller="tour_order">                                            
+                                            <h4 class="smaller  header green clearfix "> 
+                                                <div class="col-xs-3">                                            
+                                                     <i class="icon-hand-right icon-animated-hand-pointer"></i>                                            
+                                                      Customers Info                                            
+                                                 </div>                                            
+                                             </h4>
+                                            <div class="guestInfoTable">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>First Name</th>
+                                                            <th>Last Name</th>
+                                                            <th>Gender</th>
+                                                            <th>Type</th>
+                                                            <th>Citizen / PR</th>                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- <div >{{getIndex()}}&nbsp;{{$val}}</div> -->
+                                                        <tr ms-repeat="guest_list">
+                                                            <td style="text-align:center">{{$index+1}}</td>
+                                                            <td>
+                                                            <span>{{el.g_firstname}}</span>
+                                                            </td>
+                                                            <td>
+                                                            <span>{{el.g_lastname}}</span>
+                                                            </td>
+                                                            <td>
+                                                              <span>{{el.g_gender_text}}</span>
+                                                            </td>
+                                                            <td>
+                                                              <span>{{el.g_guestType_text}}</span>
+                                                            </td>
+                                                            <td>
+                                                              <span>{{el.g_naiton}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--  第二步 游客信息 End -->
+                                        <!-- 分房信息 start -->
+                                        <section class="t-step"ms-controller="tour_order">                                           
+                                            <h4 class="smaller  header green clearfix "> 
+                                            <div class="col-xs-4">                                        
+                                                 <i class="icon-hand-right icon-animated-hand-pointer"></i>
+                                                 Room Allocation </div>
+ 											</h4>
+                                            <div class="guestInfoTable">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Room Type</th>
+                                                            <th>Customers</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- <div >{{getIndex()}}&nbsp;{{$val}}</div> -->
+                                                        <tr ms-repeat="room_people">
+                                                            <td style="text-align:center">{{$index+1}}</td>
+                                                            <td>
+                                                                <span>{{el.room_type_text}}</span>
+                                                            </td>
+                                                            <td>
+                                                                {{el.guests}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                        <!-- 分房信息 end -->
+                                        <!--  航班信息  start -->
+                                        <!-- 国际航班信息 start -->
+                                        <section class="t-step" ms-controller="tour_order">                                           
+                                            <h4 class="smaller  header green clearfix "> 
+                                            <div class="col-xs-4">                                        
+                                                 <i class=" icon-fighter-jet"></i>
+                                                 Flight Info </div>
+ 											</h4>
+                                            <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Flight Date</th>
+                                                            <th>Flight No.</th>                                                            
+                                                            <th>Flight Time</th>
+                                                            <th>Flight Route</th>
+                                                            <th>Passengers</th>
+                                                        </tr>
+                                                    </thead>
+                                                <tbody>
+                                                    <tr class="front" ms-repeat="flightInfo">
+                                                        <td>
+                                                            <div class="flightRight">
+                                                                {{$index+1}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="flightRight">
+                                                            {{el.g_arriveDate}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="flightRight flight_list_wrap">
+                                                                {{el.a_flightno}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="flightRight">
+                                                               {{el.a_time}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="flightRight">
+                                                            {{ el.a_airport}}                                                              
+                                                            </div>
+                                                        </td>
+                                                        <td>                                                            
+                                                            <div class="flightRight arrived word_wrap">
+                                                              <span>{{el.arrivedName}}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </section>
+                                        <!-- 国际航班信息 end -->
+                                        <!-- 航班信息 end -->
+
+                                        <!--留言 Remark  start -->
+                                        <section ms-controller="tour_order" class="remarkInfo t-step">                                            
+                                            <h4 class="smaller  header green clearfix "> 
+
+                                                  <div class="col-xs-4">
+                                    
+                                                     <i class="icon-hand-right icon-animated-hand-pointer"></i>
+                                                     Remark(Optional)                                    
+                                                 </div>
+                                            </h4>
+                                            <!--  agent's reference start -->
+                                            <div class="form-group col-sm-12">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Agent's Reference</label>
+                                                <div class="col-sm-9">
+                                                    <div class="col-xs-10 col-sm-5">
+                                                        <div class="t-info-data">{{remark.agent_reference}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  agent's reference end  -->
+                                            <div class="remark col-sm-12">
+                                                <h5 > Special Request</h5>
+                                                <div class="t-info-data col-sm-12">{{remark.remark}}</div>
+                                            </div>
+                                        </section>
+                                        <!--留言 Remark end -->
+
+                                        <!--op审核意见 opnote  start -->
+                                        <section ms-controller="tour_order" class="remarkInfo t-step">                                            
+                                            <h4 class="smaller  header blue clearfix "> 
+
+                                                  <div class="col-xs-4">
+                                    
+                                                     <i class="icon-hand-right icon-animated-hand-pointer"></i>
+                                                     OP Check                               
+                                                 </div>
+                                            </h4>
+                                            <!--  opcode start -->
+                                            <div class="form-group col-sm-12">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">OP's Code(Extra Room)</label>
+                                                <div class="col-sm-9">
+                                                    <div class="col-xs-10 col-sm-5">
+                                                         <input type="text" class="form-control t-can_disabled"  id="opCode" ms-duplex="opCode">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  opcode end  -->
+                                            <div class="remark col-sm-12">
+                                                <h5 class="blue"> Remark for Tourguide</h5>
+                                                    <textarea rows="5" id="opNote"  ms-duplex="opNote" cols="100" ></textarea>
+                                            </div>
+                                        </section>
+                                        <!--op审核意见 opnote  end -->
+
+                                       <!--op审核通过 opcheck  start -->
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
+                                                    <div class="col-sm-3 pull-right">
+                                                        <button class="btn btn-lg btn-primary t-can_disabled" id="checkOrder"><i class="icon-ok "></i>Confirm
+                                                        </button>                                                     
+                                                    </div>
+                                                </div>
+                                        <!--op审核通过 opcheck    end -->                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PAGE CONTENT ENDS 这里存放内容 -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content -->
+    </div>
+    <!-- /.main-content -->
+    </div>
+    <!-- /.main-container-inner -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+    </a>
+    </div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="assets/js/avalon.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--
+		  <script src="assets/js/typeahead-bs2.min.js"></script>
+		  -->
+    <!-- page specific plugin scripts -->
+    <!-- ace scripts -->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+    <!-- 通用业务代码 -->
+    <script src="assets/js/seajs-2.3.0/seajs.js"></script>
+    <script src="assets/js/page/app.js"></script>
+    <!-- 具体业务代码 -->
+    <script src="assets/js/page/jquery.ynf.js"></script>
+    <script src="assets/js/page/order_detail.js"></script>
+
+    </div>
+</body>
+
+</html>
