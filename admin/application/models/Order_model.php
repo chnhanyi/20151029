@@ -128,15 +128,23 @@
                'o_opName' => $opname
             );
         	$this->db->where('o_id', $o_id);
-			$this->db->update(self::TBL_O, $data); 
-			return  $this->db->affected_rows();
+			if($this->db->update(self::TBL_O, $data)){
+				return  1;
+			}
+				else{
+				return  0;	
+				}
         }
 
         //更新订单,添加OP的审核内容
         function check_order($o_id,$data){        	
         	$this->db->where('o_id', $o_id);
-			$this->db->update(self::TBL_O, $data); 
-			return  $this->db->affected_rows();
+			if($this->db->update(self::TBL_O, $data)){
+				return  1;
+			}
+				else{
+				return  0;	
+				}
         }
 
         //更新订单的状态为已经处理
@@ -145,10 +153,14 @@
         	$data = array(               
                'o_orderStatus' => $status,
                'o_opName' => $opname
-            );
+            );            
         	$this->db->where('o_id', $o_id);
-			$this->db->update(self::TBL_O, $data); 
-			return  $this->db->affected_rows();
+			if($this->db->update(self::TBL_O, $data)){
+				return  1;
+			}
+				else{
+				return  0;	
+				}  	
         } 
 
 

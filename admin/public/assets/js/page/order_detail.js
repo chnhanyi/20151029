@@ -195,32 +195,6 @@
 
         avalon.scan();
 
- 						$('#checkOrder').click(function(e) {
-                                 if(confirm("Are you sure to Confirmed?")){
-                                //e.preventDefault();
-                                var groupData = {
-                                        o_id:$('#o_sn').val(),                                                                           
-                                        opCode:$("#opCode").val(),                                      
-                                        opNote:$("#opNote").val(),                                    
-                                    };
-                                $.post("<?php echo site_url('Order/check_order');?>",orderData, function (data) {
-                                    if(data['retCode']==-1){
-                                            //没有通过输入验证                                          
-                                            var txt= data['data'];
-                                            alert(txt);                                                                         
-                                        }else if(data['retCode']==1){
-                                            //添加成功
-                                            var txt= data['data'];
-                                            alert(txt);                                         
-                                            //重定位到订单发票页
-                                            location.href="<?php echo site_url('Order/invoice') ;?>";
-                                        }
-                                },"json");
-                                 }
-                            });
-
-
-
        }
 
 		avalon.ajax({
@@ -244,10 +218,5 @@
 			}
 		});
 
-
-
-	
-
-	 
 
 })();

@@ -183,6 +183,13 @@
                 ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
 
             ].join("");
+
+            var oper_invoice = ['<a ',
+                ' target="_self"  href="./index.php/Order/view_invioce?id=', rowdata.id, '"',
+                style,
+                ' class="c-red" title="Confirm Order">View Invoice</a><br /><br />'
+
+            ].join("");
             
             var oper_flight = ['<a ',
                 ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
@@ -194,7 +201,7 @@
 			var oper_notice = ['<a ',
                 ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
                 style,
-                ' class="c-orange" title="Add Departure Notice">DEPT Notice</a><br /><br />'
+                ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
 
             ].join("");     
 
@@ -206,7 +213,8 @@
 
             ].join("");
 
-            oper_html_arr.push(oper_check);  
+            oper_html_arr.push(oper_check); 
+            oper_html_arr.push(oper_invoice);   
 			oper_html_arr.push(oper_flight); 
 			oper_html_arr.push(oper_notice); 
             oper_html_arr.push(oper_terminate);

@@ -160,12 +160,9 @@ class User_model extends CI_Model {
 			return false;
 		}
 	}
-	//选择出用户这个月买的订单数量
-	function get_order_num($d){
-		$u = $this->get_uin();
-		$this->db->select("*");
-		$where=array('user_id='=>$u,'o_bookingTime>='=>$d);
-		$this->db->where("user_id=",$u);
+	//选择出公司这个月的订单数量
+	function get_order_num($d){	
+		$this->db->where("Date(o_bookTime)>=",$d);
 		$res = $this->db->get("pd_order");
 		$a = $res->num_rows();
 		return $a;

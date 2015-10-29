@@ -5,6 +5,9 @@
 			parent::__construct();
 			$this->load->model('Order_model');
 			$this->load->model('Group_model');
+			$this->load->model('Company_model');
+			$this->load->model('Agent_model');
+			$this->load->model('Route_model');
 		}
 		//展示op订单列表
 		function index(){
@@ -172,36 +175,113 @@
 		}
 
 		//审核订单
-		function check_order(){
-			$o_id 	= $this->input->get("o_id");
-			$data['o_opNote'] = $this->input->get("opNote");
-			$data['o_opCode'] = $this->input->get("opCode");
-			$num1 = $this->$this->Order_model->check_order($o_id,$data);
+		function confirm_order(){
+			$o_id 	= $this->input->post("o_id");
+			$data1['o_opNote'] = $this->input->post("opNote");
+			$data1['o_opCode'] = $this->input->post("opCode");
+			$num1 = $this->Order_model->check_order($o_id,$data1);
 
-			if($num1 <= 0){
-				$data['reCode'] = -1;
-			    $data['status'] = "failed";
-			    $data['data'] = "Check Order failed";
-			}else{
-
-                $this->load->helper('cookie');
-				$opname = get_cookie("uin");
-				$num2 = $this->Order_model->update_order_status2($o_id,$opname);
-
-				if($num2 > 0){
+			$this->load->helper('cookie');
+			$opname = get_cookie("uin");
+			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+						
+			if($num1 == 1 && $num2 == 1){				
 					$data['reCode'] = 1;
 					$data['status'] = "success";
-					$data['data'] = "Check Order Success";
+					$data['data'] = "Confirm Order Success";
 		        }else{
 	                $data['reCode'] = -1;
 				    $data['status'] = "failed";
-				    $data['data'] = "Check Order failed";
+				    $data['data'] = "Confirm Order failed";
 		        }
-				
+
+		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+				echo json_encode($data);
 			}
 
-			return json_encode($data);
+
+		//审核发票信息
+		function get_invoice(){
+			//获取订单编号
+			$o_id 	= $this->input->get("id");
+			//根据订单编号，查询该订单的信息
+			$res1 = $this->Order_model->get_detail($o_id);
+
+			//组装数据
+			$data=array();
+			$data['tour_code'] = $res1['t_tourCode'];
+			$data['o_sn'] = $res1['o_sn'];
+			$date = $res1['o_bookingTime'];
+			$data['tour_date'] = $this->toxdate($date);
+			$data['adultNumber'] = $res1['o_adultNumber'];
+			$data['adultPrice'] = $res1['o_adultPrice'];
+			$data['childNumber1'] = $res1['o_childNumber1'];			
+			$data['childPrice1'] = $res1['o_childPrice1'];
+			$data['childNumber2'] = $res1['o_childNumber2'];			
+			$data['childPrice2'] = $res1['o_childPrice2'];
+			$data['infantNumber'] = $res1['o_infantNumber'];			
+			$data['infantPrice'] = $res1['o_infantPrice'];
+			$data['discount'] = $res1['o_discount'];
+			$data['single'] = $res1['o_single'];
+			$data['singlePrice'] = $res1['o_singleRoomDifferencePrice'];
+			$data['reference'] = $res1['o_agentReference'];
+			$data['orderAmount'] = $res1['o_orderAmount'];
+			$data['opname'] = $res1['o_opName'];
+			$nowDate = date("Y-m-d");			
+			$data['create_date'] = $this->toxdate($nowDate);
+
+			//获取公司的信息
+			$a_id = $res1['a_id'];
+			$res2 = $this->Company_model->get_company($a_id);			
+			$data['a_name']=$res2['a_name'];
+			$data['address']=$res2['a_address'];
+            $area = $res2['a_area']; 
+            if($area == 1){
+            	$data['currency']="AUD";
+            }elseif ($area == 2 || $area == 3) {
+            	$data['currency']="NZD";
+            }
+			
+			//获取销售人员的信息
+			$s_id = $res1['user_id'];
+			$res3 = $this->Agent_model->get_agent($s_id);			
+			$data['s_name']=$res3['s_name'];
+
+			//获取线路的名字
+			$r_id = $res1['r_id'];
+			$res4 = $this->Route_model->get_route($r_id);			
+			$data['cName']=$res4['r_cName'];
+			$data['eName']=$res4['r_eName'];
+
+			//加载发票页
+			$this->load->view("op/invoice.html",$data);
 		}
+
+		//取消订单
+		function cancel_order(){
+			$o_id 	= $this->input->post("o_id");
+			$data1['o_opNote'] = $this->input->post("opNote");
+			$data1['o_opCode'] = $this->input->post("opCode");
+			$num1 = $this->Order_model->check_order($o_id,$data1);
+
+			$this->load->helper('cookie');
+			$opname = get_cookie("uin");
+			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+						
+			if($num1 == 1 && $num2 == 1){				
+					$data['reCode'] = 1;
+					$data['status'] = "success";
+					$data['data'] = "Confirm Order Success";
+		        }else{
+	                $data['reCode'] = -1;
+				    $data['status'] = "failed";
+				    $data['data'] = "Confirm Order failed";
+		        }
+
+		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+				echo json_encode($data);
+			}
+
 
 	}
 

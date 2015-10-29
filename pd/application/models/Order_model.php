@@ -30,6 +30,9 @@ class order_model extends CI_Model {
 					r_auSinglePrice as SinglePrice
 				from 
 					pd_route
+				order by
+				    r_type ASC, 
+				    r_id ASC
 				"
 			);
 		$sql[2] = sprintf(
@@ -50,6 +53,9 @@ class order_model extends CI_Model {
 					r_nzSinglePrice as SinglePrice
 				from 
 					pd_route
+				order by
+				    r_type ASC, 
+				    r_id ASC
 				"
 			);	
 		$sql[3] = sprintf(
@@ -70,6 +76,9 @@ class order_model extends CI_Model {
 					r_saSinglePrice as SinglePrice
 				from 
 					pd_route
+				order by
+				    r_type ASC, 
+				    r_id ASC
 				");	
 		
 		$result = $this->db->query($sql[$userArea]);

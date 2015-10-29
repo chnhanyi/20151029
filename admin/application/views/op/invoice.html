@@ -2,7 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Pacific Delight Booking System</title>		
+		<title>Pacific Delight Booking System</title>
+		 <base href="<?php echo base_url();?>public/" />		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<!-- basic styles -->
@@ -122,23 +123,34 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-                            <li >
-									<a href="<?php echo site_url('Order_show/index'); ?>">
-										<i class="icon-double-angle-right"></i>Info Center
-									</a>
-								</li>  
-                            <li >
-									<a href="#">
-										<i class="icon-double-angle-right"></i>Add Order
-									</a>
-								</li>
-                                <li class="active">
+                            <li   class="active">
 									<a href="<?php echo site_url('Order/index'); ?>">
 										<i class="icon-double-angle-right"></i>Order List
 									</a>
-								</li>								                                                           
+								</li>
+                                <li>
+									<a href="<?php echo site_url('Group/index'); ?>">
+										<i class="icon-double-angle-right"></i>Group List
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url('Group/add_group'); ?>">
+										<i class="icon-double-angle-right"></i>Add Group
+									</a>
+								</li>                                
+                                <li >
+									<a href="<?php echo site_url('Group/merge_group'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('Group/add_special'); ?>">
+										<i class="icon-double-angle-right"></i>Special Group
+									</a>
+								</li>	
 							</ul>
 						</li>
+						
 					</ul>
 					
 					<!-- nav end -->
@@ -210,28 +222,27 @@
 														<div class="col-sm-8">
 															<div class="row">
 																<div class="col-xs-11 bold">
-																	For:  Nexus Holiday Pty Ltd
+																	For :   <?php echo $a_name; ?>
 																</div>
 															</div>
 
 															<div>
 																<ul class="list-unstyled  spaced">
-																	<li class="bold">Address:</li>
-																	<li>Suite 203 Level 2 Manning Building 451 Pitt Street Sydeny NSW 2000
-																	</li>
+																	<li class="bold">Address :</li>
+																	<li><?php echo $address; ?></li>
 																</ul>
 															</div>
 														</div><!-- /span -->
 														<div class="col-sm-3 pull-right text-right">
-														    <span class="bold"> Invoice No:157126</span>
+														    <span class="bold"> Invoice No: <?php echo $o_sn; ?></span>
 														    <br/>
-															<span>Create Date: 03/12/2015
+															<span>Create Date: <?php echo $create_date; ?>
 															</span>
 														    <br/>
-															<span>Due Date: 16/12/2015
+															<span>Due Date: <?php echo $tour_date; ?>
 															</span>
 														    <br/>
-														    <span>Consultant: Lili Chen
+														    <span>Consultant: <?php echo $opname; ?>
 															</span>
 														    <br/>
 														</div>
@@ -243,23 +254,23 @@
 													<div>
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Agent's reference:
+																		Agent's reference: <?php echo $reference; ?>
 													</p>
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Attention to: Peter
+																		Attention to: <?php echo $s_name; ?>
 													</p>                                                        
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Tour Name:南岛七日慢慢游 south island
+																		Tour Name: <?php echo $cName."/".$eName; ?>
 													</p>
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Tour Code:PD
+																		Tour Code: <?php echo $tour_code; ?>	
 													</p>     
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Tour Date：03/11/2015
+																		Tour Date：<?php echo $tour_date; ?>
 													</p> 
 													</div>
 													<div class="space"></div>                                                                                                   
@@ -328,7 +339,7 @@
 																<span>$395</span>                                                                
 															</h4>                                                            
                                                             <h5 class="pull-right">
-																Currency: AUD                                                              
+																Currency: <?php echo $currency; ?>                                                        
 															</h5>
                                                            
 														</div>                                                        														
@@ -339,7 +350,7 @@
                                                                                                       
                                                      <hr style="border:1px dashed; height:1px" color="#DDDDDD">
 													<div class="row "> 
-		                                                        <div class="col-sm-3 ml20">
+		                                                        <div class="col-sm-3">
 		                                                        <i class="icon-caret-right grey"></i>
 		                                                        <span class="bold">
 		                                                        Payment Info:
@@ -376,7 +387,7 @@
                                                                         </li>                                                                      
                                                                     </ul> 
                                                         </div>
-                                                        <div class="col-sm-3 mr10">
+                                                        <div class="col-sm-3 ">
                                                         <ul class="list-unstyled spaced">
                                                                         <li>                                                                            
                                                                             New Zealand Account:
@@ -398,21 +409,21 @@
                                                                         </li>                                                                    
                                                                     </ul> 
                                                         </div>
-                                                        <div class="col-sm-2">
+                                                        <div class="col-sm-3">
                                                         <ul class="list-unstyled spaced">
                                                                         <li>
-                                                                            Invoice No:150726
+                                                                            Invoice No: <?php echo $o_sn; ?>
                                                                         </li>
     
                                                                         <li>
-                                                                            Due Date:03/08/2015
+                                                                            Due Date: <?php echo $tour_date; ?>
                                                                         </li>
     
                                                                         <li>
                                                                             Payment:$3399
                                                                         </li>
                                                                         <li>
-                                                                            Currency:AUD
+                                                                            Currency: <?php echo $currency; ?>
                                                                         </li>    
                                                                                                                                                 
                                                                     </ul> 
@@ -428,8 +439,8 @@
                                          
                                                              <div class="pull-right">
                                                                <button class="btn btn-primary btn-lg">
-                                                                    <i class="icon-print "></i>
-                                                                    Print
+                                                                    <i class="icon-ok "></i>
+                                                                    Confirm
                                                                 </button>
                                                            </div>
                                         

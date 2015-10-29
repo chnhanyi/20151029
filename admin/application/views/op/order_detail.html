@@ -106,34 +106,35 @@
                             <b class="arrow icon-angle-down"></b>
                         </a>
                         <ul class="submenu">
-                            <li class="active">
-                                <a href="<?php echo site_url('Group/index'); ?>">
-                                    <i class="icon-double-angle-right"></i>Order List
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('Group/index'); ?>">
-                                    <i class="icon-double-angle-right"></i>Group List
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('Group/add_group'); ?>">
-                                    <i class="icon-double-angle-right"></i>Add Group
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('Group/merge_group'); ?>">
-                                    <i class="icon-double-angle-right"></i>Merge Group
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('Group/add_special'); ?>">
-                                    <i class="icon-double-angle-right"></i>Special Group
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                            <li   class="active">
+                                    <a href="<?php echo site_url('Order/index'); ?>">
+                                        <i class="icon-double-angle-right"></i>Order List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url('Group/index'); ?>">
+                                        <i class="icon-double-angle-right"></i>Group List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url('Group/add_group'); ?>">
+                                        <i class="icon-double-angle-right"></i>Add Group
+                                    </a>
+                                </li>                                
+                                <li >
+                                    <a href="<?php echo site_url('Group/merge_group'); ?>">
+                                        <i class="icon-double-angle-right"></i>Merge Group
+                                    </a>
+                                </li>
+                                <li >
+                                    <a href="<?php echo site_url('Group/add_special'); ?>">
+                                        <i class="icon-double-angle-right"></i>Special Group
+                                    </a>
+                                </li>   
+                            </ul>
+                        </li>
+                        
+                    </ul>
                 <!-- nav end -->
                 <div class="sidebar-collapse" id="sidebar-collapse">
                     <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
@@ -470,7 +471,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
                                                     <div class="col-sm-3 pull-right">
-                                                        <button class="btn btn-lg btn-primary t-can_disabled" id="checkOrder"><i class="icon-ok "></i>Confirm
+                                                        <button class="btn btn-lg btn-primary t-can_disabled" id="confirmOrder"><i class="icon-ok "></i>Confirm
                                                         </button>                                                     
                                                     </div>
                                                 </div>
@@ -512,6 +513,33 @@
     <!-- 具体业务代码 -->
     <script src="assets/js/page/jquery.ynf.js"></script>
     <script src="assets/js/page/order_detail.js"></script>
+
+     <script>
+                            $('#confirmOrder').click(function(e) {
+                                 if(confirm("Are you sure to Confirmed?")){
+                                //e.preventDefault();
+                                var orderData = {
+                                        o_id:$('#o_sn').val(),                                                                           
+                                        opCode:$("#opCode").val(),                                      
+                                        opNote:$("#opNote").val(),                                    
+                                    };
+                                $.post("<?php echo site_url('Order/confirm_order');?>",orderData, function (data) {
+                                    if(data['reCode']==-1){
+                                            //没有通过输入验证                                          
+                                            var txt= data['data'];
+                                            alert(txt);                                                                         
+                                        }else if(data['reCode']==1){
+                                            //添加成功
+                                            var txt= data['data'];
+                                            alert(txt);
+                                            var id = $('#o_sn').val();                                           
+                                            //重定位到订单发票页
+                                            location.href="<?php echo site_url('Order/get_invoice') ;?>?id="+id;                                             
+                                        }
+                                },"json");
+                                 }
+                            });
+      </script>
 
     </div>
 </body>
