@@ -323,6 +323,27 @@
 
 		<script src="public/assets/js/page/jquery.ynf.js"></script>
 		<script src="public/assets/js/page/order_list_op.js"></script>
+		<script>
+	    $(document).on("click",".Terminate",function(e) {
+		if(confirm("Are you sure to Terminate this Order?")){
+		var tData = {
+						o_id:$(this).data("id"),																			 									
+					};
+		$.post("<?php echo site_url('Order/Cancel_order');?>",tData, function (data) {
+				if(data['reCode']==-1){											
+					var txt= data['data'];
+					alert(txt);																			
+				}else if(data['reCode']==1){
+					var txt= data['data'];
+					alert(txt);											
+					location.href="<?php echo site_url('Group/index') ;?>";
+				}
+			},"json");
+			}
+});
+
+</script>
+
 	 </div>
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 
 class Route extends  MY_Controller{

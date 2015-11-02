@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 	class Order extends  MY_Controller{
 		public function __construct(){
@@ -57,14 +59,29 @@
 
 		//显示订单详情页
 		function check_order(){
+			    //检查是否是已经取消的订单
+			$o_id = $this->input->get("id");			
 
-			    //加载订单详情页
-				$this->load->view("op/order_detail.html");
+		 	$s4 = $this->Order_model->check_order_status($o_id);
+			if($s4['o_orderStatus']==4 ){
+					return  false;
+			}else{
+				
+					$this->load->view("op/order_detail.html");
+			}
+				
+
+			   
 		}
 
 		//查看订单的详情
 		function get_order_detail(){
 		 	$o_id = $this->input->post("o_sn");
+
+		 	$s4 = $this->Order_model->check_order_status($o_id);
+			if($s4['o_orderStatus']==4 ){
+					return  false;
+			}
 
 		 	//更新订单的处理状态
 			$this->load->helper('cookie');
@@ -87,7 +104,7 @@
 			$data['o_sn'] 			= $res['o_id'];
 			$data['router_cName'] 	= $routeinfo['router_cName'];
 			$data['router_eName'] 	= $routeinfo['router_eName'];
-			$data['tour_code']   	= $routeinfo['t_tourCode'];
+			$data['tour_code']   	= $res['t_tourCode'];
 			$data['cur_date'] 		= $this->toxdate($res['o_bookingTime']);
 			$data['agent_reference'] = $res['o_agentReference'];
 			$data['is_share'] 		= $res['o_share'];
@@ -103,9 +120,7 @@
 			$data['total_people'] = $res['o_totalNum'];
 			$data['difference'] = $res['o_singleRoomDifferencePrice'] * $res['o_single'];
 			$data['discount'] = $res['o_discount'];
-			$data['fees_amount']= $res['o_saleTotal'];
-			$data['brokerage'] = $res['o_brokerage'] ;
-			$data['real_fees_amount'] = $res['o_orderAmount'];
+			$data['fees_amount']= $res['o_saleTotal'];			
 			$data['guest_list'] = array();
 			
 			$guest = $this->Order_model->get_order_guest($o_id);
@@ -214,19 +229,26 @@
 			$date = $res1['o_bookingTime'];
 			$data['tour_date'] = $this->toxdate($date);
 			$data['adultNumber'] = $res1['o_adultNumber'];
-			$data['adultPrice'] = $res1['o_adultPrice'];
+			$data['adultPrice'] = $res1['o_adultPrice']/100;
+			$data['adultPrice_invo'] = $res1['o_adultPrice']*(1-$res1['o_discount'])/100;
 			$data['childNumber1'] = $res1['o_childNumber1'];			
-			$data['childPrice1'] = $res1['o_childPrice1'];
+			$data['childPrice1'] = $res1['o_childPrice1']/100;
+			$data['childPrice1_invo'] = $res1['o_childPrice1']*(1-$res1['o_discount'])/100;
 			$data['childNumber2'] = $res1['o_childNumber2'];			
-			$data['childPrice2'] = $res1['o_childPrice2'];
+			$data['childPrice2'] = $res1['o_childPrice2']/100;
+			$data['childPrice2_invo'] = $res1['o_childPrice2']*(1-$res1['o_discount'])/100;
 			$data['infantNumber'] = $res1['o_infantNumber'];			
-			$data['infantPrice'] = $res1['o_infantPrice'];
+			$data['infantPrice'] = $res1['o_infantPrice']/100;
 			$data['discount'] = $res1['o_discount'];
 			$data['single'] = $res1['o_single'];
-			$data['singlePrice'] = $res1['o_singleRoomDifferencePrice'];
+			$data['singlePrice'] = $res1['o_singleRoomDifferencePrice']/100;
 			$data['reference'] = $res1['o_agentReference'];
-			$data['orderAmount'] = $res1['o_orderAmount'];
-			$data['opname'] = $res1['o_opName'];
+			$data['orderAmount'] = $res1['o_orderAmount']/100;
+			$data['delayAmount'] = $data['orderAmount']+($data['adultPrice']*$data['adultNumber']+$data['childPrice1']*$data['childNumber1']+$data['childPrice2']*$data['childNumber2'])*0.02;
+			
+			$this->load->helper('cookie');
+			$data['opname'] = get_cookie("uin");
+			
 			$nowDate = date("Y-m-d");			
 			$data['create_date'] = $this->toxdate($nowDate);
 
@@ -254,30 +276,56 @@
 			$data['eName']=$res4['r_eName'];
 
 			//加载发票页
-			$this->load->view("op/invoice.html",$data);
+			$this->load->view("op/com_invoice.html",$data);
 		}
 
 		//取消订单
-		function cancel_order(){
-			$o_id 	= $this->input->post("o_id");
-			$data1['o_opNote'] = $this->input->post("opNote");
-			$data1['o_opCode'] = $this->input->post("opCode");
-			$num1 = $this->Order_model->check_order($o_id,$data1);
+		function Cancel_order(){
+			$o_id 	= $this->input->post("o_id");		
 
 			$this->load->helper('cookie');
 			$opname = get_cookie("uin");
-			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
-						
-			if($num1 == 1 && $num2 == 1){				
+			//检查是否已经是取消状态
+			$res4 = $this->Order_model->check_order_status($o_id);
+			if($res4['o_orderStatus']==4 ){
+					$data['reCode'] = -1;
+				    $data['status'] = "failed";
+				    $data['data'] = "This Order has aleady Terminated !";
+			}else{
+
+			$num1 = $this->Order_model->update_order_status3($o_id,$opname);
+
+			//把订单中的数字加回去
+			$res = $this->Order_model->get_detail($o_id);
+			$pax = $res['o_totalNum'] ;
+			$tour_code = $res['t_tourCode'] ;
+
+			$res1 = $this->Group_model->get_a_group($tour_code);
+			$type = $res1['t_type'];
+
+			if($type == 1) {
+				$num2 = $this->Order_model->update_currentpax($tour_code,$pax); 
+				$num3 = 1;
+				$num4 = 1; 
+			}elseif ($type == 2) {
+				$num2 =$this->Order_model->update_currentpax($tour_code,$pax);
+				$res3 = $this->toxtourcode($tour_code); 				
+				$tour_code1 =$res3[0] ;
+				$tour_code2 =$res3[1] ;
+				$num3 =$this->Order_model->update_currentpax($tour_code1,$pax);
+				$num4 =$this->Order_model->update_currentpax($tour_code2,$pax);
+			}	 
+
+			if($num1 == 1 && $num2 == 1 && $num3 == 1 && $num4 == 1){				
 					$data['reCode'] = 1;
 					$data['status'] = "success";
-					$data['data'] = "Confirm Order Success";
+					$data['data'] = "Terminate Order Success";
 		        }else{
 	                $data['reCode'] = -1;
 				    $data['status'] = "failed";
-				    $data['data'] = "Confirm Order failed";
+				    $data['data'] = "Terminate Order failed";
 		        }
-
+		    }
 		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
 				echo json_encode($data);
 			}

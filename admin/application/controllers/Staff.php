@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 	class Staff extends  MY_Controller{
 
 		const SALT = "fdjgo94r4ljt69dfgjfy9jrgDIUTNGF8DNVBFIGAJIE3jo9ifjzdgo";

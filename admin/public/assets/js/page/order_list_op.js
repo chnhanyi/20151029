@@ -14,7 +14,7 @@
 
          var defaults_grid_args = {
             viewrecords: true,
-            rowNum: 20,
+            rowNum: 200,
             rowList: [10, 20, 30, 50],
             pager: ynf_modal_list_pager_selector,
             altRows: true,
@@ -141,7 +141,7 @@
             }],
 
             viewrecords: true,
-            rowNum: 20,
+            rowNum: 200,
             rowList: [10, 20, 30, 50],
             pager: pager_selector,
             altRows: true,
@@ -173,6 +173,10 @@
         });
 
         function oper_formatter(cellvalue, options, rowdata) {
+            if(rowdata.order_status == 4){
+                return "";
+            }else{                
+
             var oper_html_arr = [];
            
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
@@ -185,7 +189,7 @@
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/view_invioce?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Order/get_invoice?id=', rowdata.id, '"',
                 style,
                 ' class="c-red" title="Confirm Order">View Invoice</a><br /><br />'
 
@@ -203,15 +207,12 @@
                 style,
                 ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
 
-            ].join("");     
+            ].join("");  
 
-
-            var oper_terminate = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+             var oper_terminate = ['<a ',                
                 style,
-                ' class="c-red" title="Terminate">Terminate</a><br /><br />'
-
-            ].join("");
+                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
+                '>Terminate</a><br /><br />'].join("");
 
             oper_html_arr.push(oper_check); 
             oper_html_arr.push(oper_invoice);   
@@ -220,8 +221,12 @@
             oper_html_arr.push(oper_terminate);
 
             return oper_html_arr.join("");
+            }
 
         }
+
+
+ 
 
         function order_sn_formatter(cellvalue, options, rowdata) {
             var html = [
@@ -281,6 +286,9 @@
                     break;
                 case '3':
                     result = '<span class="green">Confirmed</span>';
+                    break;
+                case '4':
+                    result = '<span class="red">Terminated</span>';
                     break;
             }
 

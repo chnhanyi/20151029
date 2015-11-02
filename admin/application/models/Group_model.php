@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 	class Group_model extends CI_Model{        
         const TBL_T = "tourGroup";
@@ -25,6 +27,7 @@
 				FROM pd_tourGroup
 				LEFT JOIN pd_order ON pd_tourGroup.r_id = pd_order.r_id
 				AND pd_tourGroup.t_date = pd_order.o_bookingTime
+				AND pd_order.o_orderStatus <> 4 
 				GROUP BY pd_tourGroup.t_id, pd_tourGroup.t_date
 				ORDER BY pd_tourGroup.t_date DESC');
 			return $query->result_array();
@@ -86,6 +89,14 @@
 		 //获得选定旅游团的信息
 		 function get_group($t_id){
 			$condition['t_id'] = $t_id;
+			$query = $this->db->where($condition)->get(self::TBL_T);
+			#返回单条记录
+			return $query->row_array();
+		 }
+
+		  //获得选定旅游团的信息
+		 function get_a_group($tourcode){
+			$condition['t_tourCode'] = $tourcode;
 			$query = $this->db->where($condition)->get(self::TBL_T);
 			#返回单条记录
 			return $query->row_array();

@@ -298,10 +298,10 @@
                                                                     <td>ZHANG SAN,LI SI,WANG WU</td>
 																	<td><?php echo $adultPrice_invo; ?></td>
 																	<td><?php echo $adultNumber; ?></td>
-                                                                    <td>$10</td>
+                                                                    <td>$<?php echo $adultPrice_invo*$adultNumber; ?></td>
 																</tr>
 
-																
+																<?php if($childNumber1 != 0){ ?>
 																<tr>
 																	<td class="center"><?php echo ++$i; ?></td>
 
@@ -310,10 +310,11 @@
 																	<td>ZHAO LIU</td>
 																	<td ><?php echo $childPrice1_invo; ?></td>
 																	<td><?php echo $childNumber1; ?></td>
-                                                                    <td>$10</td>
+                                                                    <td>$<?php echo $childPrice1_invo*$childNumber1; ?></td>
 																</tr>
+																<?php }?>
 																
-																<?php if($childNumber1 != 0){ ?>
+																<?php if($childNumber2 != 0){ ?>
 																<tr>
 																	<td class="center"><?php echo ++$i; ?></td>
 
@@ -322,20 +323,21 @@
 																	<td>ZHAO LIU</td>
 																	<td><?php echo $childPrice2_invo; ?></td>
 																	<td><?php echo $childNumber2; ?></td>
-                                                                    <td>$10</td>
+                                                                    <td>$<?php echo $childPrice2_invo*$childNumber2; ?></td>
 																</tr>
 																<?php }?>
 
+																<?php if($single != 0){ ?>
 																<tr>
 																	<td class="center"><?php echo ++$i; ?></td>
-
 																	<td>SINGLE ROOM SURCHARGE</td>
 																	<td>Adult</td>
                                                                     <td>ZHANG SAN</td>
 																	<td><?php echo $singlePrice; ?></td>
 																	<td><?php echo $single; ?></td>
                                                                     <td>$10</td>
-																</tr>                                                                
+																</tr>
+																<?php }?>                                                                
                                                                
                                                                 
 															</tbody>
@@ -344,15 +346,13 @@
 													<div class="row">
                                                         <div class="col-sm-6 pull-right">                                                            
                                                             <h5 class="pull-right bold">
-                                                                Total Amount <span class="red">( If not Prepay):$412</span>                                                                
+                                                                Total Amount <span class="red">( If not Prepay):$<?php echo $delayAmount; ?></span>                                                                
                                                                     </h5>                                                        
 															<h4 class="pull-right">
-																Total Amount(Under Prepay Condition):
-																<span>$395</span>                                                                
+																Total Amount(Under Prepay Condition):$<?php echo $orderAmount; ?>                                                                
 															</h4>                                                            
-                                                            <h5 class="pull-right">
-																Currency: <?php echo $currency; ?>                                                        
-															</h5>
+                                                            <h4 class="pull-right">Currency: <?php echo $currency; ?>                                                        
+															</h4>
                                                            
 														</div>                                                        														
 													</div> 

@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 	class Company_model extends CI_Model{
         const TBL_C = "company";
@@ -11,8 +13,9 @@
 		
 		//获取agent需要的所有的代理公司
 		public function get_all_agent_companys(){
-			$this->db->select('a_name,a_id');			
+			$this->db->select('a_id,a_city,a_name');			
 			$this->db->from(self::TBL_C);
+			$this->db->order_by('a_city', 'ASC');
 			$this->db->order_by('a_name', 'ASC');
 			$query = $this->db->get();
 			return $query->result_array();

@@ -164,12 +164,8 @@
 										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
 										        	 Room List
 										         </div>
-                                                 <div class="col-xs-4 pull-right">
-										             <span class="blue bold bigger-120">STATUS: Confirmed</span>
-										         </div>
- 
 									         </h4>
-                                    <section class="t-step clearfix" ms-controller="room_list">
+                                    <section class="t-step clearfix">
                                         <div class="form-horizontal t-content col-xs-12" role="form">
 
                                             <!--  旅游团代码 Tour code start -->
@@ -177,7 +173,7 @@
                                                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tour Code </label>
                                                 <div class="col-sm-9">
                                                     <div class="col-xs-10 col-sm-8">
-                                                        <div class="t-info-data">{{tour_code}}</div>
+                                                        <div class="t-info-data"><?php echo $tour_code; ?></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -187,7 +183,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Number of Pax</label>
                                                 <div class="col-sm-9">
-                                                    <div class="t-info-data"> {{people_text}}</div>
+                                                    <div class="t-info-data"><?php echo $room_people; ?></div>
                                                 </div>
                                             </div>
                                             <!--人数 Adult end  -->
@@ -195,7 +191,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">No. of Rooms</label>
                                                 <div class="col-sm-9">
-                                                    <div class="t-info-data"> {{room_text}} </div>
+                                                    <div class="t-info-data"> <?php echo $room_request; ?> </div>
                                                 </div>
                                             </div>
                                             <!--房间 room end  -->
@@ -219,16 +215,32 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <!-- <div >{{getIndex()}}&nbsp;{{$val}}</div> -->
-                                                        <tr ms-repeat="room_people">
-                                                            <td style="text-align:center">{{$index+1}}</td>
-                                                            <td>
-                                                                <span>{{el.room_type_text}}</span>
-                                                            </td>
-                                                            <td>
-                                                                {{el.guests}}
-                                                            </td>
-                                                        </tr>
+                                                        <?php foreach($room_list as $v) :?>
+                                                            <tr>                                                            
+                                                            <td style="text-align:center"><?php echo $v["agent"]; ?></td>
+                                                            </tr>
+                                                                <?php foreach($v["room"] as $k=>$g) :?> 
+                                                                <tr>
+                                                                    <td style="text-align:center"><?php echo $k+1; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                           if($g["room_type"]==1){ 
+                                                                            echo "Single";
+                                                                        }elseif ($g["room_type"]==2) {
+                                                                            echo "Double";
+                                                                           }elseif ($g["room_type"]==3) {
+                                                                            echo "Triple";
+                                                                           }elseif ($g["room_type"]==4) {
+                                                                            echo "Twin";
+                                                                           }
+                                                                           ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $g["guests"]; ?>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php endforeach;?>                                                      
+                                                        <?php endforeach;?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -282,8 +294,7 @@
     <script src="assets/js/seajs-2.3.0/seajs.js"></script>
     <script src="assets/js/page/app.js"></script>
     <!-- 具体业务代码 -->
-    <script src="assets/js/page/jquery.ynf.js"></script>
-    <script src="assets/js/page/room_list.js"></script>
+    <script src="assets/js/page/jquery.ynf.js"></script>  
     </div>
 </body>
 

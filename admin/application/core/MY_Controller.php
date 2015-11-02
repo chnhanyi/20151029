@@ -58,6 +58,14 @@
 			} 
 		}
 
+		function toxtourcode($tourcode){
+			if($tourcode!=""){
+			$d = explode("+", $tourcode);
+			return $d;
+			}
+		}
+
+
 		protected function checkType($reg,$v,$message){
 			if(preg_match($reg, $v)){
 				return true;

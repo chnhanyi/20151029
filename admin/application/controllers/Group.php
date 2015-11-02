@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 	class Group extends  MY_Controller{
 
 
@@ -310,18 +312,18 @@
 							$data['child_2_num'] 	= $Grouptotal[0]['childNumber2'];
 							$data['total_people'] = $Grouptotal[0]['totalNumber'];
 
-                            $room_people="";
+                            $room_people="Total:".$data['total_people']."/";
 							if($data["adult_num"]>0){
                                 $room_people=$room_people."Adult×".$data["adult_num"].",";
                                 };
                             if($data["child_1_num"]>0){
-                                 $room_people=$room_people."Child(no bed)×".$data["adult_num"].",";
+                                 $room_people=$room_people."Child(no bed)×".$data["child_1_num"].",";
                                 }; 
                             if($data["child_2_num"]>0){
-                                $room_people=$room_people."Child(with bed)×".$data["adult_num"].",";
+                                $room_people=$room_people."Child(with bed)×".$data["child_2_num"].",";
                                 };
                             if($data["infant_num"]>0){
-                                $room_people=$room_people."Infant×".$data["adult_num"];
+                                $room_people=$room_people."Infant×".$data["infant_num"];
                                 };
                             $data['room_people'] = $room_people;
 
@@ -427,26 +429,21 @@
 													$order2["flightInfo"]=$data4;				                   			
 										$gf[] = $order2;
 									}
-									$data['order'] = $gf;
-																			
+									$data['order'] = $gf;																			
 
 								$da['status'] = "success";
 								$da['reCode'] = 0;
-								$da['data'] = $data;								
+								$da['data'] = $data;
 
 								$this->load->view("op/tourguide_list.html",$da);
 						}
 
 
 						// 生成房间信息表
-						function room_list(){
-							$this->load->view("op/room_list.html");
-						}
-
-
-						function get_room_list(){
+						function room_list(){							
+						
 						    //获取本团的tourCode 					
-							$t_id = $this->input->post("t_id",true);
+							$t_id = $this->input->get("id",true);
 							$res = $this->Group_model->get_group($t_id);
 
 							//获取订单信息
@@ -463,36 +460,84 @@
 							$data['child_2_num'] 	= $Grouptotal[0]['childNumber2'];
 							$data['total_people'] = $Grouptotal[0]['totalNumber'];
 
+							$room_people="Total:".$data['total_people']."--";
+							if($data["adult_num"]>0){
+                                $room_people=$room_people."Adult×".$data["adult_num"].",";
+                                };
+                            if($data["child_1_num"]>0){
+                                 $room_people=$room_people."Child(no bed)×".$data["child_1_num"].",";
+                                }; 
+                            if($data["child_2_num"]>0){
+                                $room_people=$room_people."Child(with bed)×".$data["child_2_num"].",";
+                                };
+                            if($data["infant_num"]>0){
+                                $room_people=$room_people."Infant×".$data["infant_num"];
+                                };
+                            $data['room_people'] = $room_people;
+
 							$data['triple'] = $Grouptotal[0]['triple'];
 							$data['doubleroom'] 	= $Grouptotal[0]['doubleroom'];
 							$data['twin'] 	= $Grouptotal[0]['twin'];
-							$data['single'] 	= $Grouptotal[0]['single'];		
+							$data['single'] 	= $Grouptotal[0]['single'];
+
+							$room_request="";
+							if($data["single"]>0){
+                                 $room_request=$room_request."Single ×".$data["single"].",";
+                                }; 
+							if($data["triple"]>0){
+                                $room_request=$room_request."Triple ×".$data["triple"].",";
+                                };
+                            if($data["doubleroom"]>0){
+                                $room_request=$room_request."Double ×".$data["doubleroom"].",";
+                                };
+                            if($data["twin"]>0){
+                                $room_request=$room_request."Twin×".$data["twin"];
+                                };
+                            $data['room_request'] = $room_request;		
 
 							
 							//处理房间信息
 							$res1 = $this->Order_model->get_all_order_id($tourCode);
-							$cc = array();
+													
+							$data2=array();
 							foreach($res1 as $k => $v){
+								//遍历订单号
 								$o_id = $v['o_id'];
+								//找出本订单的agent所在的区域
+								$company_res =  $this->Order_model->get_company_id($o_id);
+								$company_id = $company_res[0]['a_id'];
+								$area_res =  $this->Order_model->get_company_area($company_id);
+								$area_id = $area_res[0]['a_area'];
+								$c_name = $area_res[0]['a_name'];
 
+													    
+								if($area_id==2){
+									$cc='NZAG:'.$c_name.'/ ID:'.$o_id ;
+								}else{
+									$cc='ID:'.$o_id ;
+								}
+								   
 								$room_people = $this->Order_model->get_room_people($o_id);
-								
+								$dd = array();								
 									foreach($room_people as $k => $v){
-										$d = array(
+										$d = array(											
 											"room_type" => $v['r_type'],
 											"guests"=>$v['r_guests']
 										);
-										$cc[] = $d;
+										$dd[] = $d;
 									}
+									$room_order=array();									
+									$room_order['agent']=$cc;
+									$room_order['room']=$dd;
+									$data2[]=$room_order;
+									
 							}
+							
+							$data['room_list'] = $data2;
 
-							$data['room_people'] = $cc;
 							
-							
-							$da['status'] = "success";
-							$da['reCode'] = 0;
-							$da['data'] = $data;
-							$this->response_data($da);
+							//加载房间列表页
+							$this->load->view("op/room_list.html",$data);
 						}
 
 }

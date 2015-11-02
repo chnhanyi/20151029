@@ -1,4 +1,5 @@
 <?php
+	if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	class Agent extends  MY_Controller{
 
 		const SALT = "sdfkl23490flTMPdkwsx2dr9023PKNBSDGFHGdfhy";
@@ -46,6 +47,7 @@
 						foreach($list as $v){
 							$cc['a_id'] 			=	$v['a_id'];
 							$cc['a_name'] 	    	= 	$v['a_name'];
+							$cc['a_city'] 			=	$v['a_city'];
 							array_push($data['data'],$cc);
 						}
 						$this->load->view("manager/edit_agent.html",$data);
@@ -107,10 +109,11 @@
 
 				//增加agent用户
 				function add_agent(){
-					$list 	= $this->Company_model->get_all_companys();
+					$list 	= $this->Company_model->get_all_agent_companys();
 					$data['data'] = array();
 					foreach($list as $v){
 						$cc['a_id'] 			=	$v['a_id'];
+						$cc['a_city'] 			=	$v['a_city'];
 						$cc['a_name'] 	    	= 	$v['a_name'];
 						array_push($data['data'],$cc);
 					}

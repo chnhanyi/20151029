@@ -250,7 +250,7 @@
 			$date = date("Y");
 			$sn = substr($date, 2);
 			$sn.=date("m");
-			$d = date("Y-m")."-1";
+			$d = date("Y-m")."-01";
 			$num = $this->User_model->get_order_num($d) + 1 ;
 			return $sn.str_pad($num,3,0,STR_PAD_LEFT);
 		}

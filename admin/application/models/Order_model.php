@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 	class Order_model extends CI_Model{
         const TBL_O = "order"; 
@@ -20,6 +22,7 @@
 						AND pd_tourGroup.t_date = pd_order.o_bookingTime
 						AND pd_agent.s_id = pd_order.user_id
 						AND pd_company.a_id = pd_agent.a_id
+						GROUP BY pd_order.t_tourCode,pd_order.o_id
 						ORDER BY pd_order.o_id DESC '); 				
 			return $query->result_array();
 		}
@@ -41,7 +44,7 @@
 			 SUM( o_double ) AS doubleroom, 
 			 SUM( o_twin ) AS twin, 
 			 SUM( o_single ) AS single
-			FROM pd_order where t_tourCode like '%%%s%%'",$tourCode);
+			FROM pd_order where o_orderStatus <> 4 AND t_tourCode like '%%%s%%'",$tourCode);
 
 			$query = $this->db->query($sql);			 
 			return $query->result_array();
@@ -50,7 +53,7 @@
 
 		//获得选定的旅游团的所有订单编号
 		function get_all_order_id($tourCode){
-			$sql=sprintf("SELECT o_id	FROM pd_order where t_tourCode like '%%%s%%'",$tourCode);
+			$sql=sprintf("SELECT o_id FROM pd_order where o_orderStatus <> 4 AND t_tourCode like '%%%s%%'",$tourCode);
 			$query = $this->db->query($sql);			 
 			return $query->result_array();
 		}
@@ -62,6 +65,19 @@
 			return $query->result_array();
 		}
 
+		//获得下本订单的agent所在公司的ID
+		function get_company_id($o_id){
+			$sql=("SELECT *	FROM pd_order where o_id=".$o_id);
+			$query = $this->db->query($sql);			 
+			return $query->result_array();
+		}
+
+        //获得本公司id所在的区域
+		function get_company_area($company_id){
+			$sql=("SELECT *	FROM pd_company where a_id=".$company_id);
+			$query = $this->db->query($sql);			 
+			return $query->result_array();
+		}
 		
 				//获取游客信息情况
 			function get_order_guest($o_id){
@@ -163,30 +179,62 @@
 				}  	
         } 
 
+        //取消订单，更新订单的状态为已经取消
+        function update_order_status3($o_id,$opname){
+        	$status = 4;
+        	$data = array(               
+               'o_orderStatus' => $status,
+               'o_opName' => $opname
+            );            
+        	$this->db->where('o_id', $o_id);
+			if($this->db->update(self::TBL_O, $data)){
+				return  1;
+			}
+				else{
+				return  0;	
+				}  	
+        } 
+
+        //取消订单，把本订单的客人数量加回去
+        function update_currentpax($tour_code,$pax){
+        	$status = 4;
+        	$db = $this -> db -> query("select * from pd_tourGroup where t_tourCode='" . $tour_code. "' for update");						
+			$dbs = $db -> result();
+			$where['t_tourCode']=$tour_code;
+			$this -> db -> where($where);
+			$dd['t_currentpax'] = $dbs[0] -> t_currentpax - $pax;
+			if($this -> db -> update("pd_tourGroup", $dd)){
+
+				return  1;
+			}
+				else{
+				return  0;	
+				}  	
+        } 
 
 
-        //获得订单的详细
+
+        //获得订单的详细信息
 	    function get_detail($o_id){	    	
 		$this->db->where('o_id', $o_id);
 		$list = $this->db->get(self::TBL_O);
 		return $list->row_array();
-	}
+		}
+
+ 		//检查订单是否是取消状态
+		function check_order_status($o_id){
+			$res = $this->db->query("
+							select o_orderStatus from pd_order where o_id = ".$o_id );
+				$data = $res->row_array();
+				return $data;
+		}
 
 		//获取线路详情
 			function get_route_info($r_id){
 				$res = $this->db->query("
-							select 							
-									b.r_cName as router_cName,
-									b.r_eName as router_eName,
-									t_tourCode
-							from 
-								pd_tourGroup  a 
-							left join 
-								pd_route  b 
-							on 
-								a.r_id = b.r_id 
-							where 
-								a.r_id = ".$r_id );
+							select r_cName as router_cName,r_eName as router_eName
+							from pd_route							
+							where r_id = ".$r_id );
 				$data = $res->row_array();
 				return $data;				
 			}
