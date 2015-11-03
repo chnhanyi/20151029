@@ -175,7 +175,7 @@
         function oper_formatter(cellvalue, options, rowdata) {
             if(rowdata.order_status == 4){
                 return "";
-            }else{                
+            }else if(rowdata.o_flight == 0){                
 
             var oper_html_arr = [];
            
@@ -189,7 +189,7 @@
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/get_invoice?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Order/view_invoice?id=', rowdata.id, '"',
                 style,
                 ' class="c-red" title="Confirm Order">View Invoice</a><br /><br />'
 
@@ -221,6 +221,52 @@
             oper_html_arr.push(oper_terminate);
 
             return oper_html_arr.join("");
+            }else if(rowdata.o_flight == 1){
+            var oper_html_arr = [];
+           
+            var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
+
+            var oper_check = ['<a ',
+                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
+                style,
+                ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
+
+            ].join("");
+
+            var oper_invoice = ['<a ',
+                ' target="_self"  href="./index.php/Order/get_invoice?id=', rowdata.id, '"',
+                style,
+                ' class="c-red" title="Confirm Order">View Invoice</a><br /><br />'
+
+            ].join("");
+            
+            var oper_flight = ['<a ',
+                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                style,
+                ' class="c-black" title="Edit Flight Info">Edit Flight</a><br /><br />'
+
+            ].join("");    
+            
+            var oper_notice = ['<a ',
+                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                style,
+                ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
+
+            ].join("");  
+
+             var oper_terminate = ['<a ',                
+                style,
+                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
+                '>Terminate</a><br /><br />'].join("");
+
+            oper_html_arr.push(oper_check); 
+            oper_html_arr.push(oper_invoice);   
+            oper_html_arr.push(oper_flight); 
+            oper_html_arr.push(oper_notice); 
+            oper_html_arr.push(oper_terminate);
+
+            return oper_html_arr.join("");
+
             }
 
         }

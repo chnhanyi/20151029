@@ -194,13 +194,9 @@
 			$o_id 	= $this->input->post("o_id");
 			$data1['o_opNote'] = $this->input->post("opNote");
 			$data1['o_opCode'] = $this->input->post("opCode");
-			$num1 = $this->Order_model->check_order($o_id,$data1);
-
-			$this->load->helper('cookie');
-			$opname = get_cookie("uin");
-			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+			$num = $this->Order_model->check_order($o_id,$data1);
 						
-			if($num1 == 1 && $num2 == 1){				
+			if($num == 1){				
 					$data['reCode'] = 1;
 					$data['status'] = "success";
 					$data['data'] = "Confirm Order Success";
@@ -250,13 +246,14 @@
 			$data['opname'] = get_cookie("uin");
 			
 			$nowDate = date("Y-m-d");			
-			$data['create_date'] = $this->toxdate($nowDate);
-
+			$data['create_date'] = $this->toxdate($nowDate);			
+           
 			//获取公司的信息
 			$a_id = $res1['a_id'];
 			$res2 = $this->Company_model->get_company($a_id);			
 			$data['a_name']=$res2['a_name'];
 			$data['address']=$res2['a_address'];
+			$data['city']=$res2['a_city'];
             $area = $res2['a_area']; 
             if($area == 1){
             	$data['currency']="AUD";
@@ -275,8 +272,62 @@
 			$data['cName']=$res4['r_cName'];
 			$data['eName']=$res4['r_eName'];
 
+			//根据订单编号，获取该订单的游客姓名
+			$res5 = $this->Order_model->get_order_guest($o_id);			
+			$data['adultName'] = "";
+			$data['infantName'] = "";
+			$data['childName1'] = "";
+			$data['childName2'] = "";
+			$a=0;
+			$c1=0;
+			$c2=0;
+			$in=0;  
+
+			foreach($res5 as $key => $g){			        				    
+					if($g['g_type']==1){
+						$data['adultName'].="&nbsp;&nbsp;".++$a.".".$g['g_firstname']."/".$g['g_lastname'];
+					}elseif($g['g_type']==2){
+						$data['infantName'].="&nbsp;&nbsp;".++$c1.".".$g['g_firstname']."/".$g['g_lastname'];
+					}elseif($g['g_type']==3){
+						$data['childName1'].="&nbsp;&nbsp;".++$c2.".".$g['g_firstname']."/".$g['g_lastname'];
+					}elseif($g['g_type']==4){
+						$data['childName2'].="&nbsp;&nbsp;".++$in.".".$g['g_firstname']."/".$g['g_lastname'];
+					}
+				}
+
 			//加载发票页
 			$this->load->view("op/com_invoice.html",$data);
+		}
+
+		//更新发票信息
+		function confirm_invoice(){
+			//获取该订单的ID
+			$o_id 	= $this->input->post("o_id");
+
+			//把新增信息写入数据库
+
+
+
+            //更新该订单的处理状态
+			$this->load->helper('cookie');
+			$opname = get_cookie("uin");
+			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+
+			//判断是否更新成功，向页面发送消息
+			if($num1 == 1 && $num2==1){				
+					$data['reCode'] = 1;
+					$data['status'] = "success";
+					$data['data'] = "Confirm Order Success";
+		        }else{
+	                $data['reCode'] = -1;
+				    $data['status'] = "failed";
+				    $data['data'] = "Confirm Order failed";
+		        }
+
+		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+				echo json_encode($data);
+
+
 		}
 
 		//取消订单

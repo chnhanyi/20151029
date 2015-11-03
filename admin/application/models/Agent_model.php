@@ -14,9 +14,12 @@
 		
 		//获取所有的agent用户
 		public function get_all_agents(){
-			$this->db->select('agent.s_id,company.a_area,company.a_name,agent.s_name,agent.s_email,agent.s_status');
+			$this->db->select('agent.s_id,company.a_area,company.a_city,company.a_name,agent.s_name,agent.s_email,agent.s_status');
 			$this->db->from('agent');
 			$this->db->join('company', 'agent.a_id = company.a_id');
+			$this->db->order_by('company.a_area', 'ASC');
+			$this->db->order_by('company.a_city', 'ASC');
+			$this->db->order_by('agent.s_name', 'ASC');
 			$query = $this->db->get();
 			return $query->result_array();
 		}

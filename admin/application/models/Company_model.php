@@ -23,7 +23,9 @@
 
 		//获取所有的代理公司
 		public function get_all_companys(){
-		    $this->db->order_by("a_id", "desc"); 		
+		    $this->db->order_by("a_area", "asc");
+		    $this->db->order_by("a_city", "asc");
+		    $this->db->order_by("a_name", "asc"); 	 		
 			$query = $this->db->get(self::TBL_C);
 			return $query->result_array();
 		}

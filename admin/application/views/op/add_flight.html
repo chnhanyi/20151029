@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Pacific Delight Booking system</title>
+		<base href="<?php echo base_url();?>public/" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- ace styles -->
+
+		<!-- ui css start-->
+
+		<link rel="stylesheet" href="assets/css/ace.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+		<!-- ui css end-->
+
+		<!-- 业务css start-->
+		<link rel="stylesheet" type="text/css" href="assets/css/page/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="assets/css/page/insertOrder.css" /> -->
+		<!-- 业务css end -->
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch (e) {}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+
+							<i class="icon-leaf"></i>Pacific Delight Booking System</small>
+					</a>
+					<!-- /.brand -->
+				</div>
+				<!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo">
+								<span class="user-info">
+
+									<small>Welcome</small>
+
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+								<li>
+									<a href="<?php echo site_url('Common/logout') ?>">
+										<i class="icon-off"></i> Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<!-- /.ace-nav -->
+				</div>
+
+			</div>
+			<!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch (e) {}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="javascript:void(0)">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('sidebar', 'fixed')
+						} catch (e) {}
+					</script>
+					<!-- nav start -->
+					<ul class="nav nav-list">
+						<li class="active open">
+							<a href="javascript:void(0)" class="dropdown-toggle">
+								<i class="icon-file-alt"></i>
+								<span class="menu-text">
+									Menu
+								</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+                            <li class="active">
+									<a href="#">
+										<i class="icon-double-angle-right"></i>Dash Board
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url('Order/index'); ?>">
+										<i class="icon-double-angle-right"></i>Add Order
+									</a>
+								</li>
+								<li class="active">
+									<a href="<?php echo site_url('Order_show/index'); ?>">
+										<i class="icon-double-angle-right"></i>Order List
+									</a>
+								</li>                               
+							</ul>
+						</li>
+						
+					</ul>
+					<!-- nav end -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try {
+							ace.settings.check('sidebar', 'collapsed')
+						} catch (e) {}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try {
+								ace.settings.check('breadcrumbs', 'fixed')
+							} catch (e) {}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+
+							<li>
+								<a href="#">Add Flight Info</a>
+							</li>
+						</ul><!-- .breadcrumb -->
+					</div>
+ 
+					<div class="page-content">
+						<div class="row">                        
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS 这里存放内容-->
+
+
+
+								<div class="result-wrap">
+									<div class="result-content" style="max-width:800px;">	
+                                                                                                                        
+                                    
+				
+										<!--  第三步 航班信息  start -->
+
+										<!-- 国际航班信息 start -->
+										<section class="t-step" ms-controller="tour_flight">
+											<div class="hr hr-18 dotted hr-double t-bd-green"></div>
+											<h4 class="smaller  header green clearfix "> 
+                                            <div class="col-xs-4">                                        
+                                                 <i class="icon-hand-right icon-animated-hand-pointer"></i>
+                                                 Flight Infomation </div>
+ 											</h4>
+																					
+											<table class="table table-striped table-bordered table-hover">
+
+												<tbody>
+													<tr class="front" ms-repeat="list">
+														<td>
+															<div class="flightLeft">
+																Flight Date
+															</div>
+															<div class="flightRight">
+																<input type="text" ms-attr-value="{{el.g_arriveDate}}" ms-on-focus="focus_arriveDate" ms-on-blur="blur_arriveDate"   ms-attr-index="{{$index}}" readonly name="g_arriveDate" style="width:110px" />
+															</div>
+														</td>
+														<td>
+															<div class="flightLeft">
+																Flight No.
+															</div>
+															<div class="flightRight flight_list_wrap">
+																<input type="text" placeholder="CZ123" ms-attr-index="{{$index}}" ms-input="fn_a_flightno" ms-attr-value="{{el.a_flightno}}" name="a_flightno" style="width:110px" />
+																<ul class="flight_list hide">
+																</ul>
+
+															</div>
+														</td>
+														<td>
+															<div class="flightLeft">
+																Flight Time
+															</div>
+															<div class="flightRight">
+																<input type="text" class="date_pick" placeholder="9:40-15:40" ms-attr-index="{{$index}}" ms-input="fn_a_time" ms-attr-value="{{el.a_time}}" name="a_time" style="width:110px" />
+															</div>
+														</td>
+														<td>
+															<div class="flightLeft">
+																Flight Route
+															</div>
+															<div class="flightRight">
+																<input type="text" placeholder="MEL-AKL" ms-input="fn_a_route" ms-attr-index="{{$index}}" ms-attr-value="el.a_route" name="a_route" style="width:110px">
+															</div>
+														</td>
+														<td>
+															<div class="flightLeft">
+																Passengers
+															</div>
+															<div class="flightRight arrived">
+																<textarea ms-attr-value="{{el.arrivedName}}" ms-on-focus="focus" ms-attr-index="{{$index}}" name="arrivedName" type="text" data-type="list" readonly style="width:110px; height:130px;" class="arrivedName"></textarea>
+																<div class="arrivedperson hide" ms-attr-index="{{$index}}" ms-class-hide="el.no_focus">
+																	<div class="everybody">
+																		<input type="checkbox" class="ace" ms-attr-index="{{$index}}" ms-duplex-checked="checkall" data-type="peoples" name="arrive_peoples" />
+																		<label class="lbl">All Customers</label>
+																		<span ms-attr-index="{{$index}}" data-type="list" ms-click="close" class="shutdown pull-right" title="close"> 
+
+                        <i class="icon-remove red"></i></span>
+																	</div>
+																	<ul class="clearfix" ms-each-people="peoples">
+																		<li>
+																			<input type="checkbox" class="ace" name="eachPerson" ms-duplex-checked="people.checked" ms-click="checkIt(people)" />
+																			<label class="lbl">{{$index + 1 }}.{{people.name}}</label>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</td>
+														<td class="alignR"><span class="del red" ms-attr-index="{{$index}}" data-type="list" ms-click="remove" title="删除 delete"><i class="icon-trash bigger-200 red"></i><br/>Delete</span>
+														</td>
+													</tr>													
+												</tbody>
+
+											</table>
+
+											<button class="btn btn-sm btn-primary " ms-click="add_list_item">Add Flight Info</button>											
+										</section>
+										<!-- 航班信息 end -->
+
+										<!--  第三步 航班信息 end -->
+                                  
+											
+										<!-- 航班信息 end -->
+                                        
+
+										
+                                        <!--  -->
+                                                <div class="hr hr-18 dotted hr-double"></div>
+
+												<!-- 第一步操作 start  -->
+												<div class="form-group">							
+													<div class="col-sm-2 pull-right">
+														<button class="btn btn-lg btn-primary t-can_disabled" id="reserveBtn">Submit</button>														
+													</div>
+												</div>
+												<!--第一步操作 end  -->
+											</div>
+
+								
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- PAGE CONTENT ENDS 这里存放内容 -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.page-content -->
+		</div>
+		<!-- /.main-content -->
+
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<i class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+		</div>
+		<!-- /.main-container -->
+		<script>
+			var data = "<?php 
+		          $d = "{";
+		          foreach($data as $v){
+		            $d .='\"'.$v->r_id.'\":\"'.$v->r_name.'\",';
+		          }
+		          $in = strripos($d,",");
+		          $d = substr($d,0,$in);
+		          $d .= "}";
+		          echo $d;
+		        ?>";
+		  var routers = JSON.parse(data);   
+		</script>
+		<!-- basic scripts -->
+		<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="assets/js/avalon.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<!--
+		  <script src="assets/js/typeahead-bs2.min.js"></script>
+		  -->
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+
+		<script src="assets/js/ace-elements.min.js"></script>
+		<script src="assets/js/ace.min.js"></script>
+
+		<!-- 通用业务代码 -->
+		<script src="assets/js/seajs-2.3.0/seajs.js"></script>
+		<script src="assets/js/page/app.js"></script>
+		<!-- 具体业务代码 -->
+		<script src="assets/js/page/modules/laydate.js"></script>
+		<script src="assets/js/page/modules/jquery.date_input.pack.js"></script>
+		<script src="assets/js/page/add_order.js"></script>
+
+		</div>
+	</body>
+
+</html>

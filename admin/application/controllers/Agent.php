@@ -31,6 +31,7 @@
 							foreach($list as $v){
 								$cc['s_id'] 			=	$v['s_id'];
 								$cc['a_area'] 	        = 	$v['a_area'];
+								$cc['a_city'] 	        = 	$v['a_city'];
 								$cc['a_name'] 	        = 	$v['a_name'];
 								$cc['s_name'] 	    	= 	$v['s_name'];
 								$cc['s_email'] 	        = 	$v['s_email'];

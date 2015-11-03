@@ -54,7 +54,7 @@
 			sortname: "a_id",
             height: 500,            
             autowidth: true,
-            colNames: ["ID", "Area","Company Name","Agent Name","Email","Status", "Operation"],
+            colNames: ["ID", "Area","city","Company Name","Agent Name","Email","Status", "Operation"],
 
             colModel: [
 			{
@@ -69,6 +69,11 @@
                 width: 130,
                 editable: false,
                 formatter: company_area_formatter,
+            }, { 
+                name: 'a_city',
+                index: 'a_city',
+                width: 130,
+                editable: false,
             }, { 
                 name: 'a_name',
                 index: 'a_name',
