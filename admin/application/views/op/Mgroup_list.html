@@ -126,9 +126,14 @@
 										<i class="icon-double-angle-right"></i>Order List
 									</a>
 								</li>
-                                <li  class="active">
+                                <li>
 									<a href="<?php echo site_url('Group/index'); ?>">
-										<i class="icon-double-angle-right"></i>Group List
+										<i class="icon-double-angle-right"></i>Normal Group List
+									</a>
+								</li>
+								<li class="active">
+									<a href="<?php echo site_url('Group/Mindex'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group List
 									</a>
 								</li>
 								<li>
@@ -299,8 +304,7 @@
 		 <script >
 		   (function(){
 		       var table = { } ; 
-		       table.url = "index.php/Group/group_list";
-		       table.editurl = "index.php/Group/group_list";
+		       table.url = "index.php/Group/Mgroup_list";		      
 		       YNF_CONFIG.table = table ; 
 
 		   })();
@@ -310,7 +314,7 @@
 		<script src="public/assets/js/page/modules/grid.locale-en.js"></script>
 
 		<script src="public/assets/js/page/jquery.ynf.js"></script>
-		<script src="public/assets/js/page/group_list.js"></script>
+		<script src="public/assets/js/page/Mgroup_list.js"></script>
 	 </div>
 </body>
 </html>

@@ -17,7 +17,7 @@
 			$where 	= $this->get_where();
 		
 			$count 	= $this->Orderlist_model->get_order_count($where);
-			$list 	= $this->Orderlist_model->get_order_list($start,$rows,$where);
+			$list 	= $this->Orderlist_model->get_order_list($where);
 			
 			$data['totalPages'] 	= ceil($count/$rows);
 			$data['currentPage'] 	= $page;
@@ -25,21 +25,27 @@
 			$data['data'] = array();
 			foreach($list as $v){
 				$cc['id'] 				=	$v['o_id'];
-				$cc['user_id'] 	       = 	$v['user_id'];
+				$cc['user'] 	       = 	$v['s_name'];
 				$cc['order_sn'] 		= 	$v['o_sn'];
 				$cc['agent_reference'] 	= 	$v['o_agentReference'];
-				$cc["tour_code"]		=	$v['o_sn'];
+				$cc["tour_cName"]		=	$v['r_cName'];
+				$cc["tour_eName"]		=	$v['r_eName'];
 				$cc["tour_date"]		=	$this->toxdate($v['o_bookingTime']);
 				$cc["total_guests"]		=	$v['o_totalNum']	;
 				$cc["adult_num"]		=	$v['o_adultNumber'];
-				$cc["child_num"] 		= $v["o_childNumber1"] + $v["o_childNumber2"];
+				$cc["child_num1"] 		= 	$v["o_childNumber1"];
+				$cc["child_num2"] 		= 	$v["o_childNumber2"];					
+				$cc["infant_num"] 		= 	$v['o_infantNumber'];
+				$cc["twin_num"]			=	$v['o_twin'];
+				$cc["single_num"] 		= 	$v["o_single"];
+				$cc["double_num"] 		= 	$v["o_double"];					
+				$cc["triple_num"] 		= 	$v['o_triple'];	
+				$cc["total_room"] 		= 	$v["o_single"]+$v["o_double"]+$v['o_twin']+$v['o_triple'];	
 				
-				$cc["infant_num"] 		= $v['o_infantNumber'];	
-				$cc["sales_total"] 		= $v["o_saleTotal"];
-        		$cc["order_amount"] 	= $v['o_orderAmount'];
+        		$cc["order_amount"] 	= 	$v['o_orderAmount']/100;
 				
-				$cc['order_status']     = $v['o_orderStatus'];
-				$cc['payment_status']    = $v['o_paymentStatus'];
+				$cc['order_status']     = 	$v['o_orderStatus'];
+				$cc['payment_status']   = 	$v['o_paymentStatus'];
 				
 				array_push($data['data'],$cc);
 			}

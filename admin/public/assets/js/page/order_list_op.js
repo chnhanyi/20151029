@@ -196,7 +196,7 @@
             ].join("");
             
             var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
                 style,
                 ' class="c-black" title="Add Flight Info">Add Flight</a><br /><br />'
 
@@ -241,7 +241,7 @@
             ].join("");
             
             var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
                 style,
                 ' class="c-black" title="Edit Flight Info">Edit Flight</a><br /><br />'
 

@@ -327,8 +327,73 @@
 		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
 				echo json_encode($data);
 
+		}
+
+		//加载增加航班信息的页面（数据库中没有机票信息）
+		function add_flight(){
+			$this->load->view("op/add_flight.html");
+		}
+
+		//增加航班信息
+		function insert_flight(){
+			
+			//获取该订单的ID
+			$o_id 	= $this->input->post("o_id");
+
+			//把新增信息写入数据库
+
+
+
+            //更新该订单的处理状态
+			$this->load->helper('cookie');
+			$opname = get_cookie("uin");
+			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+
+			//判断是否更新成功，向页面发送消息
+			if($num1 == 1 && $num2==1){				
+					$data['reCode'] = 1;
+					$data['status'] = "success";
+					$data['data'] = "Confirm Order Success";
+		        }else{
+	                $data['reCode'] = -1;
+				    $data['status'] = "failed";
+				    $data['data'] = "Confirm Order failed";
+		        }
+
+		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+				echo json_encode($data);
+		}
+
+		//编辑航班信息（数据库中已经有航班信息）
+		function edit_flight(){
+			//获取该订单的ID
+			$o_id 	= $this->input->post("o_id");
+
+			//把新增信息写入数据库
+
+
+
+            //更新该订单的处理状态
+			$this->load->helper('cookie');
+			$opname = get_cookie("uin");
+			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+
+			//判断是否更新成功，向页面发送消息
+			if($num1 == 1 && $num2==1){				
+					$data['reCode'] = 1;
+					$data['status'] = "success";
+					$data['data'] = "Confirm Order Success";
+		        }else{
+	                $data['reCode'] = -1;
+				    $data['status'] = "failed";
+				    $data['data'] = "Confirm Order failed";
+		        }
+
+		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
+				echo json_encode($data);
 
 		}
+
 
 		//取消订单
 		function Cancel_order(){

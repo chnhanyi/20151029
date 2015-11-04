@@ -5,15 +5,23 @@ class orderlist_model extends CI_Model {
 		parent::__construct();
 	}
 	//选择从 n 开始的l条记录
-	function get_order_list($n,$l,$where){
+	function get_order_list($where){
 		$this->load->model("User_model");
 		//$user_id = $this->User_model->get_uin();
 		$a_id = $this->User_model->get_a_id();
-		$where['a_id='] = $a_id;
-		$this->db->where($where);
-		$this->db->order_by("o_id", "desc");
-		$this->db->limit($n,$l);
-		$list = $this->db->get("pd_order");
+		$sql = sprintf("
+					SELECT  pd_order.o_id,pd_order.o_sn,pd_order.o_bookingTime,pd_order.o_agentReference,pd_order.o_totalNum,
+					pd_order.o_adultNumber,pd_order.o_childNumber1,pd_order.o_childNumber2,pd_order.o_infantNumber,
+					pd_order.o_triple,pd_order.o_double,pd_order.o_single,pd_order.o_twin,pd_order.o_orderAmount,
+					pd_order.o_orderStatus,pd_order.o_paymentStatus,
+	                pd_agent.s_name,pd_route.r_cName,pd_route.r_eName
+	                FROM pd_route,pd_order,pd_agent
+	                WHERE pd_order.user_id=pd_agent.s_id
+	                AND pd_order.r_id=pd_route.r_id
+	                AND pd_order.a_id = %u					
+					ORDER BY pd_order.o_id DESC				
+					",$a_id);          
+		$list = $this->db->query($sql);
 		return $list->result_array();
 	}
 	//选择总的记录数

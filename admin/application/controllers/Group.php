@@ -15,24 +15,24 @@
 		}
 
 
-				//显示旅游团列表页面
+				//显示单独团的旅游团列表页面
 				    function index(){			
-							$this->load->view("op/group_list.html");
+							$this->load->view("op/Ngroup_list.html");
 						}
 
-					function group_list(){
-					        $rows 	= $this->input->get("rows");
+					function Ngroup_list(){
+					        $rows 	= $this->input->get("rows");					        
 							$page 	= $this->input->get("page");
-							$count 	= $this->Group_model->count_group();
+							$count 	= $this->Group_model->count_Ngroup();							
 							$data['totalPages'] 	= ceil($count/$rows);
 							$data['currentPage'] 	= 1;
 							$data['totalRecords'] 	= $count;
-							$list 	= $this->Group_model->get_all_groups();
+							$list 	= $this->Group_model->get_all_Ngroups();
 							$data['data'] = array();
 							foreach($list as $v){
 								$cc['t_id'] 			=	$v['t_id'];
 								$cc['t_date'] 	        = 	$v['t_date'];
-								$cc['t_type'] 	        = 	$v['t_pro'];
+								$cc['t_promo'] 	        = 	$v['t_pro'];
 								$cc['t_tourCode'] 	    = 	$v['t_tourCode'];
 								$cc['t_capacity'] 	    = 	$v['t_capacity'];
 								$cc['t_bus']	    	=	$v['t_bus'];
@@ -49,6 +49,45 @@
 								$cc['single_num']	    =	$v['single'];
 								$cc['total_rooms']	    =	$v['twin']+$v['doubleroom']+$v['triple']+$v['single'];
 								$cc['t_vacancy']	    =	$v['t_capacity']-$v['totalNumber'];
+													
+								array_push($data['data'],$cc);
+							}
+							$this->response_data($data);
+
+						}
+					
+
+					//显示拼接团的列表页面
+				    function Mindex(){			
+							$this->load->view("op/Mgroup_list.html");
+						}
+
+					function Mgroup_list(){
+					        $rows 	= $this->input->get("rows");
+							$page 	= $this->input->get("page");
+							$count 	= $this->Group_model->count_Mgroup();
+							$data['totalPages'] 	= ceil($count/$rows);
+							$data['currentPage'] 	= 1;
+							$data['totalRecords'] 	= $count;
+							$list 	= $this->Group_model->get_all_Mgroups();
+							$data['data'] = array();
+							foreach($list as $v){
+								$cc['t_id'] 			=	$v['t_id'];
+								$cc['t_date'] 	        = 	$v['t_date'];
+								$cc['t_promo'] 	        = 	$v['t_pro'];
+								$cc['t_tourCode'] 	    = 	$v['t_tourCode'];
+								$cc['t_vacancy'] 	    = 	$v['mcapacity'];								
+								$cc['a_userName']	    =	$v['a_userName'];								
+								$cc['adultNumber']	    =	$v['adultNumber'];
+								$cc['childNumber1']	    =	$v['childNumber1'];
+								$cc['childNumber2']	    =	$v['childNumber2'];
+								$cc['infantNumber']	    =	$v['infantNumber'];
+								$cc['totalNum']	        =	$v['totalNumber'];
+								$cc['twin_num']	        =	$v['twin'];
+								$cc['double_num']	    =	$v['doubleroom'];
+								$cc['triple_num']	    =	$v['triple'];
+								$cc['single_num']	    =	$v['single'];
+								$cc['total_rooms']	    =	$v['twin']+$v['doubleroom']+$v['triple']+$v['single'];								
 													
 								array_push($data['data'],$cc);
 							}

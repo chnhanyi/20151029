@@ -97,33 +97,49 @@
                 </script>
                 <!-- nav start -->
                 <ul class="nav nav-list">
-                    <li class="active open">
-                        <a href="javascript:void(0)" class="dropdown-toggle">
-                            <i class="icon-file-alt"></i>
-                            <span class="menu-text">
-									Menu
-								</span>
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="<?php echo site_url('Order_show/index'); ?>">
-                                    <i class="icon-double-angle-right"></i>Info Center
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-double-angle-right"></i>Add Order
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="<?php echo site_url('Order/index'); ?>">
-                                    <i class="icon-double-angle-right"></i>Order List
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                        <li class="active open">
+                            <a href="javascript:void(0)" class="dropdown-toggle">
+                                <i class="icon-file-alt"></i>
+                                <span class="menu-text">
+                                    Menu
+                                </span>
+                                <b class="arrow icon-angle-down"></b>
+                            </a>
+                            <ul class="submenu">
+                               <li   class="active">
+                                    <a href="<?php echo site_url('Order/index'); ?>">
+                                        <i class="icon-double-angle-right"></i>Order List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url('Group/index'); ?>">
+                                        <i class="icon-double-angle-right"></i>Normal Group List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url('Group/Mindex'); ?>">
+                                        <i class="icon-double-angle-right"></i>Merge Group List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url('Group/add_group'); ?>">
+                                        <i class="icon-double-angle-right"></i>Add Group
+                                    </a>
+                                </li>                                
+                                <li >
+                                    <a href="<?php echo site_url('Group/merge_group'); ?>">
+                                        <i class="icon-double-angle-right"></i>Merge Group
+                                    </a>
+                                </li>
+                                <li >
+                                    <a href="<?php echo site_url('Group/add_special'); ?>">
+                                        <i class="icon-double-angle-right"></i>Special Group
+                                    </a>
+                                </li>   
+                            </ul>
+                        </li>
+                        
+                    </ul>
                 <!-- nav end -->
                 <div class="sidebar-collapse" id="sidebar-collapse">
                     <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>

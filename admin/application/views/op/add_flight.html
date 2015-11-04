@@ -129,21 +129,36 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-                            <li class="active">
-									<a href="#">
-										<i class="icon-double-angle-right"></i>Dash Board
+                               <li   class="active">
+									<a href="<?php echo site_url('Order/index'); ?>">
+										<i class="icon-double-angle-right"></i>Order List
+									</a>
+								</li>
+                                <li>
+									<a href="<?php echo site_url('Group/index'); ?>">
+										<i class="icon-double-angle-right"></i>Normal Group List
 									</a>
 								</li>
 								<li>
-									<a href="<?php echo site_url('Order/index'); ?>">
-										<i class="icon-double-angle-right"></i>Add Order
+									<a href="<?php echo site_url('Group/Mindex'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group List
 									</a>
 								</li>
-								<li class="active">
-									<a href="<?php echo site_url('Order_show/index'); ?>">
-										<i class="icon-double-angle-right"></i>Order List
+								<li>
+									<a href="<?php echo site_url('Group/add_group'); ?>">
+										<i class="icon-double-angle-right"></i>Add Group
 									</a>
-								</li>                               
+								</li>                                
+                                <li >
+									<a href="<?php echo site_url('Group/merge_group'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('Group/add_special'); ?>">
+										<i class="icon-double-angle-right"></i>Special Group
+									</a>
+								</li>	
 							</ul>
 						</li>
 						
@@ -266,7 +281,7 @@
 																</div>
 															</div>
 														</td>
-														<td class="alignR"><span class="del red" ms-attr-index="{{$index}}" data-type="list" ms-click="remove" title="删除 delete"><i class="icon-trash bigger-200 red"></i><br/>Delete</span>
+														<td class="alignR"><span class="del red" ms-attr-index="{{$index}}" data-type="list" ms-click="remove" title="delete"><i class="icon-trash bigger-200 red"></i><br/>Delete</span>
 														</td>
 													</tr>													
 												</tbody>
@@ -321,19 +336,6 @@
 		</a>
 		</div>
 		<!-- /.main-container -->
-		<script>
-			var data = "<?php 
-		          $d = "{";
-		          foreach($data as $v){
-		            $d .='\"'.$v->r_id.'\":\"'.$v->r_name.'\",';
-		          }
-		          $in = strripos($d,",");
-		          $d = substr($d,0,$in);
-		          $d .= "}";
-		          echo $d;
-		        ?>";
-		  var routers = JSON.parse(data);   
-		</script>
 		<!-- basic scripts -->
 		<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="assets/js/avalon.min.js"></script>
@@ -353,7 +355,7 @@
 		<!-- 具体业务代码 -->
 		<script src="assets/js/page/modules/laydate.js"></script>
 		<script src="assets/js/page/modules/jquery.date_input.pack.js"></script>
-		<script src="assets/js/page/add_order.js"></script>
+		<script src="assets/js/page/add_flight.js"></script>
 
 		</div>
 	</body>

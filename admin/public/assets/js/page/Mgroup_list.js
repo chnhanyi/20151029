@@ -52,7 +52,7 @@
             sortorder: "desc",
             height: 500,            
             autowidth: true,
-            colNames: ["ID", "Tour Code","Tour Date","Type","Capacity","Vacancy","Coach RESV","Current Pax","Room RESV","Current Rooms","Operator","Operation"],
+            colNames: ["ID", "Tour Code","Tour Date","Promotion","Vacancy","Current Pax","Current Rooms","Operator","Operation"],
 
             colModel: [
 			{
@@ -74,35 +74,20 @@
                 editable: false,
                 // formatter: user_name_formatter,
             }, {
-                name: 't_type',
-                index: 't_type',
-                width: 40,
-				formatter: t_type_formatter,
-            }, {
-                name: 't_capacity',
-                index: 't_capacity',
-                width: 50,
-                align: "center",
+                name: 't_promo',
+                index: 't_promo',
+                width: 60,
+				formatter: t_promo_formatter,
             }, {
                 name: 't_vacancy',
                 index: 't_vacancy',
-                width:50,
-				align: "center",
+                width:50,				
 				formatter: vacancy_formatter,
-            }, {
-                name: 't_bus',
-                index: 't_bus',
-                width: 60
 			}, {
                 name: 't_currentpax',
                 index: 't_currentpax',
                 width: 100,
 				formatter: t_currentpax_formatter,
-            }, {
-                name: 't_room',
-                index: 't_room',
-                width: 80,
-
 			}, {
                 name: 't_currentroom',
                 index: 't_currentroom',
@@ -111,8 +96,8 @@
 			}, {
                 name: 'a_userName',
                 index: 'a_userName',
-                width:60,               
-			},{
+                width:60, 
+            },{
                 name: 'oper',
                 index: '',
                 width: 120,
@@ -151,21 +136,13 @@
 
 
         });
-		
-		  function oper_formatter(cellvalue, options, rowdata) {
+
+        function oper_formatter(cellvalue, options, rowdata) {
             var oper_html_arr = [];
             // 导出航班信息表，导出酒店信息表
-			var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';  		
-		                
-
-            var oper_modify = ['<a ',
-                ' target="_self"  href="index.php/Group/edit_group?id=', rowdata.t_id, '"',
-                style,
-                ' class="c-orange" title="modify">Modify</a><br /><br />'
-
-            ].join("");		
-                        
-			var oper_flight = ['<a ',
+            var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';         
+                      
+            var oper_flight = ['<a ',
                 ' target="_blank"  href="index.php/Group/tourguide_list?id=', rowdata.t_id, '"',
                 style,
                 ' class="c-blue" title="To Tour Guide">Tour Guide List</a><br /><br />'
@@ -179,15 +156,15 @@
                 ' class="c-orange" title="To Hotel">Room List</a><br /><br />'
 
             ].join("");
-			
-            oper_html_arr.push(oper_modify); 
-			oper_html_arr.push(oper_flight);  
+            
+            oper_html_arr.push(oper_flight);  
             oper_html_arr.push(oper_hotel);
           
             return oper_html_arr.join("");
 
         }
 		
+	
 		function vacancy_formatter(cellvalue, options, rowdata) {
                var html = [            
             '<span class="blue">',rowdata.t_vacancy,'</span><br />'
@@ -222,7 +199,7 @@
           }
 
 
-        function t_type_formatter(cellvalue, options, rowdata) {
+        function t_promo_formatter(cellvalue, options, rowdata) {
             // 旅游团状态， 1.正常团，2.促销团
             var result = '';
             switch (cellvalue) {
