@@ -311,7 +311,7 @@
              if (a > parseInt(info.remain)) {
                  _.modal({
                      title: "输入错误",
-                     cont: "购买票数大于最大剩余票数" + info.remain + "票"
+                     cont: "购买数量大于最大剩余数量" + info.remain + "位"
                  })
                  return false;
              }
@@ -639,6 +639,8 @@
          var leave_names = [];
          var no_infant_names = [];
          var a = 0;
+         vm_tour_flight.peoples_index = [];
+
 
          for (var i = 0; i < len; i++) {
 
@@ -687,7 +689,6 @@
 
              console.log(i, data[i].g_firstname+"/"+ data[i].g_lastname);
 
-             vm_tour_flight.peoples_index = [];
              if (data[i].g_guestType != "2") {
                  no_infant_names.push({
                      name: data[i].g_firstname+"/"+ data[i].g_lastname,
@@ -926,8 +927,10 @@
 
          }
 
+
+
          total_arr = total_arr.sort(function(a, b) {
-             return a > b ? 1 : -1
+             return parseInt(a) >  parseInt(b)  ? 1 : -1
          }); //从小到大排序
 
          for (var n = 0; n < peoples_l; n++) {

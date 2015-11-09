@@ -302,9 +302,7 @@
 		//更新发票信息
 		function confirm_invoice(){
 			//获取该订单的ID
-			$o_id 	= $this->input->post("o_id");
 
-			//把新增信息写入数据库
 
 
 
@@ -331,68 +329,110 @@
 
 		//加载增加航班信息的页面（数据库中没有机票信息）
 		function add_flight(){
-			$this->load->view("op/add_flight.html");
+
+				$this->load->view("op/add_flight.html");
+				}
+
+        //获取该订单的乘客
+		function get_passengers(){	
+		
+			//获取订单的ID
+			$o_id 	= $this->input->post("o_id");
+
+			//获得该订单的所有乘客信息（不含infant）
+			$passengers = $this->Order_model->get_order_passengers($o_id);
+
+			$an = array();			
+            
+			foreach($passengers as $k => $v){
+				$passenger = array(
+					"name" => $v['g_firstname']."/".$v['g_lastname'],                         
+                    "checked" => false,
+                    "index" => $k+1
+				);
+				$an[] = $passenger;
+			}
+
+			$data=array();
+
+			$data['reCode'] = 1;
+			$data['status'] = "success";
+			$data['passengers'] = $an;
+
+			$this->response_data($data);			
 		}
 
 		//增加航班信息
 		function insert_flight(){
 			
-			//获取该订单的ID
-			$o_id 	= $this->input->post("o_id");
+			//获取该订单的机票信息		
+			$data 	= $this->input->post("data");
+			$id 	= $this->input->post("id");
 
-			//把新增信息写入数据库
+			//删除原有的机票信息
+			$num=$this->Order_model->delete_old_flight($id);
 
+			//组装数据
+			$info=array();
+			foreach ($data as $v) {
+        		    $cc['o_id'] =$id;
+				    $cc['f_date'] = $this->toudate($v['g_arriveDate']);
+				    $cc['f_no'] = $v['a_flightno'];
+				    $cc['f_time'] =$v['a_time'];
+				    $cc['f_route'] = $v['a_route'];
+				    $cc['f_guest'] = $v['arrivedName'];
+				    array_push($info,$cc);
+				};
 
+    		//把新增信息写入数据库
+			$num1 = $this->Order_model->insert_flightInfo($info);
 
-            //更新该订单的处理状态
-			$this->load->helper('cookie');
-			$opname = get_cookie("uin");
-			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+            //更新该订单的航班信息处理状态
+            $num2 = $this->Order_model->update_flight_status($o_id);	
 
 			//判断是否更新成功，向页面发送消息
 			if($num1 == 1 && $num2==1){				
 					$data['reCode'] = 1;
 					$data['status'] = "success";
-					$data['data'] = "Confirm Order Success";
+					$data['data'] = "Add FlightInfo Success";
 		        }else{
 	                $data['reCode'] = -1;
 				    $data['status'] = "failed";
-				    $data['data'] = "Confirm Order failed";
+				    $data['data'] = "Add FlightInfo failed";
 		        }
 
-		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
-				echo json_encode($data);
+		        var_dump($data);
+		        exit;
+
+		        $this->response_data($data);	
 		}
 
 		//编辑航班信息（数据库中已经有航班信息）
 		function edit_flight(){
 			//获取该订单的ID
-			$o_id 	= $this->input->post("o_id");
+			$o_id 	= $this->input->get("id");
 
-			//把新增信息写入数据库
+			//获取本订单所有的航班信息			
+			$data = array();	
+			$gf = array();
+			$flight = $this->Order_model->get_order_flight($o_id);
 
-
-
-            //更新该订单的处理状态
-			$this->load->helper('cookie');
-			$opname = get_cookie("uin");
-			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
-
-			//判断是否更新成功，向页面发送消息
-			if($num1 == 1 && $num2==1){				
-					$data['reCode'] = 1;
-					$data['status'] = "success";
-					$data['data'] = "Confirm Order Success";
-		        }else{
-	                $data['reCode'] = -1;
-				    $data['status'] = "failed";
-				    $data['data'] = "Confirm Order failed";
-		        }
-
-		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
-				echo json_encode($data);
-
+					foreach($flight as $k => $v){
+							$fl = array(
+							"g_arriveDate"=> $v['f_date'],
+							"a_flightno"=> $v['f_no'],
+							"a_time"=>$v['f_time'],
+							"f_route"=>$v['f_route'],
+							"arrivedName"=>$v['f_guest']
+									);	
+							$gf[]=$fl;
+					}
+			     $data["flightInfo"]=$gf;
+			
+			$this->load->view("op/edit_flight.html",$data);
 		}
+
+
 
 
 		//取消订单

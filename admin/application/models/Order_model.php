@@ -212,7 +212,15 @@
 				}  	
         } 
 
-
+        //获取游客信息(添加航班用)
+			function get_order_passengers($o_id){
+				$this->db->where("o_id",$o_id);
+				$this->db->where("g_type!=",2);				
+				$this->db->order_by("g_id", "asc"); 				
+				$guest = $this->db->get("pd_guest");
+				$res = $guest-> result_array();
+				return $res;
+			}
 
         //获得订单的详细信息
 	    function get_detail($o_id){	    	
@@ -220,6 +228,56 @@
 		$list = $this->db->get(self::TBL_O);
 		return $list->row_array();
 		}
+
+		//新增机票信息
+        function insert_flightInfo($info){
+        	$num=0;
+        	foreach ($info as $v) {
+        		$data = array(
+				    'o_id' => $v['o_id'],
+				    'f_date' => $v['f_date'],
+				    'f_no' => $v['f_no'],
+				    'f_time' => $v['f_time'],
+				    'f_route' => $v['f_route'],
+				    'f_guest' => $v['f_guest']
+				);
+				if($this->db->insert('pd_flight', $data)){
+					$num=1;
+		        	}else{
+		        		$num=0;
+		        	}
+        		}
+        		return $num;
+        }
+
+        //删除原有的机票信息
+        function delete_old_flight($id){
+        	$this->db->where('o_id', $id);
+        	$num=0;			
+			if($this->db->delete('pd_flight')){
+					$num=1;
+		        	}else{
+		        		$num=0;
+		        	}
+        		}
+        		return $num;
+        }
+        
+
+       //更新订单的机票状态
+        function update_flight_status($o_id){
+        	$status = 2;
+        	$data = array(               
+               'o_flight' => 1
+            );
+        	$this->db->where('o_id', $o_id);
+			if($this->db->update(self::TBL_O, $data)){
+				return  1;
+			}
+				else{
+				return  0;	
+				}
+        }
 
  		//检查订单是否是取消状态
 		function check_order_status($o_id){

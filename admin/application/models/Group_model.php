@@ -37,7 +37,8 @@
 
 		//获取所有的拼接旅游团
 		public function get_all_Mgroups(){
-			$query = $this->db->query('SELECT pd_tourGroup.t_id, pd_tourGroup.t_date, pd_tourGroup.t_pro, pd_tourGroup.t_tourCode, pd_tourGroup.t_capacity,
+			$query = $this->db->query('SELECT pd_tourGroup.t_id, pd_tourGroup.t_date, pd_tourGroup.t_pro,
+			 pd_tourGroup.t_tourCode, pd_tourGroup.t_capacity,
 			 pd_tourGroup.t_currentpax,pd_tourGroup.a_userName, 
 			 SUM( pd_order.o_adultNumber ) AS adultNumber,
 			 SUM( pd_order.o_infantNumber ) AS infantNumber, 
