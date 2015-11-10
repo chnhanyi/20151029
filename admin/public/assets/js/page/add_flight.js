@@ -314,8 +314,7 @@
              });
 
 
-             vm.list.push({
-                o_id:o_id,
+             vm.list.push({                
                 a_flightno: "",
                 a_route: "",
                 a_time: "",

@@ -16,7 +16,7 @@
 		public function get_all_orders(){
 			$query =$this->db->query('SELECT pd_order.o_id, pd_order.o_bookTime, pd_order.o_sn, pd_order.o_agentReference, pd_order.o_totalNum, pd_order.o_adultNumber, 
 				pd_order.o_childNumber1, pd_order.o_childNumber2, pd_order.o_infantNumber, pd_order.o_orderAmount, pd_order.o_orderStatus, 
-				pd_order.o_flight,pd_order.o_opName, pd_order.o_opCode, pd_order.o_deptNotice, pd_agent.s_name, pd_company.a_name, pd_tourGroup.t_tourCode
+				pd_order.o_flight,pd_order.o_opName, pd_order.o_opCode, pd_order.o_deptNotice, pd_agent.s_name,pd_agent.s_email, pd_company.a_name,pd_company.a_tel, pd_tourGroup.t_tourCode
 						FROM pd_order, pd_company, pd_agent, pd_tourGroup
 						WHERE pd_tourGroup.r_id = pd_order.r_id
 						AND pd_tourGroup.t_date = pd_order.o_bookingTime
@@ -259,7 +259,7 @@
 		        	}else{
 		        		$num=0;
 		        	}
-        		}
+        		
         		return $num;
         }
         

@@ -219,7 +219,7 @@
                                                     <span class="bigger-290">Tax Invoice </span>                                                    
 												</div>
 
-											<div class="widget-body border-top2">
+											<div class="widget-body border-top2" ms-controller="invoice">
 												<div class="widget-main padding-24">
 													<div class="row ">
 														<div class="col-sm-8">
@@ -273,12 +273,12 @@
 													</p>     
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Tour Date：
-																		<input type="text" id="t_date" value="<?php echo $tour_date; ?>">
+																		Tour Date：																		
+																		<input type="text" id="date" value="<?php echo $tour_date; ?>">
 													</p> 
 													</div>
 													<div class="space"></div>                                                                                                   
-														<table class="table table-striped table-bordered"  id="ticketTab">
+														<table class="table table-striped table-bordered">
 															<thead>
 																<tr>
 																	<th class="center">#</th>
@@ -354,20 +354,37 @@
 																	<td><?php echo $single; ?></td>
                                                                     <td>$<?php echo $singlePrice*$single; ?></td>
 																</tr>
-																<?php }?>     
+																<?php }?>
 															</tbody>
 														</table>
-														<button class="btn btn-primary" id="addItem">
-                                                                    <i class="icon-plus"></i>Add Item
-                                                                </button>
+														<table>
+														<tbody>
+																<tr class="front" ms-repeat="list" ms-visible="visible==1">
+																<td class="center" style="width:30px" ><?php echo ++$i; ?></td>
+														<td>															
+															<div class="w510">
+																<input type="text" ms-input="fn_i_item" ms-attr-index="{{$index}}"  ms-attr-value="{{el.i_item}}" style="width:500px" />
+															</div>
+														</td>
+														<td>															
+															<div >
+																<input type="text" ms-input="fn_i_price" ms-attr-index="{{$index}}"  ms-attr-value="{{el.i_price}}" style="width:110px" />
+															</div>
+														</td>
+														<td  class="alignR" style="width:100px" ><span class="del red" ms-attr-index="{{$index}}" data-type="list" ms-click="remove" title="delete"><i class="icon-trash bigger-200 red"></i><br/>Delete</span>
+														</td>														
+													</tr>     
+															</tbody>
+														</table>														
+														<button class="btn btn-sm btn-primary mt30" ms-click="add_list_item">Add Item</button>
 													
 													<div class="row">
                                                         <div class="col-sm-6 pull-right">                                                            
                                                             <h5 class="pull-right bold">
-                                                                Total Amount <span class="red">( If not Prepay):$<b id="totalAmount_1"><?php echo $delayAmount; ?></b></span>                                                                
+                                                                Total Amount <span class="red">( If not Prepay):$<b id="noprepay"><?php echo $delayAmount; ?></b></span>                                                                
                                                                     </h5>                                                        
 															<h4 class="pull-right">
-																Total Amount(Under Prepay Condition):$<b id="totalAmount_2"><?php echo $orderAmount; ?></b>                                                                
+																Total Amount(Under Prepay Condition):$<b id="prepay"><?php echo $orderAmount; ?></b>                                                                
 															</h4>                                                            
                                                             <h4 class="pull-right">Currency: <?php echo $currency; ?>                                                        
 															</h4>
@@ -496,102 +513,26 @@
 		</div><!-- /.main-container -->
 
 		<!-- basic scripts -->
-		<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>		
-		<script src="public/assets/js/bootstrap.min.js"></script>	
+		<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="public/assets/js/avalon.min.js"></script>
+		<script src="public/assets/js/bootstrap.min.js"></script>
+		<!--
+		  <script src="public/assets/js/typeahead-bs2.min.js"></script>
+		  -->
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+
 		<script src="public/assets/js/ace-elements.min.js"></script>
 		<script src="public/assets/js/ace.min.js"></script>
 
 		<!-- 通用业务代码 -->
 		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>
 		<script src="public/assets/js/page/app.js"></script>
-		<!-- 具体业务代码 -->	
-        <script>
-		$(document).ready(function(){
-			var totalAmount_1,totalAmount_2;
-				totalAmount_1 = $('#totalAmount_1').html(),
-				totalAmount_2 = $('#totalAmount_2').html();
-			//检测输入为数字	
-			function onlyNum(){
-			  if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105)||(event.keyCode>=109&&event.keyCode<=110)))
-				event.returnValue=false;
-				}
-			//新增项计算
-			function addpriceSum(){
-				var sum = 0, a;
-				$('.addPrice').each(function (){
-					a = parseFloat($(this).val()) || 0 
-					sum += a;
-				});
-				return sum;
-				}
-			//新增一行	
-            $('#addItem').click(function(){
-				var colnum = $('#ticketTab tbody tr:last td').eq(0).html(),newcolnum;
-	 				 newcolnum = parseInt(colnum) + 1;
-				var colum = $(['<tr>',
-					'<td class="center">'+newcolnum+'</td>',
-					'<td colspan=4><input type="text" class="w510" /></td>',
-					'<td><input type="text" class="addPrice w50" value="0" /></td>',
-					'<td class="text-center"><span class="del red" title="删除 delete" index="0"><i class="icon-trash bigger-150 red"></i></span></td>',
-				'</tr>'].join(''));
-				colum.appendTo($('#ticketTab tbody'))
-				})
-			//只能输入数字	
-			$('#ticketTab').delegate('.addPrice','keyup',function(){
-				var tmptxt=$(this).val();     
-                $(this).val(tmptxt.replace(/[^\-?\d.]/g,'')); 
-            });
-			//新增值变化时计算
-			$('#ticketTab').delegate('.addPrice','change',function(){
-				addpriceSum();
-                var addPrice,newprice_1,newprice_2;
-				addPrice = addpriceSum();
-				newprice_1 =parseFloat(totalAmount_1)+parseFloat(addPrice);
-				newprice_2 =parseFloat(totalAmount_2)+parseFloat(addPrice);
-				$('#totalAmount_1').html(newprice_1);
-				$('#totalAmount_2').html(newprice_2);
-            });
-			$('#ticketTab').delegate('.del','click',function(){
-				var me = $(this),delTr = me.parents('tr');
-				delTr.remove();
-				addpriceSum();
-                var addPrice,newprice_1,newprice_2;
-				addPrice = addpriceSum();
-				newprice_1 =parseFloat(totalAmount_1)+parseFloat(addPrice);
-				newprice_2 =parseFloat(totalAmount_2)+parseFloat(addPrice);
-				$('#totalAmount_1').html(newprice_1);
-				$('#totalAmount_2').html(newprice_2);
-			})
-
-			 	$('#confirmInvo').click(function(e) {
-								 if(confirm("Are you sure to confirm this Invoice?")){
-						        //e.preventDefault();
-								var groupData = {
-									    r_id:$('#r_id').val(),																			 
-										date:$("#date").val(),										
-										capacity:$('#capacity').val(),
-										bus:$('#bus').val(),
-										room:$('#room').val(),
-										groupB:$('#groupB').val(),										
-									};
-								$.post("<?php echo site_url('Group/insert_group');?>",groupData, function (data) {
-									if(data['retCode']==-1){
-											//没有通过输入验证											
-											var txt= data['data'];
-											alert(txt);																			
-										}else if(data['retCode']==1){
-											//添加成功
-											var txt= data['data'];
-											alert(txt);											
-											//重定位到公司列表页
-											location.href="<?php echo site_url('Group/index') ;?>";
-										}
-								},"json");
-								 }
-			});
-        });
-    </script>
-   
+		<!-- 具体业务代码 -->
+		<script src="public/assets/js/page/modules/laydate.js"></script>
+		<script src="public/assets/js/page/modules/jquery.date_input.pack.js"></script>
+		<script src="public/assets/js/page/jquery.ynf.js"></script>
+		<script src="public/assets/js/page/invoice.js"></script>   
 		<!-- inline scripts related to this page -->		
 
 		<!-- inline scripts related to this page -->

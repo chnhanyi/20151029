@@ -39,7 +39,9 @@
 				$cc['agent_reference'] 	= 	$v['o_agentReference'];
 				$cc["tour_code"]		=	$v['t_tourCode'];
 				$cc["agent_name"]		=	$v['s_name'];
-				$cc["company_name"]		=	$v['a_name'];				
+				$cc["agent_email"]		=	$v['s_email'];
+				$cc["company_name"]		=	$v['a_name'];
+				$cc["company_tel"]		=	$v['a_tel'];				
 				$cc["total_guests"]		=	$v['o_totalNum']	;
 				$cc["adult_num"]		=	$v['o_adultNumber'];
 				$cc["child_num"] 		= 	$v["o_childNumber1"] + $v["o_childNumber2"];				
@@ -430,6 +432,24 @@
 			     $data["flightInfo"]=$gf;
 			
 			$this->load->view("op/edit_flight.html",$data);
+		}
+
+		//编辑联系人信息
+		function edit_contacts(){
+			//获取该订单的ID
+			$o_id 	= $this->input->get("id");
+
+			//获取本订单的联系人信息			
+			$data = array();	
+			
+			$contacts = $this->Order_model->get_order_detail($o_id);
+
+			$data['id']=$o_id ;
+			$data['name']=$contacts[0]['o_contacts'];
+			$data['phone']=$contacts[0]['o_mobile'];
+			$data['email']=$contacts[0]['o_email'];
+			
+			$this->load->view("op/edit_contacts.html",$data);
 		}
 
 

@@ -53,7 +53,7 @@
             height: 500,
             caption: "Order List",
             autowidth: true,
-            colNames: ["ID", "Booking Time","Invoice No","Agent Ref","Company", "Agent","Tour Code","Total Pax", "Nett", "Flight","Status", "Extra SRV","DEPT Notice", "Operator","Operation"],
+            colNames: ["ID", "Booking Time","Invoice No","Agent","Tour Code","Total Pax", "Nett", "Flight","Status","DEPT Notice", "Operator","Operation"],
 
             colModel: [
 			{
@@ -74,25 +74,15 @@
                 width: 80,
                 formatter:order_sn_formatter
             }, {
-                name: 'agent_reference',
-                index: 'agent_reference',
-                width: 100,
-            }, {
-                name: 'company_name',
-                index: 'company_name',
-                width: 100,
-                align: "center",
-            
-            }, {
 				name: 'agent_name',
                 index: 'agent_name',
-                width: 80,
-                align: "center",
-            
+                width: 240,
+                formatter:agent_formatter            
             }, {
                 name: 'tour_code',
                 index: 'tour_code',
-                width: 150
+                width: 180,
+                formatter:tourcode_formatter    
             }, {
                 name: 'total_guest',
                 index: 'total_guest',
@@ -118,10 +108,6 @@
                 width: 80,
                 sortable: true,
                 formatter: order_status_formatter
-			},{
-                name: 'op_code',
-                index: 'op_code',
-                width: 80,
 			},{
                 name: 'deptNotice',
                 index: 'deptNotice',
@@ -189,9 +175,9 @@
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/view_invoice?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
                 style,
-                ' class="c-red" title="Confirm Order">View Invoice</a><br /><br />'
+                ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
 
             ].join("");
             
@@ -234,9 +220,9 @@
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/get_invoice?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
                 style,
-                ' class="c-red" title="Confirm Order">View Invoice</a><br /><br />'
+                ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
 
             ].join("");
             
@@ -271,8 +257,26 @@
 
         }
 
+        function agent_formatter(cellvalue, options, rowdata) {
+            var html = [
+            '<span class="red">',rowdata.agent_reference,'</span><br />',
+            '<span class="black">',rowdata.company_name,'</span><br />',
+            '<span class="orange">',rowdata.company_tel,'</span><br />',
+            '<span class="blue">',rowdata.agent_name,'</span><br />',
+            '<span class="orange">',rowdata.agent_email,'</span><br />'
+            ].join("");
+             
+             return html;
+        } 
 
- 
+        function tourcode_formatter(cellvalue, options, rowdata) {
+            var html = [
+            '<span class="blue">',rowdata.tour_code,'</span><br />',
+            '<span class="orange">',rowdata.op_code,'</span><br />'
+            ].join("");
+             
+             return html;
+        } 
 
         function order_sn_formatter(cellvalue, options, rowdata) {
             var html = [
