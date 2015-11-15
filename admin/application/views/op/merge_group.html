@@ -288,7 +288,10 @@
     <script src="assets/js/page/modules/laydate.js"></script> 
              <script>
 						  	$('#mergeGroup').click(function(e) {
-								 if(confirm("Tour Name and Tour Date are Correct?")){
+                                if($('#r_id').val()==0||$('#r_Nid').val()==0||$('#r_Sid').val()==0){
+                                        alert("Please select a tour group!");   
+                                    }else{
+								 if(confirm("Tour Name and Tour Date are Correct?")){								 	
 						        //e.preventDefault();
 								var groupData = {
 									    r_id:$('#r_id').val(),																			 
@@ -308,7 +311,8 @@
 											location.href="<?php echo site_url('Group/index') ;?>";
 										}
 								},"json");
-								 }
+								 }								 
+                                }
 						    });
 						  </script>
 

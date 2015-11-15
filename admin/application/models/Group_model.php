@@ -48,21 +48,25 @@
 			 SUM( pd_order.o_double ) AS doubleroom, 
 			 SUM( pd_order.o_twin ) AS twin, 
 			 SUM( pd_order.o_single ) AS single,
-			 min(capacity) AS mcapacity 
+			 mcapacity 
 				FROM pd_tourGroup,pd_order,
 				(
-						SELECT pd2.t_tourCode, (
+                        select t_tourCode,t_date,min(capacity) as mcapacity
+                                         from
+                                         (
+						SELECT pd2.t_tourCode, pd2.t_date, (
 						pd1.t_capacity - pd1.t_currentpax
 						) AS capacity
 						FROM pd_tourGroup pd1
 						JOIN pd_tourGroup pd2 ON pd2.t_Nid = pd1.t_id						
 						UNION 
-						SELECT  pd2.t_tourCode, (
+						SELECT  pd2.t_tourCode, pd2.t_date, (
 						pd1.t_capacity - pd1.t_currentpax
 						) AS capacity
 						FROM pd_tourGroup pd1
 						JOIN pd_tourGroup pd2 ON pd2.t_Sid = pd1.t_id						
-						) as combine 
+                                         ) as dd group by dd.t_tourCode,dd.t_date
+				) as combine 
                 WHERE pd_tourGroup.t_tourCode = pd_order.t_tourCode
                 AND pd_order.t_tourCode = combine.t_tourCode			
 				AND pd_order.o_orderStatus <> 4
@@ -170,8 +174,7 @@
 		 }
 
 		//查询数据库中当前两个团是否已经拼过了
-		 function is_Mgroup($r_id,$Nid,$Sid){
-		 	$this->db->where('r_id', $r_id);
+		 function is_Mgroup($r_id,$Nid,$Sid){		 	
 		 	$this->db->where('t_Nid', $Nid);
 		 	$this->db->where('t_Sid', $Sid);
 			$query = $this->db->get(self::TBL_T);

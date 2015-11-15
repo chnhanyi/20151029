@@ -174,6 +174,7 @@ class order_model extends CI_Model {
 		$row = $type_res->row();
 		$type= $row->t_type;
 
+
 			if($type == 1){
 					$sql = sprintf("select 
 						t_capacity - t_currentpax as curreent 
@@ -191,20 +192,21 @@ class order_model extends CI_Model {
 						) AS remain_guest
 						FROM pd_tourGroup pd1
 						JOIN pd_tourGroup pd2 ON pd2.t_Nid = pd1.t_id
-						AND pd2.r_id = %s and pd2.t_date >= %s
+						AND pd2.r_id = %s and pd2.t_date >= '%s'
 						UNION 
 						SELECT  (
 						pd1.t_capacity - pd1.t_currentpax
 						) AS remain_guest
 						FROM pd_tourGroup pd1
 						JOIN pd_tourGroup pd2 ON pd2.t_Sid = pd1.t_id
-						AND pd2.r_id = %s and pd2.t_date >= %s
+						AND pd2.r_id = %s and pd2.t_date >= '%s'
 						) as combine						
 				",$r_id,$date,$r_id,$date);
 			}
 
 		$result = $this->db->query($sql);
 		$data = $result->row_array();
+
 		return $data['curreent'];				
 	} 
 	/** 插入库存信息

@@ -165,8 +165,7 @@
 
      /* 航班 */
 
-     vm_tour_flight = avalon.define("tour_flight", function(vm) {
-         vm.is_hide = false;
+     vm_tour_flight = avalon.define("tour_flight", function(vm) {      
 
          vm.list = [{             
              g_arriveDate: "",

@@ -135,6 +135,16 @@
 						ORDER BY pd_order.o_id DESC '); 				
 			return $query->result_array();
 		}
+
+		//获得某一订单的单人房间信息
+		function get_single_name($o_id){
+			$this->db->select('r_guests');
+			$this->db->where('o_id', $o_id);
+			$this->db->where('r_type',1);
+			$query = $this->db->get("pd_room");
+			
+			return $query->result_array();
+		}
          
         //更新订单的状态为正在处理中
         function update_order_status1($o_id,$opname){
@@ -152,6 +162,34 @@
 				}
         }
 
+        //获取订单发票的修改次数
+        function get_invoice_hit($o_id){
+        	$this->db->select('o_invoice_hit');
+        	$this->db->where('o_id', $o_id);
+        	$query = $this->db->get("pd_order");
+        	$row=$query->row();
+
+        	return $row->o_invoice_hit;
+        }
+
+        //更新发票的信息和发票点击次数，OPname等
+        function update_invoice_info($o_id,$opname,$newhit,$data){
+        	$status = 3;
+        	$updata = array(
+        		'o_invoice_hit' => $newhit,
+        		'o_invoice_data' => $data,
+                'o_orderStatus' => $status,
+                'o_opName' => $opname
+            );            
+        	$this->db->where('o_id', $o_id);
+			if($this->db->update(self::TBL_O, $updata)){
+				return  1;
+			}
+				else{
+				return  0;	
+				}  	
+        } 
+
         //更新订单,添加OP的审核内容
         function check_order($o_id,$data){        	
         	$this->db->where('o_id', $o_id);
@@ -163,21 +201,17 @@
 				}
         }
 
-        //更新订单的状态为已经处理
-        function update_order_status2($o_id,$opname){
-        	$status = 3;
-        	$data = array(               
-               'o_orderStatus' => $status,
-               'o_opName' => $opname
-            );            
+
+        //更新联系人的信息
+        function update_contact($o_id,$data){
         	$this->db->where('o_id', $o_id);
 			if($this->db->update(self::TBL_O, $data)){
 				return  1;
 			}
 				else{
 				return  0;	
-				}  	
-        } 
+				}
+        }
 
         //取消订单，更新订单的状态为已经取消
         function update_order_status3($o_id,$opname){
@@ -265,12 +299,11 @@
         
 
        //更新订单的机票状态
-        function update_flight_status($o_id){
-        	$status = 2;
+        function update_flight_status($id){        	
         	$data = array(               
                'o_flight' => 1
             );
-        	$this->db->where('o_id', $o_id);
+        	$this->db->where('o_id', $id);
 			if($this->db->update(self::TBL_O, $data)){
 				return  1;
 			}

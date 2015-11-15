@@ -189,7 +189,7 @@
 
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-12">
+							<div class="col-xs-12" ms-controller="invoice">
 								<!-- PAGE CONTENT BEGINS -->
 
 								<div class="space-6"></div>
@@ -225,27 +225,27 @@
 														<div class="col-sm-8">
 															<div class="row">
 																<div class="col-xs-11 bold">
-																	For :   <?php echo $a_name; ?>
+																	For :  {{company_name}}
 																</div>
 															</div>
 
 															<div>
 																<ul class="list-unstyled  spaced">
 																	<li class="bold">Address :</li>
-																	<li><?php echo $address."&nbsp;&nbsp;&nbsp;".$city; ?></li>
+																	<li>{{company_address}}</li>
 																</ul>
 															</div>
 														</div><!-- /span -->
 														<div class="col-sm-3 pull-right text-right">
-														    <span class="bold"> Invoice No: <?php echo $o_sn; ?></span>
+														    <span class="bold"> Invoice No: {{invoice_no}}</span>
 														    <br/>
-															<span>Create Date: <?php echo $create_date; ?>
+															<span>Create Date: {{create_date}}
 															</span>
 														    <br/>
-															<span>Due Date: <?php echo $tour_date; ?>
+															<span>Due Date: {{tour_date}}
 															</span>
 														    <br/>
-														    <span>Consultant: <?php echo $opname; ?>
+														    <span>Consultant: {{op_name}}
 															</span>
 														    <br/>
 														</div>
@@ -257,24 +257,24 @@
 													<div>
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Agent's reference: <?php echo $reference; ?>
+																		Agent's reference: {{reference}}
 													</p>
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Attention to: <?php echo $s_name; ?>
+																		Attention to: {{agent_name}}
 													</p>                                                        
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Tour Name: <?php echo $cName."/".$eName; ?>
+																		Tour Name: {{c_name}}/{{e_name}}
 													</p>
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
-																		Tour Code: <?php echo $tour_code; ?>	
+																		Tour Code: {{tour_code}}	
 													</p>     
                                                     <p>
 																		<i class="icon-caret-right grey"></i>
 																		Tour Date：																		
-																		<input type="text" id="date" value="<?php echo $tour_date; ?>">
+																		<input type="text" id="date" ms-duplex="tour_date">
 													</p> 
 													</div>
 													<div class="space"></div>                                                                                                   
@@ -282,8 +282,7 @@
 															<thead>
 																<tr>
 																	<th class="center">#</th>
-																	<th >Tour Fee Items</th>
-                                                                    <th>Type</th>
+																	<th>Tour Fee Items</th>                                                                   
                                                                     <th style="width:400px;">Customer Name</th>
                                                                     <th>Unit Price</th>																	
 																	<th>Unit</th>
@@ -292,88 +291,33 @@
 															</thead>
 
 															<tbody>
-																<tr>
-																	<td class="center"><?php $i=1; echo $i; ?></td>
-
-																	<td>TOUR FEE</td>
-																	<td >
-																		Adult
-																	</td>
-                                                                    <td style="word-wrap:break-word;max-width:400px; display:inline-block"><?php echo $adultName; ?></td>
-																	<td><?php echo $adultPrice_invo; ?></td>
-																	<td><?php echo $adultNumber; ?></td>
-                                                                    <td>$<?php echo $adultPrice_invo*$adultNumber; ?></td>
-																</tr>
-
-																<?php if($childNumber1 != 0){ ?>
-																<tr>
-																	<td class="center"><?php echo ++$i; ?></td>
-
-																	<td>TOUR FEE</td>
-																	<td >Child(No Bed)</td>
-																	<td style="word-wrap:break-word;max-width:400px; display:inline-block"><?php echo $childName1; ?></td>
-																	<td ><?php echo $childPrice1_invo; ?></td>
-																	<td><?php echo $childNumber1; ?></td>
-                                                                    <td>$<?php echo $childPrice1_invo*$childNumber1; ?></td>
-																</tr>
-																<?php }?>
-																
-																<?php if($childNumber2 != 0){ ?>
-																<tr>
-																	<td class="center"><?php echo ++$i; ?></td>
-
-																	<td>TOUR FEE</td>
-																	<td >Child(With Bed)</td>
-																	<td style="word-wrap:break-word;max-width:400px; display:inline-block"><?php echo $childName2; ?></td>
-																	<td><?php echo $childPrice2_invo; ?></td>
-																	<td><?php echo $childNumber2; ?></td>
-                                                                    <td>$<?php echo $childPrice2_invo*$childNumber2; ?></td>
-																</tr>
-																<?php }?>
-
-																<?php if($infantNumber != 0){ ?>
-																<tr>
-																	<td class="center"><?php echo ++$i; ?></td>
-
-																	<td>TOUR FEE</td>
-																	<td>Infant</td>
-																	<td style="word-wrap:break-word;max-width:400px; display:inline-block"><?php echo $infantName; ?></td>
-																	<td><?php echo $infantPrice; ?></td>
-																	<td><?php echo $infantNumber; ?></td>
-                                                                    <td>$<?php echo $infantPrice*$infantNumber; ?></td>
-																</tr>
-																<?php }?>
-
-																<?php if($single != 0){ ?>
-																<tr>
-																	<td class="center"><?php echo ++$i; ?></td>
-																	<td>SINGLE ROOM SURCHARGE</td>
-																	<td>Adult</td>
-                                                                    <td></td>
-																	<td><?php echo $singlePrice; ?></td>
-																	<td><?php echo $single; ?></td>
-                                                                    <td>$<?php echo $singlePrice*$single; ?></td>
-																</tr>
-																<?php }?>
+																<tr ms-repeat="invoice_list">
+																	<td class="center">{{$index + 1 }}</td>
+																	<td>{{el.item}}</td>																	
+                                                                    <td style="word-wrap:break-word;max-width:400px; display:inline-block" ms-html="el.name"></td>
+																	<td>${{el.price}}</td>
+																	<td>{{el.unit}}</td>
+                                                                    <td>${{el.total}}</td>
+																</tr>																
 															</tbody>
 														</table>
 														<table>
 														<tbody>
-																<tr class="front" ms-repeat="list" ms-visible="visible==1">
-																<td class="center" style="width:30px" ><?php echo ++$i; ?></td>
-														<td>															
-															<div class="w510">
-																<input type="text" ms-input="fn_i_item" ms-attr-index="{{$index}}"  ms-attr-value="{{el.i_item}}" style="width:500px" />
-															</div>
-														</td>
-														<td>															
+															<tr class="front" ms-repeat="list">
+																<td class="center" style="width:30px" >{{$index + 1 }}</td>
+														<td style="width:680px">															
 															<div >
-																<input type="text" ms-input="fn_i_price" ms-attr-index="{{$index}}"  ms-attr-value="{{el.i_price}}" style="width:110px" />
+																<input type="text" ms-input="fn_item" ms-attr-index="{{$index}}"  ms-attr-value="{{el.item}}" style="width:600px" />
 															</div>
 														</td>
-														<td  class="alignR" style="width:100px" ><span class="del red" ms-attr-index="{{$index}}" data-type="list" ms-click="remove" title="delete"><i class="icon-trash bigger-200 red"></i><br/>Delete</span>
+														<td style="width:100px">															
+															<div >
+																$<input type="text" ms-input="fn_total" ms-on-blur="blur_total" ms-attr-index="{{$index}}"  ms-attr-value="{{el.total}}" style="width:60px" />
+															</div>
+														</td>
+														<td  class="alignR" style="width:150px" ><span class="del red" ms-attr-index="{{$index}}" data-type="list" ms-click="remove" title="delete"><i class="icon-trash bigger-200 red"></i><br/>Delete</span>
 														</td>														
-													</tr>     
+															</tr>     
 															</tbody>
 														</table>														
 														<button class="btn btn-sm btn-primary mt30" ms-click="add_list_item">Add Item</button>
@@ -381,12 +325,12 @@
 													<div class="row">
                                                         <div class="col-sm-6 pull-right">                                                            
                                                             <h5 class="pull-right bold">
-                                                                Total Amount <span class="red">( If not Prepay):$<b id="noprepay"><?php echo $delayAmount; ?></b></span>                                                                
+                                                                Total Amount <span class="red">( If not Prepay):$<b  ms-text="delayAmount"></b></span>                                                                
                                                                     </h5>                                                        
 															<h4 class="pull-right">
-																Total Amount(Under Prepay Condition):$<b id="prepay"><?php echo $orderAmount; ?></b>                                                                
+																Total Amount(Under Prepay Condition):$<b ms-text="orderAmount"></b>                                                                
 															</h4>                                                            
-                                                            <h4 class="pull-right">Currency: <?php echo $currency; ?>                                                        
+                                                            <h4 class="pull-right">Currency: {{currency}}
 															</h4>
                                                            
 														</div>                                                        														
@@ -459,18 +403,18 @@
                                                         <div class="col-sm-3">
                                                         <ul class="list-unstyled spaced">
                                                                         <li>
-                                                                            Invoice No: <?php echo $o_sn; ?>
+                                                                            Invoice No:{{invoice_no}}
                                                                         </li>
     
                                                                         <li>
-                                                                            Due Date: <?php echo $tour_date; ?>
+                                                                            Due Date:{{tour_date}}
                                                                         </li>
     
                                                                         <li>
                                                                             Payment:
                                                                         </li>
                                                                         <li>
-                                                                            Currency: <?php echo $currency; ?>
+                                                                            Currency:{{currency}}
                                                                         </li>    
                                                                                                                                                 
                                                                     </ul> 
@@ -485,8 +429,8 @@
                                                         <div style="line-height: 32px;" class="col-xs-12 t-no-pdr" ms-controller="tour_fees" >
                                          
                                                              <div class="pull-right">
-                                                               <button class="btn btn-primary btn-lg" id="confirmInvo">
-                                                                    <i class="icon-ok "></i>Comfirm
+                                                               <button class="btn btn-primary btn-lg" id="add_invoice">
+                                                                    <i class="icon-ok "></i>Confirm
                                                                 </button>
                                                            </div>
                                         
@@ -532,7 +476,7 @@
 		<script src="public/assets/js/page/modules/laydate.js"></script>
 		<script src="public/assets/js/page/modules/jquery.date_input.pack.js"></script>
 		<script src="public/assets/js/page/jquery.ynf.js"></script>
-		<script src="public/assets/js/page/invoice.js"></script>   
+		<script src="public/assets/js/page/com_invoice.js"></script>   
 		<!-- inline scripts related to this page -->		
 
 		<!-- inline scripts related to this page -->

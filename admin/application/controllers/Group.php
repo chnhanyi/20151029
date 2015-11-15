@@ -279,9 +279,14 @@
 			         } 	
 			            $r_id = $this->input->post("r_id",true);					
 						$Nid =$this->input->post("r_Nid",true);
-						$Sid =$this->input->post("r_Sid",true);													
+						$Sid =$this->input->post("r_Sid",true);	
+					if ($r_id==0 ||$Nid==0 ||$Sid == 0){						
+						$data['retCode'] = -1;
+						$data['data'] = "Tour Group ID can not be 0!";
+						$data['status'] = "fail";				
+			         } 												
 
-					if($this->Group_model->is_Mgroup($r_id,$Nid,$Sid) == false){						
+					if($this->Group_model->is_Mgroup($Nid,$Sid) == false){						
 						$data['retCode'] = -1;
 						$data['data'] =  "Same TourGroup Exists!";
 						$data['status'] = "fail";				

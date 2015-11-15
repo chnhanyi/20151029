@@ -193,7 +193,7 @@
 			$currentset = $this->Order_model->get_route_store($data['r_id'],$data['o_bookingTime']);
 		
 			if($currentset < $data['o_totalNum']){
-				$this->response_data("remain sit is not valid",-113);
+				$this->response_data("remain seat is not valid".$currentset.$data['r_id'].$data['o_bookingTime'],-113);
 			}
 			if($data['o_totalNum'] != $data['o_adultNumber'] + $data['o_childNumber1'] +$data['o_childNumber2'] + $data['o_infantNumber'] ){
 				$this->response_data("person number is not valid",-114);

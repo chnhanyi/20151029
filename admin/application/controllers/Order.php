@@ -215,119 +215,281 @@
 
 		//审核发票信息
 		function get_invoice(){
-			//获取订单编号
-			$o_id 	= $this->input->get("id");
-			//根据订单编号，查询该订单的信息
-			$res1 = $this->Order_model->get_detail($o_id);
-
-			//组装数据
-			$data=array();
-			$data['tour_code'] = $res1['t_tourCode'];
-			$data['o_sn'] = $res1['o_sn'];
-			$date = $res1['o_bookingTime'];
-			$data['tour_date'] = $this->toxdate($date);
-			$data['adultNumber'] = $res1['o_adultNumber'];
-			$data['adultPrice'] = $res1['o_adultPrice']/100;
-			$data['adultPrice_invo'] = $res1['o_adultPrice']*(1-$res1['o_discount'])/100;
-			$data['childNumber1'] = $res1['o_childNumber1'];			
-			$data['childPrice1'] = $res1['o_childPrice1']/100;
-			$data['childPrice1_invo'] = $res1['o_childPrice1']*(1-$res1['o_discount'])/100;
-			$data['childNumber2'] = $res1['o_childNumber2'];			
-			$data['childPrice2'] = $res1['o_childPrice2']/100;
-			$data['childPrice2_invo'] = $res1['o_childPrice2']*(1-$res1['o_discount'])/100;
-			$data['infantNumber'] = $res1['o_infantNumber'];			
-			$data['infantPrice'] = $res1['o_infantPrice']/100;
-			$data['discount'] = $res1['o_discount'];
-			$data['single'] = $res1['o_single'];
-			$data['singlePrice'] = $res1['o_singleRoomDifferencePrice']/100;
-			$data['reference'] = $res1['o_agentReference'];
-			$data['orderAmount'] = $res1['o_orderAmount']/100;
-			$data['delayAmount'] = $data['orderAmount']+($data['adultPrice']*$data['adultNumber']+$data['childPrice1']*$data['childNumber1']+$data['childPrice2']*$data['childNumber2'])*0.02;
-			
-			$this->load->helper('cookie');
-			$data['opname'] = get_cookie("uin");
-			
-			$nowDate = date("Y-m-d");			
-			$data['create_date'] = $this->toxdate($nowDate);			
-           
-			//获取公司的信息
-			$a_id = $res1['a_id'];
-			$res2 = $this->Company_model->get_company($a_id);			
-			$data['a_name']=$res2['a_name'];
-			$data['address']=$res2['a_address'];
-			$data['city']=$res2['a_city'];
-            $area = $res2['a_area']; 
-            if($area == 1){
-            	$data['currency']="AUD";
-            }elseif ($area == 2 || $area == 3) {
-            	$data['currency']="NZD";
-            }
-			
-			//获取销售人员的信息
-			$s_id = $res1['user_id'];
-			$res3 = $this->Agent_model->get_agent($s_id);			
-			$data['s_name']=$res3['s_name'];
-
-			//获取线路的名字
-			$r_id = $res1['r_id'];
-			$res4 = $this->Route_model->get_route($r_id);			
-			$data['cName']=$res4['r_cName'];
-			$data['eName']=$res4['r_eName'];
-
-			//根据订单编号，获取该订单的游客姓名
-			$res5 = $this->Order_model->get_order_guest($o_id);			
-			$data['adultName'] = "";
-			$data['infantName'] = "";
-			$data['childName1'] = "";
-			$data['childName2'] = "";
-			$a=0;
-			$c1=0;
-			$c2=0;
-			$in=0;  
-
-			foreach($res5 as $key => $g){			        				    
-					if($g['g_type']==1){
-						$data['adultName'].="&nbsp;&nbsp;".++$a.".".$g['g_firstname']."/".$g['g_lastname'];
-					}elseif($g['g_type']==2){
-						$data['infantName'].="&nbsp;&nbsp;".++$c1.".".$g['g_firstname']."/".$g['g_lastname'];
-					}elseif($g['g_type']==3){
-						$data['childName1'].="&nbsp;&nbsp;".++$c2.".".$g['g_firstname']."/".$g['g_lastname'];
-					}elseif($g['g_type']==4){
-						$data['childName2'].="&nbsp;&nbsp;".++$in.".".$g['g_firstname']."/".$g['g_lastname'];
-					}
-				}
-
 			//加载发票页
-			$this->load->view("op/com_invoice.html",$data);
+			$this->load->view("op/com_invoice.html");
 		}
 
 		//更新发票信息
-		function confirm_invoice(){
-			//获取该订单的ID
+		function confirm_invoice(){			
+			//获取订单编号
+			$o_id 	= $this->input->post("o_id");
+			//根据订单编号，查询该订单的信息
+			$res1 = $this->Order_model->get_detail($o_id);
+
+			//查询订单的修改次数，如果大于等于1，说明已经被修改过，直接从发票信息取数据即可。
+			$data=array();
+
+			$this->load->helper('cookie');
+			$data['opname'] = get_cookie("uin");					
+			$nowDate = date("Y-m-d");			
+			$data['create_date'] = $this->toxdate($nowDate);
+
+			if($res1['o_invoice_hit']==0){
+					//第一次提取数据，从订单表中组装
+					//组装数据
+					$data['tour_code'] = $res1['t_tourCode'];
+					$data['o_sn'] = $res1['o_sn'];
+					$date = $res1['o_bookingTime'];
+					$data['tour_date'] = $this->toxdate($date);
+					$data['adultNumber'] = $res1['o_adultNumber'];
+					$data['adultPrice'] = $res1['o_adultPrice']/100;
+					$data['adultPrice_invo'] = $res1['o_adultPrice']*(1-$res1['o_discount'])/100;
+					$data['childNumber1'] = $res1['o_childNumber1'];			
+					$data['childPrice1'] = $res1['o_childPrice1']/100;
+					$data['childPrice1_invo'] = $res1['o_childPrice1']*(1-$res1['o_discount'])/100;
+					$data['childNumber2'] = $res1['o_childNumber2'];			
+					$data['childPrice2'] = $res1['o_childPrice2']/100;
+					$data['childPrice2_invo'] = $res1['o_childPrice2']*(1-$res1['o_discount'])/100;
+					$data['infantNumber'] = $res1['o_infantNumber'];			
+					$data['infantPrice'] = $res1['o_infantPrice']/100;
+					$data['discount'] = $res1['o_discount'];
+					$data['reference'] = $res1['o_agentReference'];
+					$data['orderAmount'] = $res1['o_orderAmount']/100;
+					$data['delayAmount'] = $data['orderAmount']+($data['adultPrice']*$data['adultNumber']+$data['childPrice1']*$data['childNumber1']+$data['childPrice2']*$data['childNumber2'])*0.02;
+		           
+					//获取公司的信息
+					$a_id = $res1['a_id'];
+					$res2 = $this->Company_model->get_company($a_id);			
+					$data['a_name']=$res2['a_name'];
+					$data['address']=$res2['a_address'];
+					//$data['city']=$res2['a_city'];
+		            $area = $res2['a_area']; 
+		            if($area == 1){
+		            	$data['currency']="AUD";
+		            }elseif ($area == 2 || $area == 3) {
+		            	$data['currency']="NZD";
+		            }
+					
+					//获取销售人员的信息
+					$s_id = $res1['user_id'];
+					$res3 = $this->Agent_model->get_agent($s_id);			
+					$data['s_name']=$res3['s_name'];
+
+					//获取线路的名字
+					$r_id = $res1['r_id'];
+					$res4 = $this->Route_model->get_route($r_id);			
+					$data['cName']=$res4['r_cName'];
+					$data['eName']=$res4['r_eName'];
+
+					//根据订单编号，获取该订单的游客姓名
+					$res5 = $this->Order_model->get_order_guest($o_id);			
+					$data['adultName'] = "";
+					$data['infantName'] = "";
+					$data['childName1'] = "";
+					$data['childName2'] = "";
+					$a=0;
+					$c1=0;
+					$c2=0;
+					$in=0;  
+
+					foreach($res5 as $key => $g){			        				    
+							if($g['g_type']==1){
+								$data['adultName'].="&nbsp;&nbsp;".++$a.".".$g['g_firstname']."/".$g['g_lastname'];
+							}elseif($g['g_type']==2){
+								$data['infantName'].="&nbsp;&nbsp;".++$c1.".".$g['g_firstname']."/".$g['g_lastname'];
+							}elseif($g['g_type']==3){
+								$data['childName1'].="&nbsp;&nbsp;".++$c2.".".$g['g_firstname']."/".$g['g_lastname'];
+							}elseif($g['g_type']==4){
+								$data['childName2'].="&nbsp;&nbsp;".++$in.".".$g['g_firstname']."/".$g['g_lastname'];
+							}
+						}
+
+				    //填写发票信息
+					$data['invoice_list'] = array();
+
+		            //成人的发票信息
+		            $adt=array();
+		        		    $adt['item'] = "TOUR FEE (ADULT)";
+						    $adt['name'] = $data['adultName'];
+						    $adt['price']= $data['adultPrice_invo'];
+						    $adt['unit'] = $data['adultNumber'];
+						    $adt['total'] =$data['adultPrice_invo']*$data['adultNumber'];				   
+						    array_push($data['invoice_list'],$adt);
+					
+					//小孩（不占床的发票信息）
+						    if($data['childNumber1']!=0){
+						    $cd1=array();
+			        		    $cd1['item'] = "TOUR FEE (CHILD NO BED)";
+							    $cd1['name'] = $data['childName1'];
+							    $cd1['price'] = $data['childPrice1_invo'];
+							    $cd1['unit'] = $data['childNumber1'];
+							    $cd1['total'] =$data['childPrice1_invo']*$data['childNumber1'];				   
+							    array_push($data['invoice_list'],$cd1);
+						    }
 
 
+					//小孩（占床的发票信息）
+						    if($data['childNumber2']!=0){
+						    $cd2=array();
+			        		    $cd2['item'] = "TOUR FEE (CHILD WITH BED)";
+							    $cd2['name'] = $data['childName2'];
+							    $cd2['price'] = $data['childPrice2_invo'];
+							    $cd2['unit'] = $data['childNumber2'];
+							    $cd2['total'] =$data['childPrice2_invo']*$data['childNumber2'];				   
+							    array_push($data['invoice_list'],$cd2);
+						    }
 
+					//婴儿的发票信息
+						    if($data['infantNumber']!=0){
+						    $nt=array();
+			        		    $nt['item'] = "TOUR FEE (INFANT)";
+							    $nt['name'] = $data['infantName'];
+							    $nt['price'] = $data['infantPrice'];
+							    $nt['unit'] = $data['infantNumber'];
+							    $nt['total'] =$data['infantPrice_invo']*$data['infantNumber'];				   
+							    array_push($data['invoice_list'],$nt);
+						    }
 
-            //更新该订单的处理状态
+				    //单人房差的发票信息
+						    if($res1['o_single']!=0){
+					//根据订单编号，查询该单人房间的姓名信息
+					      $res6 = $this->Order_model->get_single_name($o_id);
+					      $single_name="";
+					      foreach ($res6 as $key => $value) {
+					      	$single_name.=$value['r_guests'];
+					      }
+
+						    $sg=array();
+			        		    $sg['item'] = "SINGLE ROOM SURCHARGE";
+							    $sg['name'] = $single_name;
+							    $sg['price'] = $res1['o_singleRoomDifferencePrice']/100;
+							    $sg['unit'] = $res1['o_single'];
+							    $sg['total'] =$sg['price']*$sg['unit'] ;				   
+							    array_push($data['invoice_list'],$sg);
+						    }
+
+			}else{
+				//不是第一次提取数据，直接从数据库读取字段即可
+                //根据修改次数，确定发票号码
+                	$o_sn = $res1['o_sn'];
+					switch ($res1['o_invoice_hit']) {
+						case 1:
+							$data['o_sn']= $o_sn."A";
+							break;
+						case 2:
+							$data['o_sn']= $o_sn."B";
+							break;
+						case 3:
+							$data['o_sn']= $o_sn."C";
+							break;
+						case 4:
+							$data['o_sn']= $o_sn."D";
+							break;
+						case 5:
+							$data['o_sn']= $o_sn."E";
+							break;
+						case 6:
+							$data['o_sn']= $o_sn."F";
+							break;
+						case 7:
+							$data['o_sn']= $o_sn."G";
+							break;
+						case 8:
+							$data['o_sn']= $o_sn."H";
+							break;
+						case 9:
+							$data['o_sn']= $o_sn."I";
+							break;
+						case 10:
+							$data['o_sn']= $o_sn."J";
+							break;
+						case 11:
+							$data['o_sn']= $o_sn."K";
+							break;
+						case 12:
+							$data['o_sn']= $o_sn."L";
+							break;
+						case 13:
+							$data['o_sn']= $o_sn."M";
+							break;
+						default:
+						    $data['o_sn']= $o_sn;
+							break;
+				}
+				//从数据库中获取发票的字段
+                 $invoice_info = $res1['o_invoice_data'];
+                 $invoice_info=stripslashes($invoice_info);
+   				 $invoice_info= json_decode($invoice_info,true); 
+                 
+                 //分配数据
+                 $data['tour_date']=$invoice_info['tour_date'];
+                 $data['tour_code']=$invoice_info['tour_code'];
+				 $data['reference'] = $invoice_info['reference'];
+				 $data['orderAmount'] = $invoice_info['orderAmount'];
+				 $data['delayAmount'] = $invoice_info['delayAmount'];
+				 $data['a_name']=$invoice_info['company_name'];
+				 $data['address']=$invoice_info['company_address'];
+				 $data['currency']=$invoice_info['currency'];
+				 $data['s_name']=$invoice_info['agent_name'];
+				 $data['cName']=$invoice_info['c_name'];
+				 $data['eName']=$invoice_info['e_name'];
+
+				 //发票的必填项目信息
+				 $data['invoice_list'] = array();	
+				 $data['invoice_list'] = $invoice_info['invoice_list'];
+
+   				 //检查是否有额外的收费项目	
+                 $data['extra_list']=array();
+                 if($invoice_info['list']!=null){
+                 	$data['extra_list'] = $invoice_info['list'];
+                        }
+			      }
+
+			$da['status'] = "success";
+			$da['reCode'] = 0;
+			$da['data'] = $data;
+
+			$this->response_data($da);
+		}
+
+		//更新发票信息和发票点击次数，审核信息
+		function update_invoice(){
+			//获取订单编号和op的姓名
+			$o_id= $this->input->post("o_id",true);
 			$this->load->helper('cookie');
 			$opname = get_cookie("uin");
-			$num2 = $this->Order_model->update_order_status2($o_id,$opname);
+			//获取新增数据
+			$date=$this->input->post("date",true);
+			$tour_date=$this->toudate($date);
+			$invoice_data= $this->input->post("data",true);
+			
+			$data=json_encode($invoice_data);
+			$data=addslashes($data);
 
-			//判断是否更新成功，向页面发送消息
-			if($num1 == 1 && $num2==1){				
-					$data['reCode'] = 1;
-					$data['status'] = "success";
-					$data['data'] = "Confirm Order Success";
+			//获取发票的修改次数，然后加1
+			$hit=$this->Order_model->get_invoice_hit($o_id);
+            
+            $newhit=(int)$hit+1;
+		
+            //更新发票信息和订单的审核人、审核状态
+            $num1 = $this->Order_model->update_invoice_info($o_id,$opname,$newhit,$data);
+
+            //判断是否更新成功，向页面发送消息
+            $re_data=array();
+			if($num1 == 1){				
+					$re_data['reCode'] = 1;
+					$re_data['status'] = "success";
+					$re_data['data'] = "Confirm Inovice Info Success";
 		        }else{
-	                $data['reCode'] = -1;
-				    $data['status'] = "failed";
-				    $data['data'] = "Confirm Order failed";
+	                $re_data['reCode'] = -1;
+				    $re_data['status'] = "failed";
+				    $re_data['data'] = "Confirm Inovice Info failed";
 		        }
-
-		        $this->output->set_header('Content-Type: application/json; charset=utf-8');
-				echo json_encode($data);
-
+		        $this->response_data($re_data);
 		}
+
+
+
 
 		//加载增加航班信息的页面（数据库中没有机票信息）
 		function add_flight(){
@@ -390,7 +552,7 @@
 			$num1 = $this->Order_model->insert_flightInfo($info);
 
             //更新该订单的航班信息处理状态
-            $num2 = $this->Order_model->update_flight_status($o_id);	
+            $num2 = $this->Order_model->update_flight_status($id);	
 
 			//判断是否更新成功，向页面发送消息
 			if($num1 == 1 && $num2==1){				
@@ -402,9 +564,6 @@
 				    $data['status'] = "failed";
 				    $data['data'] = "Add FlightInfo failed";
 		        }
-
-		        var_dump($data);
-		        exit;
 
 		        $this->response_data($data);	
 		}
@@ -434,7 +593,7 @@
 			$this->load->view("op/edit_flight.html",$data);
 		}
 
-		//编辑联系人信息
+		//加载编辑联系人信息页面
 		function edit_contacts(){
 			//获取该订单的ID
 			$o_id 	= $this->input->get("id");
@@ -452,6 +611,34 @@
 			$this->load->view("op/edit_contacts.html",$data);
 		}
 
+		//更新联系人信息
+		function update_contacts(){
+
+			$contact = array();
+
+			//获取该订单的ID和联系人信息
+			$o_id= $this->input->post("id",true);
+			$contact['o_contacts']= $this->input->post("id",true);
+			$contact['o_mobile']= $this->input->post("id",true);
+			$contact['o_email']= $this->input->post("id",true);
+
+
+			//在数据库中更新联系人信息			
+			$num = $this->Order_model->update_contact($o_id,$contact);	
+
+			//判断是否更新成功，向页面发送消息
+			$data = array();
+			if($num==1){				
+					$data['retCode'] = 1;
+					$data['status'] = "success";
+					$data['data'] = "Update ContactsInfo Success";
+		        }else{
+	                $data['retCode'] = -1;
+				    $data['status'] = "failed";
+				    $data['data'] = "Update ContactsInfo failed";
+		        }
+		    $this->response_data($data);	
+		}
 
 
 
