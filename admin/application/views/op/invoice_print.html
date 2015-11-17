@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pacific Delight Booking System</title>
+<base href="<?php echo base_url();?>" />
+<style>
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6,form, input, p, span, strong, em, a, img, table, th, tr,td{ margin:0; padding:0; border:none;}
+.fb{ font-weight:bold;}
+.f12{ font-size:12px;}
+.f14{ font-size:14px;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden; font-size:0;}
+.clearfix { *zoom:1;}
+.hidden{ display:none;}
+.alignCenter{ text-align:center;}
+a{ text-decoration:none; color:#333; outline:none; -webkit-outline:none;}
+a:hover{ text-decoration:underline; color:#F60;} 
+input:focus { outline: none; } 
+body{ font-family:"微软雅黑", "宋体", "黑体"; font-size:12px; color:#333;}
+.wrap{ width:950px; margin:50px auto;}
+.head{ padding:0 30px;}
+.companyInfo{ }
+.companyInfo ul{ list-style:none; padding:30px 20px 0 0;}
+.companyInfo ul li{ text-align:right; line-height:25px; word-spacing:3px; letter-spacing: 1px;}
+.content{ width:880px; margin:20px auto; }
+.content h3{ font-size:40px; text-align:center; font-weight:normal;letter-spacing: 1px; padding-bottom:15px;}
+.content .invoiceBox{ width:100%; height:1000px; border:1px solid #999; border-top:2px solid #333;}
+.invoiceBox .top{ width:100%; padding:20px 0 0 20px;}
+.top p{ line-height:30px;}
+.top p label{ font-weight:bold; padding-right:5px;}
+.w70{ width:70%;}
+.w28{ width:28%;}
+.top ul{ list-style:none; padding-right:40px;} 
+.top ul li{ text-align:right; line-height:30px;} 
+.tureInfo{ padding:20px 0 20px 20px;}
+.tureInfo ul{ list-style:square inside;}
+.tureInfo ul li{ line-height:30px;}
+.tourBox{ width:90%; margin:0 auto;}
+.tourBox table{ width:100%; border:1px solid #666;  margin-bottom:20px;}
+.tourBox table th,.tourBox table td{ border:1px solid #666; height:30px;}
+.tourBox table td{ text-align:center;}
+.tourBox table td.alignLeft{ text-align:left;}
+.price{ text-align:right; font-weight:bold; font-size:16px; line-height:30px;}
+.red{ color:#F00;}
+.bottom{ margin:220px 0 40px 0;}
+.bottom h3{ text-align:center; font-size:14px; font-weight:bold;}
+.paymentInfo{ border-top:2px dashed #999999; width:95%; margin:0 auto; padding-top:15px;}
+.paymentInfo p{ font-size:14px; font-weight:bold;}
+.paymentInfo ul{ list-style:none; margin-right:45px;}
+.paymentInfo ul li { line-height:25px; letter-spacing:-0.5px;}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+	<div class="head clearfix">
+    	<div class="fl"><img src="public/assets/images/ilogo.jpg"></div>
+        <div class="companyInfo fr">
+        	<ul>
+            	<li class="fb f14">Pacific Delight Ltd</li>
+                <li>PO Box 26135 </li>
+                <li>Epsom,Auckland </li>
+                <li>New Zealand </li>
+                <li>Tel: 09-3079555 </li>
+                <li>GST No:53-172-970 </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+    	<h3>Tax Invoice</h3>
+        <div class="invoiceBox">
+        	<div class="top clearfix">
+            	<div class="w70 fl">
+                   <p class="f14"><label>For:</label><b><?php echo $company_name ?></b></p>
+				   <p class="f14"><label>Address:</label></p>
+				   <p><?php echo $address ?></p>
+                </div>
+                <div class="w28 fr">
+                	<ul>
+                    	<li class="f14 fb">Invoice No:<?php echo $invoice_no ?></li>
+                        <li>Create Date: <?php echo $create_date ?></li>
+                        <li>Due Date: <?php echo $tour_date ?></li>
+                        <li>Consultant: <?php echo $op_name ?></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tureInfo">
+                <ul>
+                    <li>Agent's reference:<?php echo $reference ?></li>
+                    <li>Attention to: <?php echo $agent_name ?></li>
+                    <li>Tour Name:<?php echo $c_name ?>/<?php echo $e_name ?></li>
+                    <li>Tour Code:<?php echo $tour_code ?></li>
+                    <li>Tour Date：<?php echo $tour_date ?></li>
+                </ul>
+        	</div>
+            <div class="tourBox">
+            	<table cellpadding="0" cellspacing="0">
+                   <thead>
+                		<tr>
+                            <th width="5%">#</th>
+                            <th width="25%">Tour Fee Items</th>
+                            <th width="35%">Customer Name</th>
+                            <th width="15%">Unit Price</th>
+                            <th width="10%">Unit</th>
+                            <th width="10%">Total</th>
+                    	</tr>
+                   </thead>
+                   <tbody>
+                        <?php foreach($invoice_list as  $k => $v) :?>                                                                   
+                        <tr>                            
+                            <td><?php echo $k+1 ?></td>
+                            <td><?php echo $v['item'] ?></td>
+                            <td><?php echo $v['name'] ?></td>
+                            <td><?php echo $v['price'] ?></td>
+                            <td><?php echo $v['unit'] ?></td>
+                            <td><?php echo $v['total'] ?></td>
+                        </tr>
+                      <?php endforeach;?>
+                   </tbody>
+                </table>
+                <p class="price">Total Amount <span class="red">( If not Prepay):<?php echo $delayAmount ?></span></p> 
+                <p class="price">Total Amount(Under Prepay Condition): $<?php echo $orderAmount ?></p>
+                <p class="price">Currency: <?php echo $currency ?></p>
+            </div>
+            <div class="bottom">
+            	<h3>Thank you for choosing Pacific Delight Ltd.</h3>
+                <div class="paymentInfo">
+                	<p>Payment Info:</p>
+                    <div class="clearfix">
+                    	<ul class="fl">
+                            <li><b>Pay to:</b></li>
+                            <li>Pacific Delight Ltd. POBox 26135</li>
+                            <li>Epsom, Auckland, New Zealand</li>
+                        </ul>
+                        <ul class="fl">
+                        	<li>Austrilia account:</li>
+                            <li>Bank Name: ANZ</li>
+                            <li>Branch No: (BSB)012-071</li>
+                            <li>Account No:5403-05227</li>
+                            <li>Account Name: Ming Ho Chen</li>
+                        </ul>
+                        <ul class="fl">
+                        	<li>New Zealand Account:</li>
+                            <li>Bank Name: Bank of New Zealand</li>
+                            <li>Account Name: Pacific Delight Ltd</li>
+                            <li>Account No: 02-0108-0231759-000</li>
+                            <li>Swift Code: BKNZNZ22</li>
+                        </ul>
+                        <ul class="fl">
+                        	<li>Invoice No:<?php echo $invoice_no ?></li>
+                            <li>Due Date:<?php echo $tour_date ?></li>
+                            <li>Payment:</li>
+                            <li>Currency:<?php echo $currency ?></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+</body>
+</html>

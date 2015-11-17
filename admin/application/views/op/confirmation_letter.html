@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pacific Delight Booking System</title>
+<base href="<?php echo base_url();?>" />
+<style>
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6,form, input, p, span, strong, em, a, img, table, th, tr,td{ margin:0; padding:0; border:none;}
+.fb{ font-weight:bold;}
+.f12{ font-size:12px;}
+.f14{ font-size:14px;}
+.f16{ font-size:16px; font-weight:bold;}
+.fl{ float:left;}
+.fr{ float:right;}
+.clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden; font-size:0;}
+.clearfix { *zoom:1;}
+.hidden{ display:none;}
+.alignCenter{ text-align:center;}
+a{ text-decoration:none; color:#333; outline:none; -webkit-outline:none;}
+a:hover{ text-decoration:underline; color:#F60;} 
+input:focus { outline: none; } 
+body{ font-family:"微软雅黑", "宋体", "黑体"; font-size:12px; color:#333;}
+.wrap{ width:950px; margin:50px auto;}
+.wrap h2{ font-size:30px; padding:20px 0 10px 20px; letter-spacing:1px;}
+.wrap h3{ font-size:20px; padding:30px 0 20px 20px;}
+.wrap h4{ font-size:18px; padding:30px 0 0 20px; font-weight:500;}
+.thank{ font-size:16px; font-weight:bold; line-height:25px; padding-left:40px;}
+.bottom{vertical-align: bottom;}
+.red{color:#F00;}
+.length{max-width: 500px;};
+table{ width:100%; border:1px solid #666;  margin:20px;}
+table th,table td{ border:1px solid #666; height:40px;}
+table td{ text-align:center;}
+.pt200{padding-top: 200px;}
+</style>
+</head>
+
+<body>
+<div class="wrap clearfix">
+	<div class="fl">
+    	<h2>Booking Confirmmation<span class="thank">(Customer Copy)</span></h2>
+        <img src="public/assets/images/bookingBg.jpg">
+        <h3>Congratulations, Your booking has been confirmed. </h3>
+        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to buy travel insurance .</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Thank you for chosing us, may you have a wonderful journey.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purpose.</p>
+        <h4><?php echo $c_name;?>/<?php echo $e_name;?></h4>
+        <h4>Tour Code: <?php echo $tour_code;?>&nbsp;&nbsp;&nbsp;&nbsp;Tour Date：<?php echo $tour_date;?></h4>
+        <h4><span class="red">Very Important:&nbsp;&nbsp;&nbsp;&nbsp;</span>Contacts: <?php echo $contacts;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mobile：<?php echo $mobile;?></h4>
+        <table class="f14" cellpadding="0" cellspacing="0">
+           <thead>
+                <tr>
+                    <th width="20%">Item</th>                    
+                    <th width="80%">Details</th>
+                </tr>
+           </thead>
+           <tbody>
+                <tr>
+                    <td>Room Request</td>                   
+                    <td><?php echo $room;?></td>
+                </tr>
+                <tr>
+                    <td>Total Customers</td>                   
+                    <td><?php echo $people;?></td>
+                </tr>
+                <tr>
+                    <td>Customer Names</td>                   
+                    <td class="length"><?php echo $guest_list;?></td>
+                </tr>
+                <?php if($service!=""){ ?>
+                	<tr>
+                    <td>Additional Service</td>                    
+                    <td><?php echo $service; ?></td>
+                	</tr>               
+				<?php }?>                
+           </tbody>
+        </table>
+            <h4><?php echo $company_name;?></h4>
+            <h4>TEL: <?php echo $company_tel;?></h4>
+            <img class="pt200" src="public/assets/images/swty.jpg">
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">Our Staff will welcome you at the arrival gate with this sign.</p>
+    </div>
+	<div class="rightBar fr"><img src="public/assets/images/bodyBg.jpg"></div>
+
+</div>
+</body>
+</html>

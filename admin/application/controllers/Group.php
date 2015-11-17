@@ -102,7 +102,8 @@
 							$cc['r_id'] 			=	$v['r_id'];
 							$cc['r_cName'] 	    	= 	$v['r_cName'];
 							array_push($data['data'],$cc);
-						}			
+						}
+
 						$this->load->view("op/edit_group.html",$data);
 				}
 

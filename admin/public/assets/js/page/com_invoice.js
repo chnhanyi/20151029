@@ -80,7 +80,15 @@
                      vm.delayAmount=parseFloat(i.delayAmount).toFixed(2);
                      vm.currency=i.currency;
 
-                     vm.list = i.extra_list ;
+                     vm.list = i.extra_list;
+                     if(vm.list!=null){
+                          for(var n=0;n<vm.list.length;n++){                                                                                                                      
+                             vm.orderAmount=parseFloat(vm.orderAmount)+parseFloat(vm.list[n].total);
+                             vm.delayAmount=parseFloat(vm.delayAmount)+parseFloat(vm.list[n].total);
+                           }
+                             vm.orderAmount=parseFloat(vm.orderAmount).toFixed(2);
+                             vm.delayAmount=parseFloat(vm.delayAmount).toFixed(2);
+                       }
 
 
                      vm.remove = function() {
@@ -94,13 +102,25 @@
                      }
 
                      vm.add_list_item = function() {
-                              vm.list.push({
-                                     item: "",
-                                     name: "", 
-                                     price: "",
-                                     unit: "",
-                                     total:""
-                                 });                                                       
+                                        if(vm.list==null){
+                                            vm.list=[{
+                                                     item: "",
+                                                     name: "", 
+                                                     price: "",
+                                                     unit: "",
+                                                     total:""
+                                                    }];
+                                        }else{
+                                               vm.list.push({
+                                                     item: "",
+                                                     name: "", 
+                                                     price: "",
+                                                     unit: "",
+                                                     total:""
+                                                 });   
+
+                                        }
+                                                    
                         }
 
                      vm.fn_item = function() {
@@ -166,7 +186,7 @@
                  }
 
 
-                 if (data.list[m].total != "" && !/^\d{1,}(?:\.\d{1,2})?$/.test(data.list[m].total)) {
+                 if (data.list[m].total != "" && !/^[-]?\d{1,}(?:\.\d{1,2})?$/.test(data.list[m].total)) {
                      _.modal({
                          "title": "Error Tips",
                          cont: "Amount Format incorrect, only Arabic numerals and . allowed, Row #" + (m+ 1) + "!"
@@ -224,9 +244,9 @@
                                      _.modal({
                                      "title": "Comfirm Invoice Success!",
                                      cont: "Comfirm Invoice Success!",
-                                     //close_fn: function() {
-                                      //  window.location.href = "index.php/Order/index"
-                                     //}
+                                     close_fn: function() {
+                                       window.location.href = "index.php/Order/index"
+                                     }
                                  });
                              } else {
                                  _.modal({

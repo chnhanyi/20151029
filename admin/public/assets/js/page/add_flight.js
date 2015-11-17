@@ -238,7 +238,7 @@
              setTimeout(function() {
                  vm.list[index].g_arriveDate = _this.val();
                  console.log("blur_arriveDate" ,_this , _this.val());
-             }, 300);
+             }, 1000);
          }         
  
 

@@ -70,9 +70,7 @@
 			}else{
 				
 					$this->load->view("op/order_detail.html");
-			}
-				
-
+			}	
 			   
 		}
 
@@ -90,9 +88,6 @@
 			$opname = get_cookie("uin");
 			$num = $this->Order_model->update_order_status1($o_id,$opname);
 
-			//if($num <= 0){
-			//	return false;
-			//}
 
 			//加载订单的详细内容			
 			$res = $this->Order_model->get_detail($o_id);
@@ -234,13 +229,7 @@
 			$nowDate = date("Y-m-d");			
 			$data['create_date'] = $this->toxdate($nowDate);
 
-			if($res1['o_invoice_hit']==0){
-					//第一次提取数据，从订单表中组装
-					//组装数据
-					$data['tour_code'] = $res1['t_tourCode'];
-					$data['o_sn'] = $res1['o_sn'];
-					$date = $res1['o_bookingTime'];
-					$data['tour_date'] = $this->toxdate($date);
+			//计算订单的总额和延迟付款额
 					$data['adultNumber'] = $res1['o_adultNumber'];
 					$data['adultPrice'] = $res1['o_adultPrice']/100;
 					$data['adultPrice_invo'] = $res1['o_adultPrice']*(1-$res1['o_discount'])/100;
@@ -253,10 +242,21 @@
 					$data['infantNumber'] = $res1['o_infantNumber'];			
 					$data['infantPrice'] = $res1['o_infantPrice']/100;
 					$data['discount'] = $res1['o_discount'];
-					$data['reference'] = $res1['o_agentReference'];
+
 					$data['orderAmount'] = $res1['o_orderAmount']/100;
 					$data['delayAmount'] = $data['orderAmount']+($data['adultPrice']*$data['adultNumber']+$data['childPrice1']*$data['childNumber1']+$data['childPrice2']*$data['childNumber2'])*0.02;
-		           
+		    
+		    //判断是新增发票还是改发票
+
+			if($res1['o_invoice_hit']==0){
+					//第一次提取数据，从订单表中组装
+					//组装数据
+					$data['reference'] = $res1['o_agentReference'];
+					$data['tour_code'] = $res1['t_tourCode'];
+					$data['o_sn'] = $res1['o_sn'];
+					$date = $res1['o_bookingTime'];
+					$data['tour_date'] = $this->toxdate($date);
+       
 					//获取公司的信息
 					$a_id = $res1['a_id'];
 					$res2 = $this->Company_model->get_company($a_id);			
@@ -368,6 +368,9 @@
 							    array_push($data['invoice_list'],$sg);
 						    }
 
+                    //给额外的信息赋值
+			       	$data['extra_list'] = array();
+
 			}else{
 				//不是第一次提取数据，直接从数据库读取字段即可
                 //根据修改次数，确定发票号码
@@ -425,14 +428,13 @@
                  $data['tour_date']=$invoice_info['tour_date'];
                  $data['tour_code']=$invoice_info['tour_code'];
 				 $data['reference'] = $invoice_info['reference'];
-				 $data['orderAmount'] = $invoice_info['orderAmount'];
-				 $data['delayAmount'] = $invoice_info['delayAmount'];
 				 $data['a_name']=$invoice_info['company_name'];
 				 $data['address']=$invoice_info['company_address'];
 				 $data['currency']=$invoice_info['currency'];
 				 $data['s_name']=$invoice_info['agent_name'];
 				 $data['cName']=$invoice_info['c_name'];
 				 $data['eName']=$invoice_info['e_name'];
+
 
 				 //发票的必填项目信息
 				 $data['invoice_list'] = array();	
@@ -488,6 +490,163 @@
 		        $this->response_data($re_data);
 		}
 
+		//发票页的打印和生成pdf
+		function invoice_print(){
+			//获取订单编号
+			$o_id= $this->input->get("id",true);
+
+			//找出发票的字段并组装
+			$res = $this->Order_model->get_detail($o_id);
+			$invoice_info=array();
+			     $invoice_info = $res['o_invoice_data'];
+                 $invoice_info=stripslashes($invoice_info);
+   				 $invoice_info= json_decode($invoice_info,true); 
+
+
+			$data=array();
+
+			//分配数据 Print
+            	 $data['tour_date']=$invoice_info['tour_date'];
+             	 $data['tour_code']=$invoice_info['tour_code'];
+             	 $data['invoice_no'] = $invoice_info['invoice_no'];
+             	 $data['op_name']=$invoice_info['op_name'];
+             	 $data['create_date'] = $invoice_info['create_date'];
+				 $data['reference'] = $invoice_info['reference'];
+				 $data['company_name']=$invoice_info['company_name'];
+				 $data['address']=$invoice_info['company_address'];
+				 $data['currency']=$invoice_info['currency'];
+				 $data['agent_name']=$invoice_info['agent_name'];
+				 $data['c_name']=$invoice_info['c_name'];
+				 $data['e_name']=$invoice_info['e_name'];
+				 $data['orderAmount']=$invoice_info['orderAmount'];
+				 $data['delayAmount']=$invoice_info['delayAmount'];
+
+				 //发票的必填项目信息
+				 $data['invoice_list'] = array();	
+				 $data['invoice_list'] = $invoice_info['invoice_list'];
+
+   				 //检查是否有额外的收费项目	
+                 $data['extra_list']=array();
+                 if($invoice_info['list']!=null){
+                 	$data['extra_list'] = $invoice_info['list'];
+                 	$data['invoice_list'] = array_merge($data['invoice_list'],$data['extra_list']);
+                        }
+			      
+
+			//加载打印发票页
+
+				$this->load->view("op/invoice_print.html",$data);
+		}
+
+		//confirmation letter的打印和生成pdf
+		function confirmation_letter(){
+			//获取订单编号
+			$o_id= $this->input->get("id",true);
+
+			//找出confirmation letter的字段并组装
+
+			//加载订单的详细内容			
+			$res = $this->Order_model->get_detail($o_id);
+
+			$invoice_info=array();
+			     $invoice_info = $res['o_invoice_data'];
+                 $invoice_info=stripslashes($invoice_info);
+   				 $invoice_info= json_decode($invoice_info,true); 
+ 
+			//组装数据		    
+			$data = array();
+			     $data['tour_date']=$invoice_info['tour_date'];
+             	 $data['tour_code']=$invoice_info['tour_code'];
+				 $data['c_name']=$invoice_info['c_name'];
+				 $data['e_name']=$invoice_info['e_name'];
+				 $data['company_name']=$invoice_info['company_name'];
+
+			//总人数
+			$data['people'] ="";
+			$adult_num = $res['o_adultNumber'];
+			$infant_num= $res['o_infantNumber'];
+			$child_num = $res['o_childNumber1']+$res['o_childNumber2'];
+			if($adult_num!=0){
+				 $data['people'].="ADULT×".$adult_num.",";
+			}
+			if($infant_num!=0){
+				 $data['people'].="INFANT×".$infant_num.",";
+			}
+			if($child_num!=0){
+				 $data['people'].="CHILD×".$child_num;
+			}
+
+
+
+			//获得客户名单
+			$guest = $this->Order_model->get_order_guest($o_id);
+			
+			$data['guest_list'] ="";			
+			foreach($guest as $k => $v){
+				switch ($v['g_type']) {
+					case 1:
+						$g_type="ADULT";
+						break;
+					case 2:
+						$g_type="INFANT";
+						break;
+					case 3:
+						$g_type="CHILD(NO BED)";
+						break;
+					case 4:
+						$g_type="CHILD(WITH BED)";
+						break;
+				}
+				$index=$k+1;
+				$data['guest_list'].=$index.".".$v['g_firstname']."/".$v['g_lastname']."/".$g_type.";&nbsp;&nbsp;&nbsp;";						
+			}
+				
+
+			//联系人信息			
+			$data['contacts'] = $res['o_contacts'];
+			$data['mobile'] = $res['o_mobile'];
+
+			//房间需求信息						
+			$double_room_num = $res['o_double'];
+			$triple_room_num= $res['o_triple'];
+			$single_room_num = $res['o_single'];
+			$twin_room_num= $res['o_twin'];
+
+			$data['room']="";
+			if($triple_room_num!=0){
+				 $data['room'].="Triple×".$triple_room_num.",";
+			}
+			if($single_room_num!=0){
+				 $data['room'].="Single×".$single_room_num.",";
+			}
+			if($double_room_num!=0){
+				 $data['room'].="Double×".$double_room_num.",";
+			}
+			if($twin_room_num!=0){
+				 $data['room'].="Twin×".$twin_room_num;
+			}
+
+			//额外的服务
+			$data['service']="";
+			if($invoice_info['list']!=null){
+                 	foreach ($invoice_info['list'] as $key => $value) {
+                 		$m=$key+1;
+                 		$data['service'].=$m.".".$value['item'];                 	
+                        }
+            }
+
+            //获得公司的电话号码
+            $a_id= $res['a_id'];
+            $company_res=$this->Company_model->get_company($a_id);           
+            $data['company_tel']=$company_res['a_tel'];
+
+
+
+			//加载打印confirmation letter页
+
+			$this->load->view("op/confirmation_letter.html",$data);
+		}
+
 
 
 
@@ -495,6 +654,7 @@
 		function add_flight(){
 
 				$this->load->view("op/add_flight.html");
+
 				}
 
         //获取该订单的乘客

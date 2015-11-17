@@ -652,7 +652,7 @@
                  return false;
              }
 
-             if (!/^[A-Za-z]+$/.test(data[i].g_firstname)) {
+             if (!/^[A-Za-z\s]+$/.test(data[i].g_firstname)) {
                  _.modal({
                      "title": "Error Tips",
                      cont: "First Name Format incorrect, only English letters allowed #" + (i + 1) + "!"

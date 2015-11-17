@@ -118,6 +118,7 @@
 						$cc['a_name'] 	    	= 	$v['a_name'];
 						array_push($data['data'],$cc);
 					}
+				
 					$this->load->view("manager/add_agent.html",$data);
 
 			  		}

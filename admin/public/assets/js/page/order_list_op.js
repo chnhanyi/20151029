@@ -200,11 +200,27 @@
                 ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
                 '>Terminate</a><br /><br />'].join("");
 
+            var invoice_print = ['<a ',
+                ' target="_blank"  href="./index.php/Order/invoice_print?id=', rowdata.id, '"',
+                style,
+                ' class="c-green" title="Print Invoice">Print Invoice</a><br /><br />'
+
+            ].join("");  
+
+            var confirmation_letter = ['<a ',
+                ' target="_blank"  href="./index.php/Order/confirmation_letter?id=', rowdata.id, '"',
+                style,
+                ' class="c-blue" title="Confirmation letter">Confirmation letter</a><br /><br />'
+
+            ].join("");   
+
             oper_html_arr.push(oper_check); 
             oper_html_arr.push(oper_invoice);   
 			oper_html_arr.push(oper_flight); 
 			oper_html_arr.push(oper_notice); 
             oper_html_arr.push(oper_terminate);
+            oper_html_arr.push(invoice_print); 
+            oper_html_arr.push(confirmation_letter);
 
             return oper_html_arr.join("");
             }else if(rowdata.o_flight == 1){
@@ -245,11 +261,27 @@
                 ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
                 '>Terminate</a><br /><br />'].join("");
 
+            var invoice_print = ['<a ',
+                ' target="_blank"  href="./index.php/Order/invoice_print?id=', rowdata.id, '"',
+                style,
+                ' class="c-green" title="Print Invoice">Print Invoice</a><br /><br />'
+
+            ].join("");  
+
+            var confirmation_letter = ['<a ',
+                ' target="_blank"  href="./index.php/Order/confirmation_letter?id=', rowdata.id, '"',
+                style,
+                ' class="c-blue" title="Confirmation letter">Confirmation letter</a><br /><br />'
+
+            ].join("");  
+
             oper_html_arr.push(oper_check); 
             oper_html_arr.push(oper_invoice);   
             oper_html_arr.push(oper_flight); 
             oper_html_arr.push(oper_notice); 
             oper_html_arr.push(oper_terminate);
+            oper_html_arr.push(invoice_print); 
+            oper_html_arr.push(confirmation_letter);
 
             return oper_html_arr.join("");
 
