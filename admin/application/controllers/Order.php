@@ -442,7 +442,7 @@
 
    				 //检查是否有额外的收费项目	
                  $data['extra_list']=array();
-                 if($invoice_info['list']!=null){
+                 if(isset($invoice_info['list'])==true && $invoice_info['list']!=null){
                  	$data['extra_list'] = $invoice_info['list'];
                         }
 			      }
@@ -527,7 +527,7 @@
 
    				 //检查是否有额外的收费项目	
                  $data['extra_list']=array();
-                 if($invoice_info['list']!=null){
+                 if(isset($invoice_info['list'])==true && $invoice_info['list']!=null){
                  	$data['extra_list'] = $invoice_info['list'];
                  	$data['invoice_list'] = array_merge($data['invoice_list'],$data['extra_list']);
                         }
@@ -555,6 +555,7 @@
  
 			//组装数据		    
 			$data = array();
+			     $data['invoice_no']=$invoice_info['invoice_no'];
 			     $data['tour_date']=$invoice_info['tour_date'];
              	 $data['tour_code']=$invoice_info['tour_code'];
 				 $data['c_name']=$invoice_info['c_name'];
@@ -628,7 +629,7 @@
 
 			//额外的服务
 			$data['service']="";
-			if($invoice_info['list']!=null){
+			if(isset($invoice_info['list'])==true && $invoice_info['list']!=null){
                  	foreach ($invoice_info['list'] as $key => $value) {
                  		$m=$key+1;
                  		$data['service'].=$m.".".$value['item'];                 	
@@ -639,7 +640,6 @@
             $a_id= $res['a_id'];
             $company_res=$this->Company_model->get_company($a_id);           
             $data['company_tel']=$company_res['a_tel'];
-
 
 
 			//加载打印confirmation letter页

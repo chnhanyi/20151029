@@ -7,14 +7,13 @@
 
 
  
-   var date_url = "/index.php/Order/a_route_detail"; // 获取日期以及余位信息
+    var date_url = "/index.php/Order/a_route_detail"; // 获取日期以及余位信息
     var submit_order_url = "/index.php/Order/add_order"; //提交 成品订单
  
      // var completed = false ; 
      var completed_one = false; // true 表示第一阶段校验通过
      var completed_two = false; //true 表示第二阶段校验通过
      var completed_three = false; // true 表示第三阶段校验通过 准备提价完整订单
-
 
 
      window.info = {}; // 初始化的部分数据（以前 做的设定 不需要太重视这个数据）
@@ -1109,8 +1108,19 @@
 
 
 
-
              order_info.flightInfo.arrive = JSON.parse(JSON.stringify(data.list));
+
+             $.each( order_info.flightInfo.arrive  ,function   (i,v) {
+                var indexs = v.arrivedName.split(",") ;
+                var newIndexs = [] ;
+                for( var n = 0 ; n<indexs.length ; n++){
+                     if( $.isNumeric( indexs[n] )  ){
+                       newIndexs.push( indexs[n] );
+                     }
+                }
+               v.arrivedName =  newIndexs.join(",");
+             });
+
              // order_info.flightInfo.leave = JSON.parse(JSON.stringify(data.leave_list));
 
              $.each(order_info.flightInfo.arrive, function(i, v) {

@@ -245,7 +245,7 @@
                                      "title": "Comfirm Invoice Success!",
                                      cont: "Comfirm Invoice Success!",
                                      close_fn: function() {
-                                       window.location.href = "index.php/Order/index"
+                                       window.location.href = "index.php/Order/invoice_print?id="+o_id;                                       
                                      }
                                  });
                              } else {

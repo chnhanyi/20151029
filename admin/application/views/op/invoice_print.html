@@ -45,12 +45,13 @@ body{ font-family:"微软雅黑", "宋体", "黑体"; font-size:12px; color:#333
 .tourBox table td.alignLeft{ text-align:left;}
 .price{ text-align:right; font-weight:bold; font-size:16px; line-height:30px;}
 .red{ color:#F00;}
-.bottom{ margin:220px 0 40px 0;}
+.bottom{ margin:180px 0 40px 0;}
 .bottom h3{ text-align:center; font-size:14px; font-weight:bold;}
 .paymentInfo{ border-top:2px dashed #999999; width:95%; margin:0 auto; padding-top:15px;}
 .paymentInfo p{ font-size:14px; font-weight:bold;}
 .paymentInfo ul{ list-style:none; margin-right:45px;}
 .paymentInfo ul li { line-height:25px; letter-spacing:-0.5px;}
+.length{max-width: 400px;word-wrap:break-word;};
 </style>
 </head>
 
@@ -83,7 +84,7 @@ body{ font-family:"微软雅黑", "宋体", "黑体"; font-size:12px; color:#333
                     	<li class="f14 fb">Invoice No:<?php echo $invoice_no ?></li>
                         <li>Create Date: <?php echo $create_date ?></li>
                         <li>Due Date: <?php echo $tour_date ?></li>
-                        <li>Consultant: <?php echo $op_name ?></li>
+                        <li>Operator: <?php echo $op_name ?></li>
                     </ul>
                 </div>
             </div>
@@ -113,7 +114,7 @@ body{ font-family:"微软雅黑", "宋体", "黑体"; font-size:12px; color:#333
                         <tr>                            
                             <td><?php echo $k+1 ?></td>
                             <td><?php echo $v['item'] ?></td>
-                            <td><?php echo $v['name'] ?></td>
+                            <td class="length"><?php echo $v['name'] ?></td>
                             <td><?php echo $v['price'] ?></td>
                             <td><?php echo $v['unit'] ?></td>
                             <td><?php echo $v['total'] ?></td>

@@ -28,11 +28,12 @@ body{ font-family:"微软雅黑", "宋体", "黑体"; font-size:12px; color:#333
 .thank{ font-size:16px; font-weight:bold; line-height:25px; padding-left:40px;}
 .bottom{vertical-align: bottom;}
 .red{color:#F00;}
-.length{max-width: 500px;};
-table{ width:100%; border:1px solid #666;  margin:20px;}
+.length{max-width: 600px;word-wrap:break-word;};
+table{width:90%; border:1px solid #666;margin:20px;}
 table th,table td{ border:1px solid #666; height:40px;}
 table td{ text-align:center;}
-.pt200{padding-top: 200px;}
+.pt100{padding-top: 100px;}
+.mt20{margin-top:20px;margin-left: 20px;}
 </style>
 </head>
 
@@ -45,14 +46,16 @@ table td{ text-align:center;}
         <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to buy travel insurance .</p>
         <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Thank you for chosing us, may you have a wonderful journey.</p>
         <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purpose.</p>
-        <h4><?php echo $c_name;?>/<?php echo $e_name;?></h4>
+        <h4>No. <?php echo $invoice_no;?></h4>
+        <h4><?php echo $c_name;?></h4>
+        <h4><?php echo $e_name;?></h4>
         <h4>Tour Code: <?php echo $tour_code;?>&nbsp;&nbsp;&nbsp;&nbsp;Tour Date：<?php echo $tour_date;?></h4>
         <h4><span class="red">Very Important:&nbsp;&nbsp;&nbsp;&nbsp;</span>Contacts: <?php echo $contacts;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mobile：<?php echo $mobile;?></h4>
-        <table class="f14" cellpadding="0" cellspacing="0">
+        <table class="f14 mt20" cellpadding="0" cellspacing="0">
            <thead>
                 <tr>
-                    <th width="20%">Item</th>                    
-                    <th width="80%">Details</th>
+                    <th width="25%">Item</th>                    
+                    <th width="75%">Details</th>
                 </tr>
            </thead>
            <tbody>
@@ -78,7 +81,7 @@ table td{ text-align:center;}
         </table>
             <h4><?php echo $company_name;?></h4>
             <h4>TEL: <?php echo $company_tel;?></h4>
-            <img class="pt200" src="public/assets/images/swty.jpg">
+            <img class="pt100" src="public/assets/images/swty.jpg">
             <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>
             <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">Our Staff will welcome you at the arrival gate with this sign.</p>
     </div>
