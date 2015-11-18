@@ -11,6 +11,7 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6,form, input, p, span, strong, em
 .f12{ font-size:12px;}
 .f14{ font-size:14px;}
 .f16{ font-size:16px; font-weight:bold;}
+.f22{ font-size:30px; font-weight:bold;}
 .fl{ float:left;}
 .fr{ float:right;}
 .clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden; font-size:0;}
@@ -33,7 +34,7 @@ table{width:90%; border:1px solid #666;margin:20px;}
 table th,table td{ border:1px solid #666; height:40px;}
 table td{ text-align:center;}
 .pt100{padding-top: 100px;}
-.mt20{margin-top:20px;margin-left: 20px;}
+.mt20{margin-top:20px;margin-left: 10px;}
 </style>
 </head>
 
@@ -42,10 +43,10 @@ table td{ text-align:center;}
 	<div class="fl">
     	<h2>Booking Confirmmation<span class="thank">(Customer Copy)</span></h2>
         <img src="public/assets/images/bookingBg.jpg">
-        <h3>Congratulations, Your booking has been confirmed. </h3>
+        <h3><span class="f22">Congratulations</span>, Your booking has been confirmed. </h3>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purpose.</p>
         <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to buy travel insurance .</p>
         <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Thank you for chosing us, may you have a wonderful journey.</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purpose.</p>
         <h4>No. <?php echo $invoice_no;?></h4>
         <h4><?php echo $c_name;?></h4>
         <h4><?php echo $e_name;?></h4>

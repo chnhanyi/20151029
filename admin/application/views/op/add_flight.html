@@ -218,10 +218,10 @@
 													<tr class="front" ms-repeat="list">
 														<td>
 															<div class="flightLeft">
-																Flight Date
+																Departure Date
 															</div>
 															<div class="flightRight">
-																<input type="text" ms-input="g_arriveDate" ms-attr-value="{{el.g_arriveDate}}" ms-attr-index="{{$index}}" name="g_arriveDate" style="width:110px" />
+																<input type="text" placeholder="eg:2015-11-18" ms-input="fn_g_arriveDate" ms-attr-value="{{el.g_arriveDate}}" ms-attr-index="{{$index}}" name="g_arriveDate" style="width:110px" />
 															</div>
 														</td>
 														<td>
@@ -229,7 +229,7 @@
 																Flight No.
 															</div>
 															<div class="flightRight flight_list_wrap">
-																<input type="text" placeholder="CZ123" ms-attr-index="{{$index}}" ms-input="fn_a_flightno" ms-attr-value="{{el.a_flightno}}" name="a_flightno" style="width:110px" />
+																<input type="text" placeholder="eg:CZ123" ms-attr-index="{{$index}}" ms-input="fn_a_flightno" ms-attr-value="{{el.a_flightno}}" name="a_flightno" style="width:110px" />
 																<ul class="flight_list hide">
 																</ul>
 
@@ -240,7 +240,7 @@
 																Flight Time
 															</div>
 															<div class="flightRight">
-																<input type="text" class="date_pick" placeholder="0940-1540" ms-attr-index="{{$index}}" ms-input="fn_a_time" ms-attr-value="{{el.a_time}}" name="a_time" style="width:110px" />
+																<input type="text" class="date_pick" placeholder="eg:0940-1540" ms-attr-index="{{$index}}" ms-input="fn_a_time" ms-attr-value="{{el.a_time}}" name="a_time" style="width:110px" />
 															</div>
 														</td>
 														<td>
@@ -248,7 +248,7 @@
 																Flight Route
 															</div>
 															<div class="flightRight">
-																<input type="text" placeholder="MEL-AKL" ms-input="fn_a_route" ms-attr-index="{{$index}}" ms-attr-value="el.a_route" name="a_route" style="width:110px">
+																<input type="text" placeholder="eg:MEL-AKL" ms-input="fn_a_route" ms-attr-index="{{$index}}" ms-attr-value="el.a_route" name="a_route" style="width:110px">
 															</div>
 														</td>
 														<td>
@@ -332,8 +332,7 @@
 		<!-- ace scripts -->
 
 		<script src="public/assets/js/ace-elements.min.js"></script>
-		<script src="public/assets/js/ace.min.js"></script>
-		<script src="assets/js/jStroage-0.4.12.min.js"></script>
+		<script src="public/assets/js/ace.min.js"></script>	
 
 		<!-- 通用业务代码 -->
 		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>

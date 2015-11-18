@@ -7,14 +7,13 @@
 
 
  
-   var date_url = "/index.php/Order/a_route_detail"; // 获取日期以及余位信息
+    var date_url = "/index.php/Order/a_route_detail"; // 获取日期以及余位信息
     var submit_order_url = "/index.php/Order/add_order"; //提交 成品订单
  
      // var completed = false ; 
      var completed_one = false; // true 表示第一阶段校验通过
      var completed_two = false; //true 表示第二阶段校验通过
      var completed_three = false; // true 表示第三阶段校验通过 准备提价完整订单
-
 
 
      window.info = {}; // 初始化的部分数据（以前 做的设定 不需要太重视这个数据）
@@ -311,7 +310,7 @@
              if (a > parseInt(info.remain)) {
                  _.modal({
                      title: "输入错误",
-                     cont: "购买票数大于最大剩余票数" + info.remain + "票"
+                     cont: "购买数量大于最大剩余数量" + info.remain + "位"
                  })
                  return false;
              }
@@ -639,6 +638,8 @@
          var leave_names = [];
          var no_infant_names = [];
          var a = 0;
+         vm_tour_flight.peoples_index = [];
+
 
          for (var i = 0; i < len; i++) {
 
@@ -650,7 +651,7 @@
                  return false;
              }
 
-             if (!/^[A-Za-z]+$/.test(data[i].g_firstname)) {
+             if (!/^[A-Za-z\s]+$/.test(data[i].g_firstname)) {
                  _.modal({
                      "title": "Error Tips",
                      cont: "First Name Format incorrect, only English letters allowed #" + (i + 1) + "!"
@@ -687,7 +688,6 @@
 
              console.log(i, data[i].g_firstname+"/"+ data[i].g_lastname);
 
-             vm_tour_flight.peoples_index = [];
              if (data[i].g_guestType != "2") {
                  no_infant_names.push({
                      name: data[i].g_firstname+"/"+ data[i].g_lastname,
@@ -912,10 +912,10 @@
 
                  if (res.total == 3) {
 
-                     if (res[4] >= 2) {
+                     if (res[4] >= 3) {
                          _.modal({
                              "title": "Error Tips",
-                             cont: "Sorry! Only 1 child is allowed into a Triple room, Room ID #" + (i + 1) + "!"
+                             cont: "Sorry! Only 2 child is allowed into a Triple room, Room ID #" + (i + 1) + "!"
                          });
                          return false;
                      }
@@ -926,8 +926,10 @@
 
          }
 
+
+
          total_arr = total_arr.sort(function(a, b) {
-             return a > b ? 1 : -1
+             return parseInt(a) >  parseInt(b)  ? 1 : -1
          }); //从小到大排序
 
          for (var n = 0; n < peoples_l; n++) {
@@ -1106,8 +1108,19 @@
 
 
 
-
              order_info.flightInfo.arrive = JSON.parse(JSON.stringify(data.list));
+
+             $.each( order_info.flightInfo.arrive  ,function   (i,v) {
+                var indexs = v.arrivedName.split(",") ;
+                var newIndexs = [] ;
+                for( var n = 0 ; n<indexs.length ; n++){
+                     if( $.isNumeric( indexs[n] )  ){
+                       newIndexs.push( indexs[n] );
+                     }
+                }
+               v.arrivedName =  newIndexs.join(",");
+             });
+
              // order_info.flightInfo.leave = JSON.parse(JSON.stringify(data.leave_list));
 
              $.each(order_info.flightInfo.arrive, function(i, v) {

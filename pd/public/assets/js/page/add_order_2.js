@@ -651,10 +651,10 @@
                  return false;
              }
 
-             if (!/^[A-Za-z\s]+$/.test(data[i].g_firstname)) {
+             if (!/^[A-Za-z]+$/.test(data[i].g_firstname)) {
                  _.modal({
                      "title": "Error Tips",
-                     cont: "First Name Format incorrect, only English letters allowed #" + (i + 1) + "!"
+                     cont: "First Name Format incorrect,no space, only English letters allowed #" + (i + 1) + "!"
                  });
                  return false;
              }
@@ -667,10 +667,10 @@
                  return false;
              }
 
-             if (!/^[A-Za-z\s]+$/.test(data[i].g_lastname)) {
+             if (!/^[A-Za-z]+$/.test(data[i].g_lastname)) {
                  _.modal({
                      "title": "Error Tips",
-                     cont: "Last Name Format incorrect, only English letters and space allowed #" + (i + 1) + "!"
+                     cont: "Last Name Format incorrect,no space, only English letters and space allowed #" + (i + 1) + "!"
                  });
                  return false;
              }
@@ -1110,16 +1110,6 @@
 
              order_info.flightInfo.arrive = JSON.parse(JSON.stringify(data.list));
 
-             $.each( order_info.flightInfo.arrive  ,function   (i,v) {
-                var indexs = v.arrivedName.split(",") ;
-                var newIndexs = [] ;
-                for( var n = 0 ; n<indexs.length ; n++){
-                     if( $.isNumeric( indexs[n] )  ){
-                       newIndexs.push( indexs[n] );
-                     }
-                }
-               v.arrivedName =  newIndexs.join(",");
-             });
 
              // order_info.flightInfo.leave = JSON.parse(JSON.stringify(data.leave_list));
 
@@ -1401,7 +1391,7 @@
              var val = _this.value;
              var re = /[^a-z]{1}/ig;
              if (val != "") {
-                 val.replace(re, "");
+                 val = val.replace(re, "");
                  // console.log("新的val",val);
                  val = val.toUpperCase();
                 // val = val.substring(0, 1).toUpperCase() + val.substring(1);
@@ -1417,7 +1407,7 @@
              var val = _this.value;
              var re = /[^a-z]{1}/ig;
              if (val != "") {
-                 val.replace(re, "");
+                  val = val.replace(re, "");
                   val = val.toUpperCase();
                 //val = val.substring(0, 1).toUpperCase() + val.substring(1);
 

@@ -700,7 +700,7 @@
 			$info=array();
 			foreach ($data as $v) {
         		    $cc['o_id'] =$id;
-				    $cc['f_date'] = $this->toudate($v['g_arriveDate']);
+				    $cc['f_date'] = $v['g_arriveDate'];
 				    $cc['f_no'] = $v['a_flightno'];
 				    $cc['f_time'] =$v['a_time'];
 				    $cc['f_route'] = $v['a_route'];
@@ -722,7 +722,7 @@
 		        }else{
 	                $data['reCode'] = -1;
 				    $data['status'] = "failed";
-				    $data['data'] = "Add FlightInfo failed";
+				    $data['data'] = "Add FlightInfo Failed";
 		        }
 
 		        $this->response_data($data);	

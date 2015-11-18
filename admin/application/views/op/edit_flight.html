@@ -218,8 +218,8 @@
                                                             <th>ID</th>
                                                             <th>Flight Date</th>
                                                             <th>Flight No.</th>
-                                                            <th>Flight Route</th>                                                            
-                                                            <th>Flight Time</th>                                                            
+                                                            <th>Flight Time</th>  
+                                                            <th>Flight Route</th>                                    
                                                             <th>Customers</th>
                                                         </tr>
                                                     </thead>
@@ -243,15 +243,14 @@
                                                         </td>
                                                         <td>
                                                             <div class="flightRight">
-                                                            <?php echo $f["f_route"]; ?>                                                        
+                                                               <?php echo $f["a_time"]; ?>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="flightRight">
-                                                               <?php echo $f["a_time"]; ?>
+                                                            <?php echo $f["f_route"]; ?>                                                        
                                                             </div>
-                                                        </td>
-                                                        
+                                                        </td> 
                                                         <td>                                                            
                                                             <div class="flightRight arrived">
                                                               <span class="word_wrap"><?php echo $f["arrivedName"]; ?></span>
@@ -269,10 +268,10 @@
 													<tr class="front" ms-repeat="list">
 														<td>
 															<div class="flightLeft">
-																Flight Date
+																Departure Date
 															</div>
 															<div class="flightRight">
-																<input type="text" ms-attr-value="{{el.g_arriveDate}}" ms-on-focus="focus_arriveDate" ms-on-blur="blur_arriveDate"   ms-attr-index="{{$index}}" readonly name="g_arriveDate" style="width:110px" />
+																<input type="text" placeholder="eg:2015-11-18" ms-input="fn_g_arriveDate" ms-attr-value="{{el.g_arriveDate}}" ms-attr-index="{{$index}}" name="g_arriveDate" style="width:110px" />
 															</div>
 														</td>
 														<td>
@@ -389,8 +388,7 @@
 		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>
 		<script src="public/assets/js/page/app.js"></script>
 		<!-- 具体业务代码 -->
-		<script src="public/assets/js/page/modules/laydate.js"></script>
-		<script src="public/assets/js/page/modules/jquery.date_input.pack.js"></script>
+		<script src="public/assets/js/page/modules/laydate.js"></script>	
 		<script src="public/assets/js/page/jquery.ynf.js"></script>
 		<script src="public/assets/js/page/add_flight.js"></script>
 

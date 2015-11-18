@@ -218,7 +218,7 @@
                                                 <!--  线路名称 Tour Name end  -->
                                                 <!--  出行日期 TourDate start  -->
                                                 <div class="form-group" ms-controller="tour_date">
-                                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> TourDate </label>
+                                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tour Date </label>
                                                     <div class="col-sm-9">
                                                         <!-- <input type="text"   placeholder="Username" class="col-xs-10 col-sm-5"> -->
                                                         <div class="col-xs-10 col-sm-5">
@@ -253,7 +253,7 @@
                                                     <div class="col-sm-9">
                                                         <div class="t-dib t-pdl-15">
                                                             <button ms-click="reduce_child" data-type="infant_num" class="btn btn-xs btn-info t-can_disabled "> -</button>
-                                                            <input class="text_box adultAdd t-can_disabled" data-type="infant_num" style="width:50px" ms-duplex-number="infant_num" type="text" />
+                                                            <input class="text_box adultAdd t-can_disabled" readonly data-type="infant_num" style="width:50px" ms-duplex-number="infant_num" type="text" />
                                                             <button ms-click="add_child" data-type="infant_num" class="btn btn-xs btn-info t-can_disabled">+ </button>
                                                             <!-- <input class="add can_disabled"  ms-click="add_adult"    name="" type="button" value="&nbsp;" /> -->
                                                             <!-- <span class="price hidden">{{adult_price}}</span> -->
@@ -267,7 +267,7 @@
                                                     <div class="col-sm-9">
                                                         <div class="t-dib t-pdl-15">
                                                             <button ms-click="reduce_child" data-type="child_1_num" class="btn btn-xs btn-info t-can_disabled "> -</button>
-                                                            <input class="text_box adultAdd t-can_disabled" style="width:50px" name="o_adultNumber" id="o_adultNumber" ms-duplex-number="child_1_num" type="text" />
+                                                            <input class="text_box adultAdd t-can_disabled" style="width:50px" readonly ms-duplex-number="child_1_num" type="text" />
                                                             <button ms-click="add_child" data-type="child_1_num" class="btn btn-xs btn-info t-can_disabled">+ </button>
                                                         </div>
                                                         <div class="t-dib">{{child_1_num}}×$<span class="price">{{child_1_price}}</span> <span class="t-chd-desc">(Without Bed)</span>
@@ -280,7 +280,7 @@
                                                     <div class="col-sm-9">
                                                         <div class="t-dib t-pdl-15">
                                                             <button ms-click="reduce_child" data-type="child_2_num" class="btn btn-xs btn-info t-can_disabled "> -</button>
-                                                            <input class="text_box adultAdd t-can_disabled" style="width:50px" name="o_adultNumber" id="o_adultNumber" ms-duplex-number="child_2_num" type="text" />
+                                                            <input class="text_box adultAdd t-can_disabled" style="width:50px" readonly ms-duplex-number="child_2_num" type="text" />
                                                             <button ms-click="add_child" data-type="child_2_num" class="btn btn-xs btn-info t-can_disabled">+ </button>
                                                         </div>
                                                         <div class="t-dib">{{child_2_num}}×$<span class="price">{{child_2_price}}</span> <span class="t-chd-desc">(With Bed)</span>
@@ -458,17 +458,17 @@
                                                     <td>
                                                         <div class="blue"> Contacts
                                                         </div>
-                                                        <input type="text" ms-on-input="input" ms-duplex="contact.contactor" placeholder="Contacts Name " style="width:130px" />
+                                                        <input type="text" ms-on-input="input" ms-duplex="contact.contactor" placeholder="Contacts Name " style="width:130px;ime-mode:disabled" />
                                                     </td>
                                                     <td>
                                                         <div class="blue">Phone Number
                                                         </div>
-                                                        <input type="text" ms-on-input="input_mobile" ms-duplex="contact.mobile" placeholder="Phone Number" style="width:130px" />
+                                                        <input type="text" ms-on-input="input_mobile" ms-duplex="contact.mobile" placeholder="Phone Number" style="width:130px;ime-mode:disabled" />
                                                     </td>
                                                     <td>
                                                         <div class="blue"> Email
                                                         </div>
-                                                        <input type="text" ms-on-input="input_email" ms-duplex="contact.email" placeholder="Email address" style="width:180px" />
+                                                        <input type="text" ms-on-input="input_email" ms-duplex="contact.email" placeholder="Email address" style="width:180px;ime-mode:disabled" />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -501,10 +501,10 @@
                                                         <tr ms-repeat="list">
                                                             <td style="text-align:center">{{$index+1}}</td>
                                                             <td>
-                                                                <input type="text" class="insert" ms-attr-index="{{$index}}" name="g_firstname" ms-attr-value="{{el.g_firstname}}" ms-input="fn_g_firstname" style="width:100px;" value="" />
+                                                                <input type="text" class="insert"  onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" style="ime-mode:disabled" ms-attr-index="{{$index}}" name="g_firstname" ms-attr-value="{{el.g_firstname}}" ms-input="fn_g_firstname" style="width:100px;" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="insert" ms-attr-index="{{$index}}" ms-input="fn_g_lastname" name="g_lastname" ms-attr-value="{{el.g_lastname}}" style="width:110px" />
+                                                                <input type="text" class="insert"  onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" style="ime-mode:disabled" ms-attr-index="{{$index}}" ms-input="fn_g_lastname" name="g_lastname" ms-attr-value="{{el.g_lastname}}" style="width:110px" />
                                                             </td>
                                                             <td>
                                                                 <select ms-attr-index="{{$index}}" name='g_gender' style='width:75px;'>
@@ -628,7 +628,7 @@
                                                         <tr class="front" ms-repeat="list">
                                                             <td>
                                                                 <div class="flightLeft">
-                                                                    Flight Date
+                                                                    Departure Date
                                                                 </div>
                                                                 <div class="flightRight">
                                                                     <input type="text" ms-attr-value="{{el.g_arriveDate}}" ms-on-focus="focus_arriveDate" ms-on-blur="blur_arriveDate" ms-attr-index="{{$index}}" readonly name="g_arriveDate" style="width:110px" />
@@ -639,7 +639,7 @@
                                                                     Flight No.
                                                                 </div>
                                                                 <div class="flightRight flight_list_wrap">
-                                                                    <input type="text" placeholder="Flight No" ms-attr-index="{{$index}}" ms-input="fn_a_flightno" ms-attr-value="{{el.a_flightno}}" name="a_flightno" style="width:110px" />
+                                                                    <input type="text" style="ime-mode:disabled" placeholder="Flight No" ms-attr-index="{{$index}}" ms-input="fn_a_flightno" ms-attr-value="{{el.a_flightno}}" name="a_flightno" style="width:110px" />
                                                                     <ul class="flight_list hide">
                                                                     </ul>
                                                                 </div>
@@ -649,7 +649,7 @@
                                                                     Flight Time
                                                                 </div>
                                                                 <div class="flightRight">
-                                                                    <input type="text" class="date_pick" placeholder="eg:0900-1120" ms-attr-index="{{$index}}" ms-input="fn_a_time" ms-attr-value="{{el.a_time}}" name="a_time" style="width:110px" />
+                                                                    <input type="text" style="ime-mode:disabled" class="date_pick" placeholder="eg:0900-1120" ms-attr-index="{{$index}}" ms-input="fn_a_time" ms-attr-value="{{el.a_time}}" name="a_time" style="width:110px" />
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -657,7 +657,7 @@
                                                                     Flight Route
                                                                 </div>
                                                                 <div class="flightRight">
-                                                                    <input type="text" placeholder="eg:MEL-AKL" ms-input="fn_a_route" ms-attr-index="{{$index}}" ms-attr-value="el.a_route" name="a_route" style="width:110px">
+                                                                    <input type="text" style="ime-mode:disabled" placeholder="eg:MEL-AKL" ms-input="fn_a_route" ms-attr-index="{{$index}}" ms-attr-value="el.a_route" name="a_route" style="width:110px">
                                                                 </div>
                                                             </td>
                                                             <td>

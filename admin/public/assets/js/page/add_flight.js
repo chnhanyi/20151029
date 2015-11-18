@@ -117,6 +117,14 @@
                      return false;
                  }
 
+                if (data.list[i].g_arriveDate != "" && !/^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/.test(data.list[i].g_arriveDate)) {
+                     _.modal({
+                         "title": "Error Tips",
+                         cont: "Flight Date Format incorrect, eg:2016-01-09, Row #" + (i + 1) + "!"
+                     });
+                     return false;
+                 }
+
 
                  if (data.list[i].a_flightno != "" && !/^[A-Za-z0-9]+$/.test(data.list[i].a_flightno)) {
                      _.modal({
@@ -211,16 +219,6 @@
              vm[type][index].no_focus = false;
          }
 
-         vm.focus_arriveDate = function() {
-
-             console.log("focus_arriveDate ArriveDate");
-
-             if (!$(this).data("is_date_pick")) {
-                 $(this).date_input();
-                 $(this).data("is_date_pick", true);
-             }
-
-         }
 
          function render_flightInfo(dom, data) {
              var $flight_list_wrap = $(dom).parent();
@@ -228,19 +226,12 @@
 
          }
 
-         vm.flightno_focus = function() {
-
+        vm.fn_g_arriveDate = function() {
+             var _this = this;
+             var index = parseInt(avalon(this).attr("index"));
+             vm.list[index].g_arriveDate = _this.value;
          }
 
-         vm.blur_arriveDate = function() {
-             var _this = avalon(this);
-             var index = parseInt(_this.attr("index"));
-             setTimeout(function() {
-                 vm.list[index].g_arriveDate = _this.val();
-                 console.log("blur_arriveDate" ,_this , _this.val());
-             }, 1000);
-         }         
- 
 
          vm.fn_a_time = function() {
              var _this = this;
@@ -399,7 +390,7 @@
                                  "title": "Add FlightInfo Success!",
                                  cont: "Add FlightInfo Success!",
                                  close_fn: function() {
-                                    window.location.href = "index.php/Order/index"
+                                    window.location.href = "http://op.booktour.nz/index.php/Order/index";     
                                  }
                                  });
                              } else {

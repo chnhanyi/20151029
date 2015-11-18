@@ -244,8 +244,8 @@
                                      _.modal({
                                      "title": "Comfirm Invoice Success!",
                                      cont: "Comfirm Invoice Success!",
-                                     close_fn: function() {
-                                       window.location.href = "index.php/Order/invoice_print?id="+o_id;                                       
+                                     close_fn: function() {                                        
+                                       window.location.href = "http://op.booktour.nz/index.php/Order/invoice_print?id="+o_id;                                       
                                      }
                                  });
                              } else {
