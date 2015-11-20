@@ -230,7 +230,10 @@
 										 	location.href="<?php echo site_url('Order/index') ;?>";
 										}else if(data['retCode']==3 & data['status']==1){
 											//Accoutant
-											location.href="<?php echo site_url('Account/index') ;?>";											
+											location.href="<?php echo site_url('Account/index') ;?>";
+											}else if(data['retCode']==4 & data['status']==1){
+											//Controller
+											location.href="<?php echo site_url('Control/index') ;?>";												
 										}else {
 											alert("Login Failed!")
 										}

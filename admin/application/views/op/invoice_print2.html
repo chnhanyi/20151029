@@ -35,10 +35,10 @@ body{ font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; f
 .w28{ width:28%;}
 .top ul{ list-style:none; padding-right:40px;} 
 .top ul li{ text-align:right; line-height:30px;} 
-.tureInfo{ padding:20px 0 20px 20px;}
+.tureInfo{ padding:10px 0 20px 20px;}
 .tureInfo ul{ list-style:square inside;}
 .tureInfo ul li{ line-height:30px;}
-.tourBox{width:95%; height:460px;margin:0 auto;}
+.tourBox{width:95%; height:470px;margin:0 auto;}
 .tourBox table{ width:100%; border:1px solid #666;  margin-bottom:20px;}
 .tourBox table th,.tourBox table td{ border:1px solid #666; height:30px;}
 .tourBox table td{ text-align:center;}
@@ -94,7 +94,7 @@ body{ font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; f
                     <li>Tour Code:<?php echo $tour_code ?></li>
                     <li>Tour Name:<?php echo $c_name ?>/<?php echo $e_name ?></li>
                     <li>Tour Date：<?php echo $tour_date ?></li>
-                    <li>Agent's reference:<?php echo $reference ?></li>
+                    <li>Agent's Reference:<?php echo $reference ?></li>
                     <li>Attention to: <?php echo $agent_name ?></li>
                 </ul>
         	</div>
@@ -126,6 +126,7 @@ body{ font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; f
                 <p class="price">Total Amount <span class="red">( If not Prepay):<?php echo $delayAmount ?></span></p> 
                 <p class="price">Total Amount(Under Prepay Condition): $<?php echo $orderAmount ?></p>
                 <p class="price">Currency: <?php echo $currency ?></p>
+                <p class="price">Checked By:______________________  </p>
             </div>
             <div class="bottom">
             	<h2 class="mb10">Thank you for choosing Pacific Delight Ltd.</h2>

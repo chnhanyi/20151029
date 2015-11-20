@@ -189,7 +189,8 @@
             vm.agent_reference =  o.agent_reference;
 
             vm.opNote = o.opNote;
-            vm.opCode = o.opCode
+            vm.opCode = o.opCode;
+            vm.opMark = o.opMark;
 
        	 });
 

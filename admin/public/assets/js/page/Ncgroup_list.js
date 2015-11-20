@@ -14,7 +14,7 @@
 
          var defaults_grid_args = {
             viewrecords: true,
-            rowNum: 200,
+            rowNum: 20,
             rowList: [10, 20, 30, 50],
             pager: ynf_modal_list_pager_selector,
             altRows: true,
@@ -49,84 +49,74 @@
                 repeatitems: false
             },
             datatype: "json",
-			sortable:true,
             sortorder: "desc",
-			sortname: "a_id",
             height: 500,            
             autowidth: true,
-            colNames: ["ID", "Area","City","District","Company Name","Address","TEL and Fax","Paid Monthly", "Type", "Commission" ,"North Rate", "Operation"],
+            colNames: ["ID", "Tour Code","Tour Date","Promotion","Capacity","Vacancy","Coach RESV","Current Pax","Room RESV","Current Rooms","Operator","Operation"],
 
             colModel: [
 			{
-                name: 'a_id',
-                index: 'a_id',
-                width: 30,
+                name: 't_id',
+                index: 't_id',
+                width: 20,
                 editable: false,
                 // formatter: user_name_formatter,
 			}, { 
-                name: 'a_area',
-                index: 'a_area',
-                width: 80,
+                name: 't_tourCode',
+                index: 't_tourCode',
+                width: 120,
                 editable: false,
-                formatter: company_area_formatter,
-			}, { 
-                name: 'a_city',
-                index: 'a_city',
-                width: 50,
-                editable: false,
-			}, { 
-                name: 'a_district',
-                index: 'a_district',
-                width: 50,
-                editable: false,
+                // formatter: user_name_formatter,
             }, { 
-                name: 'a_name',
-                index: 'a_name',
-                width: 130,
+                name: 't_date',
+                index: 't_date',
+                width: 60,
                 editable: false,
                 // formatter: user_name_formatter,
             }, {
-                name: 'a_address',
-                index: 'a_address',
-                width: 100,
+                name: 't_promo',
+                index: 't_promo',
+                width: 50,
+				formatter: t_promo_formatter,
             }, {
-                name: 'a_tel',
-                index: 'a_tel',
-                width: 150,
+                name: 't_capacity',
+                index: 't_capacity',
+                width: 50,
                 align: "center",
-            
             }, {
-                name: 'a_monthly',
-                index: 'a_monthly',
-                width: 60,
-				formatter: company_monthly_formatter,
+                name: 't_vacancy',
+                index: 't_vacancy',
+                width:50,
+				align: "center",
+				formatter: vacancy_formatter,
             }, {
-                name: 'a_type',
-                index: 'a_type',
-                width: 70,
-                sortable: false,
-                editable: false,
-				formatter: company_type_formatter,
-			}, {                
-                name: 'a_commissionRate',
-                index: 'a_commissionRate',
-                width: 70,
-                sortable: false,
-                editable: false,
-            }, {                
-                name: 'a_northRate',
-                index: 'a_northRate',
-                width: 70,
-                sortable: false,
-                editable: false,
-                // formatter:money_paid_formatter
+                name: 't_bus',
+                index: 't_bus',
+                width: 60
+			}, {
+                name: 't_currentpax',
+                index: 't_currentpax',
+                width: 100,
+				formatter: t_currentpax_formatter,
+            }, {
+                name: 't_room',
+                index: 't_room',
+                width: 80,
+
+			}, {
+                name: 't_currentroom',
+                index: 't_currentroom',
+                width: 80,
+				formatter: t_currentroom_formatter,
+			}, {
+                name: 'a_userName',
+                index: 'a_userName',
+                width:50,               
 			},{
                 name: 'oper',
                 index: '',
                 width: 120,
                 fixed: true,
-                sortable: false,
-                resize: false,
                 formatter: oper_formatter,
             }],
 
@@ -161,87 +151,97 @@
 
 
         });
-
-        function oper_formatter(cellvalue, options, rowdata) {
+		
+		  function oper_formatter(cellvalue, options, rowdata) {
             var oper_html_arr = [];
+            // 导出航班信息表，导出酒店信息表
+			var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';  		
+		                
 
-            var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
-
-            var oper_view = ['<a ',
-                ' target="_self"  href="index.php/Company/edit_company?id=' , rowdata.a_id, '"',
+            var oper_group = ['<a ',
+                ' target="_blank"  href="index.php/Control/group_detail?id=', rowdata.t_id, '"',
                 style,
-                ' class="c-blue" title="Modify">Modify</a><br />'
-            ].join("");
-             var mark;
+                ' class="c-orange" title="Group Detail">Group Detail</a><br /><br />'
 
-
-            oper_html_arr.push(oper_view);
-
-
+            ].join("");	
+			
+            oper_html_arr.push(oper_group);
+          
             return oper_html_arr.join("");
 
         }
-
-
-         function total_people_formatter(cellvalue, options, rowdata) {
-               var html = [
-            '<span class="black">Total ',rowdata.total_guests,'</span><br />',
-            '<span class="black">Adult ',rowdata.adult_num,'</span><br />',
-            '<span class="orange">Tnfant ',rowdata.infant_num,'</span><br />',
-            '<span class="blue">Child ',rowdata.child_num,'</span><br />'
+		
+		function vacancy_formatter(cellvalue, options, rowdata) {
+               var html = [            
+            '<span class="blue">',rowdata.t_vacancy,'</span><br />'
             ].join("");
              
              return html;
           }
 
 
-        function company_area_formatter(cellvalue, options, rowdata) {           
+         function t_currentpax_formatter(cellvalue, options, rowdata) {
+               var html = [
+            '<span class="red">Total ',rowdata.totalNum,'</span><br />',
+            '<span class="black">Adult ',rowdata.adultNumber,'</span><br />',
+            '<span class="orange">Tnfant ',rowdata.infantNumber,'</span><br />',
+            '<span class="blue">Child(With Bed)',rowdata.childNumber1,'</span><br />',
+            '<span class="blue">Child(No Bed)',rowdata.childNumber2,'</span><br />'
+            ].join("");
+             
+             return html;
+          }
+		  
+		 function t_currentroom_formatter(cellvalue, options, rowdata) {
+               var html = [
+			'<span class="red">Total ',rowdata.total_rooms,'</span><br />',
+            '<span class="black">Twin ',rowdata.twin_num,'</span><br />',
+            '<span class="orange">Double ',rowdata.double_num,'</span><br />',
+            '<span class="blue">Triple ',rowdata.triple_num,'</span><br />',
+            '<span class="orange">Single ',rowdata.single_num,'</span><br />'
+            ].join("");
+             
+             return html;
+          }
+
+
+        function t_promo_formatter(cellvalue, options, rowdata) {
+            // 旅游团状态， 1.正常团，2.促销团
             var result = '';
             switch (cellvalue) {
                 case '1':
-                    result = 'Australia';
+                    result = '<span class="black">Regular</span>';
                     break;
                 case '2':
-                    result = 'New Zealand';
-                    break;
-                case '3':
-                    result = 'South East Asia';
+                    result = '<span class="orange">Special</span>';
                     break;
             }
-
             return result;
         }
 
-         function company_monthly_formatter(cellvalue, options, rowdata) {
-            var result = '';
-            switch (cellvalue) {
-                case '0':
-                    result = 'No';
-                    break;
-                case '1':
-                    result = 'Yes';
-                    break;
-            }
 
-            return result;
-        }
-		
-		function company_type_formatter(cellvalue, options, rowdata) { 
-            var result = '';
-            switch (cellvalue) {
-                case '1':
-                    result = 'Standard';
-                    break;
-                case '2':
-                    result = 'Friendly';
-                    break;
-				case '3':
-                    result = 'Deeply';
-                    break;
-            }
+        (function() {
 
-            return result;
-        }
+
+            // 配置表导航过滤搜索  
+            $.ynf.init_single_filter({
+                empty_datepicker: true
+            });
+
+            // 配置表导航时间范围搜索  
+            $.ynf.init_time_filter();
+
+            // 下拉框 条件选择搜索
+            $.ynf.init_single_search({
+                special: {
+                    user_name: "cn",
+                    order_sn: "cn",
+                    consignee:"cn"
+                }
+            });
+
+        })();
+
 
 
         

@@ -65,7 +65,8 @@
        	 	vm.a_tel =  e.a_tel ; 
        	 	vm.a_monthly =  e.a_monthly==1 ? true:false ;			
        	 	vm.a_type =  e.a_type ; 
-       	 	vm.a_commissionRate = e.a_commissionRate ;   
+       	 	vm.a_commissionRate = e.a_commissionRate ; 
+       	 	vm.a_northRate = e.a_northRate ;   
        	 });
 
         avalon.scan();

@@ -92,10 +92,7 @@
 						</li>
 					</ul><!-- /.ace-nav -->
 				</div>
-
-			 
-			</div>
-			<!-- navbar-container end  -->
+			</div><!-- navbar-container end  -->
 		</div>
 
 		<div class="main-container" id="main-container">
@@ -124,68 +121,23 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-                               <li>
-									<a href="<?php echo site_url('Order/manager'); ?>">
-										<i class="icon-double-angle-right"></i> Order List
+                               <li >
+									<a href="<?php echo site_url('Control/index'); ?>">
+										<i class="icon-double-angle-right"></i>Order List
 									</a>
 								</li>
-                                <li >
-									<a href="<?php echo site_url('News/index'); ?>">
-										<i class="icon-double-angle-right"></i> News List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('News/add_news'); ?>">
-										<i class="icon-double-angle-right"></i> Add News
-									</a>
-								</li>
-								<li  class="active">
-									<a href="<?php echo site_url('Route/index'); ?>">
-										<i class="icon-double-angle-right"></i> Route List
+                                <li  class="active">
+									<a href="<?php echo site_url('Control/Nindex'); ?>">
+										<i class="icon-double-angle-right"></i>Normal Group List
 									</a>
 								</li>
 								<li>
-									<a href="<?php echo site_url('Route/add_route'); ?>">
-										<i class="icon-double-angle-right"></i> Add Route
+									<a href="<?php echo site_url('Control/Mindex'); ?>">
+										<i class="icon-double-angle-right"></i>North&South Group List
 									</a>
 								</li>
-                                 <li>
-									<a href="<?php echo site_url('Company/index'); ?>">
-										<i class="icon-double-angle-right"></i> Company List
-									</a>
-								</li>
-								<li  >
-									<a href="<?php echo site_url('Company/add_company'); ?>">
-										<i class="icon-double-angle-right"></i> Add Company
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Agent/index'); ?>">
-										<i class="icon-double-angle-right"></i> Agent List
-									</a>
-								</li>
-                                <li>
-									<a href="<?php echo site_url('Agent/add_agent'); ?>">
-										<i class="icon-double-angle-right"></i> Add Agent
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Staff/index'); ?>">
-										<i class="icon-double-angle-right"></i> Staff List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Staff/add_staff'); ?>">
-										<i class="icon-double-angle-right"></i> Add Staff
-									</a>
-								</li>
-                                <li >
-									<a href="<?php echo site_url('Statistics/index'); ?>">
-										<i class="icon-double-angle-right"></i> Sales Statistics
-									</a>
-								</li>                                  
 							</ul>
-						</li>
+						</li>						
 					</ul>
 					<!-- nav end -->
 
@@ -211,7 +163,7 @@
 							</li>
 
 							<li>
-								Company List
+								Group List
 							</li>
 						</ul><!-- .breadcrumb -->
 
@@ -232,9 +184,11 @@
 											           <div class="input-group col-xs-4 ynf-bd-r-1">
 											             <div class="control-group clearfix select-input-search" data-y-role="select_input_search" >
 											                    <div class="col-xs-5">
-											                        <select class="form-control" data-y-role ="search_select" >
-											                            <option value="o_sn">Company Name</option>											                            
-											                        </select>											                        
+											                        <select class="form-control" data-y-role ="search_select" >											                            <
+											                            <option value="tour_code"> Tour Name</option>
+											                            <option value="tour_code"> Tour Code</option>
+											                        </select>
+											                        </select>
 											                    </div>
 											                    <div class="col-xs-7 input-group"  style="padding-left:0px">
 											                        <input type="text" data-y-role="search_input" class="form-control search-query" placeholder="">
@@ -245,8 +199,51 @@
 											                    </div>
 											                </div>
 											           </div>
+
+											          <div class="col-xs-4 ynf-time-range-search  ynf-bd-r-1" >
+
+											            <div class="col-xs-4 ynf-search-time-begin" sidx="tour_date" >
+											              <div class="input-group">
+											                <span class="input-group-addon">
+											                  <i class="icon-calendar bigger-110"></i>
+											                </span>
+
+											                <div class="col-xs-4 ynf-padding-l-0">
+											                  <input class="date-picker ynf-input"  type="text" data-date-format="dd/mm/yyyy" placeholder="Start Date" >
+											               </div>	
+											              </div>
+											            </div>
+											            <div class="col-xs-4 ynf-search-time-end" sidx="end_date" >
+											              <div class="input-group">
+											                 <span class="input-group-addon">
+											                    <i class="icon-arrow-right c-blue icon-on-right bigger-110"></i>
+											                </span>
+											                <div class="col-xs-4 ynf-padding-l-0">
+											                  <input class="date-picker ynf-input"  type="text" data-date-format="dd/mm/yyyy" placeholder="End Date" >
+											               </div>
+											              </div>
+											            </div>										            
+
+											             <div class="pull-right">
+											                <button data-y-role="time_range_search_btn"  class="btn btn-success btn-sm">Search</button>
+											            </div>
+
 											        </div>
-											    											    
+
+											        <!-- 审核状态 start -->
+											        <div class="col-xs-2  ynf-bd-r-1">
+										                <select class="form-control" id="" data-y-role="search_filter" sidx="order_status">
+										                      <option value="">Order Status </option>
+                                                              <option value="1">Waiting for Process</option>
+										                      <option value="2">Processing</option>
+										                      <option value="3">processed</option>	
+										                  </select>
+                                                   </div>
+												<!-- 审核状态 end -->
+
+											        </div>
+											    
+											    
 											    <table id="ynf_list"></table>
 											    <div id="ynf_list_pager"></div>
 											</div>
@@ -292,8 +289,7 @@
 		 <script >
 		   (function(){
 		       var table = { } ; 
-		       table.url = "index.php/Route/route_list";
-		       table.editurl = "index.php/Route/route_list";
+		       table.url = "index.php/Control/Ngroup_list";		       
 		       YNF_CONFIG.table = table ; 
 
 		   })();
@@ -303,7 +299,7 @@
 		<script src="public/assets/js/page/modules/grid.locale-en.js"></script>
 
 		<script src="public/assets/js/page/jquery.ynf.js"></script>
-		<script src="public/assets/js/page/route_list.js"></script>
+		<script src="public/assets/js/page/Ncgroup_list.js"></script>
 	 </div>
 </body>
 </html>

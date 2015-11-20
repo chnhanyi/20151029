@@ -14,7 +14,7 @@
 
          var defaults_grid_args = {
             viewrecords: true,
-            rowNum: 200,
+            rowNum: 500,
             rowList: [10, 20, 30, 50],
             pager: ynf_modal_list_pager_selector,
             altRows: true,
@@ -53,19 +53,13 @@
             height: 500,
             caption: "Order List",
             autowidth: true,
-            colNames: ["ID", "Booking Time","Invoice No","Agent","Tour Code","Total Pax", "Nett", "Flight","Status","DEPT Notice", "Operator","Operation"],
+            colNames: ["ID", "Invoice No","Agent","Tour Code","Total Pax", "Nett", "Flight","Status","DEPT Notice", "Operator","Operation"],
 
             colModel: [
 			{
                 name: 'id',
                 index: 'id',
                 width: 25,
-                editable: false,
-                // formatter: user_name_formatter,
-            }, { 
-                name: 'booking_time',
-                index: 'booking_time',
-                width: 80,
                 editable: false,
                 // formatter: user_name_formatter,
             }, {
@@ -127,7 +121,7 @@
             }],
 
             viewrecords: true,
-            rowNum: 200,
+            rowNum: 500,
             rowList: [10, 20, 30, 50],
             pager: pager_selector,
             altRows: true,
@@ -158,235 +152,38 @@
 
         });
 
-        function oper_formatter(cellvalue, options, rowdata) {
-            //如果订单已经取消，不显示任何内容
-            if(rowdata.order_status == 4){
-                return "";
-            //如果订单不含机票信息且已经确认，显示下面的列表       
-            }else if(rowdata.o_flight == 0 && rowdata.order_status == 3){                
+        function oper_formatter(cellvalue, options, rowdata) {                        
 
             var oper_html_arr = [];
            
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
 
             var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
+                ' target="_self"  href="./index.php/Control/check_order?id=', rowdata.id, '"',
                 style,
-                ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
+                ' class="c-green" title="Confirm Order">Order Details</a><br /><br />'
 
             ].join("");
-
-            var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
-                style,
-                ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
-
-            ].join("");
-            
-            var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
-                style,
-                ' class="c-black" title="Add Flight Info">Add Flight</a><br /><br />'
-
-            ].join("");    
-			
-			var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
-
-            ].join("");  
-
-             var oper_terminate = ['<a ',                
-                style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
 
             var invoice_print = ['<a ',
-                ' target="_blank"  href="./index.php/Order/invoice_print?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Control/invoice_print?id=', rowdata.id, '"',
                 style,
-                ' class="c-green" title="Print Invoice">Print Invoice</a><br /><br />'
+                ' class="c-green" title="Invoice">Invoice</a><br /><br />'
 
             ].join("");  
 
             var confirmation_letter = ['<a ',
-                ' target="_blank"  href="./index.php/Order/confirmation_letter?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Control/confirmation_letter?id=', rowdata.id, '"',
                 style,
                 ' class="c-blue" title="Confirmation letter">Confirmation letter</a><br /><br />'
 
             ].join("");   
 
             oper_html_arr.push(oper_check); 
-            oper_html_arr.push(oper_invoice);   
-			oper_html_arr.push(oper_flight); 
-			oper_html_arr.push(oper_notice); 
-            oper_html_arr.push(oper_terminate);
             oper_html_arr.push(invoice_print); 
             oper_html_arr.push(confirmation_letter);
 
-            return oper_html_arr.join("");
-
-            //如果订单不含机票信息但未确认，显示下面的列表
-            }else if(rowdata.o_flight == 0 && rowdata.order_status != 3){                
-
-            var oper_html_arr = [];
-           
-            var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
-
-            var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
-
-            ].join("");
-
-            var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
-                style,
-                ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
-
-            ].join("");
-            
-            var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
-                style,
-                ' class="c-black" title="Add Flight Info">Add Flight</a><br /><br />'
-
-            ].join("");    
-            
-            var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
-
-            ].join("");  
-
-             var oper_terminate = ['<a ',                
-                style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
-
-
-            oper_html_arr.push(oper_check); 
-            oper_html_arr.push(oper_invoice);   
-            oper_html_arr.push(oper_flight); 
-            oper_html_arr.push(oper_notice); 
-            oper_html_arr.push(oper_terminate);
-
-
-            return oper_html_arr.join("");
-            //如果订单含有机票信息且已经确认，显示以下列表
-            }else if(rowdata.o_flight == 1 && rowdata.order_status == 3){
-            var oper_html_arr = [];
-           
-            var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
-
-            var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
-
-            ].join("");
-
-            var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
-                style,
-                ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
-
-            ].join("");
-            
-            var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
-                style,
-                ' class="c-black" title="Edit Flight Info">Edit Flight</a><br /><br />'
-
-            ].join("");    
-            
-            var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
-
-            ].join("");  
-
-             var oper_terminate = ['<a ',                
-                style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
-
-            var invoice_print = ['<a ',
-                ' target="_blank"  href="./index.php/Order/invoice_print?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Print Invoice">Print Invoice</a><br /><br />'
-
-            ].join("");  
-
-            var confirmation_letter = ['<a ',
-                ' target="_blank"  href="./index.php/Order/confirmation_letter?id=', rowdata.id, '"',
-                style,
-                ' class="c-blue" title="Confirmation letter">Confirmation letter</a><br /><br />'
-
-            ].join("");  
-
-            oper_html_arr.push(oper_check); 
-            oper_html_arr.push(oper_invoice);   
-            oper_html_arr.push(oper_flight); 
-            oper_html_arr.push(oper_notice); 
-            oper_html_arr.push(oper_terminate);
-            oper_html_arr.push(invoice_print); 
-            oper_html_arr.push(confirmation_letter);
-
-            return oper_html_arr.join("");
-
-            //如果订单有机票信息且没有确认，显示下面的列表
-            }else if(rowdata.o_flight == 1 && rowdata.order_status != 3){
-            var oper_html_arr = [];
-           
-            var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
-
-            var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
-
-            ].join("");
-
-            var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
-                style,
-                ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
-
-            ].join("");
-            
-            var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
-                style,
-                ' class="c-black" title="Edit Flight Info">Edit Flight</a><br /><br />'
-
-            ].join("");    
-            
-            var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
-                style,
-                ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
-
-            ].join("");  
-
-             var oper_terminate = ['<a ',                
-                style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
- 
-
-            oper_html_arr.push(oper_check); 
-            oper_html_arr.push(oper_invoice);   
-            oper_html_arr.push(oper_flight); 
-            oper_html_arr.push(oper_notice); 
-            oper_html_arr.push(oper_terminate);
-
-            return oper_html_arr.join("");
-
-            }
+            return oper_html_arr.join("");            
 
         }
 

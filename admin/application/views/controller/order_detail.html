@@ -106,36 +106,21 @@
                             <b class="arrow icon-angle-down"></b>
                         </a>
                         <ul class="submenu">
-                            <li   class="active">
-                                    <a href="<?php echo site_url('Order/index'); ?>">
+                               <li   class="active">
+                                    <a href="<?php echo site_url('Control/index'); ?>">
                                         <i class="icon-double-angle-right"></i>Order List
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url('Group/index'); ?>">
+                                    <a href="<?php echo site_url('Control/Nindex'); ?>">
                                         <i class="icon-double-angle-right"></i>Normal Group List
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url('Group/Mindex'); ?>">
-                                        <i class="icon-double-angle-right"></i>Merge Group List
+                                    <a href="<?php echo site_url('Control/Mindex'); ?>">
+                                        <i class="icon-double-angle-right"></i>North&South Group List
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="<?php echo site_url('Group/add_group'); ?>">
-                                        <i class="icon-double-angle-right"></i>Add Group
-                                    </a>
-                                </li>                                
-                                <li >
-                                    <a href="<?php echo site_url('Group/merge_group'); ?>">
-                                        <i class="icon-double-angle-right"></i>Merge Group
-                                    </a>
-                                </li>
-                                <li >
-                                    <a href="<?php echo site_url('Group/add_special'); ?>">
-                                        <i class="icon-double-angle-right"></i>Special Group
-                                    </a>
-                                </li>   
                             </ul>
                         </li>
                         
@@ -419,7 +404,7 @@
                                         <!-- 航班信息 end -->
 
                                         <!--留言 Remark  start -->
-                                        <section ms-controller="tour_order" class="t-step">                                            
+                                        <section ms-controller="tour_order" class="remarkInfo t-step">                                            
                                             <h4 class="smaller  header green clearfix "> 
 
                                                   <div class="col-xs-4">
@@ -446,7 +431,7 @@
                                         <!--留言 Remark end -->
 
                                         <!--op审核意见 opnote  start -->
-                                        <section ms-controller="tour_order" class="t-step">                                            
+                                        <section ms-controller="tour_order" class="remarkInfo t-step">                                            
                                             <h4 class="smaller  header blue clearfix "> 
 
                                                   <div class="col-xs-4">
@@ -459,39 +444,19 @@
                                             <div class="form-group col-sm-12">
                                                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">OP's Code(Extra Room)</label>
                                                 <div class="col-sm-9">
-                                                    <div class="col-xs-10 col-sm-5">
-                                                         <input type="text" class="form-control t-can_disabled"  id="opCode" ms-duplex="opCode">
-                                                    </div>
+                                                    <div class="col-xs-10 col-sm-5">{{opCode}}</div>
                                                 </div>
                                             </div>
                                             <!--  opcode end  -->
                                             <div class="remark col-sm-12">
                                                 <h5 class="blue"> Remark for Tourguide</h5>
-                                                    <textarea rows="5" id="opNote"  ms-duplex="opNote" cols="100" ></textarea>
-                                            </div>
-                                            <div class="remark col-sm-12 t-step">
-                                                <h4 class="orange  header"> To Customer Additional Service and Special request</h4>
-                                                    <textarea rows="5" id="opMark"  ms-duplex="opMark" cols="100" ></textarea>
+                                                    <div class="col-sm-9">
+                                                        <div class="col-xs-10 col-sm-5">{{opNote}}</div>
+                                                     </div>
                                             </div>
                                         </section>
                                         <!--op审核意见 opnote  end -->
-
-                                       <!--op审核通过 opcheck  start -->
-                                        <section class="t-step">    
-                                                <div class="form-group">
-                                                   <div class="col-sm-3 pull-left">
-                                                        <button class="btn btn-sm btn-danger t-can_disabled" id="confirmOrder"><i class="icon-ok "></i>Confirm&Invoice
-                                                        </button>                                                     
-                                                    </div>
-                                                    <div class="col-sm-3 pull-right">
-                                                               <button class="btn btn-primary btn-lg" id="update_info">
-                                                                    <i class="icon-ok "></i>Confirm
-                                                                </button>
-                                                           </div>
-                                                    
-                                                </div>
-                                        </section>
-                                        <!--op审核通过 opcheck    end -->                                    
+                                 
                                 </div>
                             </div>
                         </div>
@@ -537,8 +502,7 @@
                                 var orderData = {
                                         o_id:$('#o_sn').val(),                                                                           
                                         opCode:$("#opCode").val(),                                      
-                                        opNote:$("#opNote").val(), 
-                                        opMark:$("#opMark").val(),                                    
+                                        opNote:$("#opNote").val(),                                    
                                     };
                                 $.post("<?php echo site_url('Order/confirm_order');?>",orderData, function (data) {
                                     if(data['reCode']==-1){
@@ -562,8 +526,7 @@
                                 var orderData = {
                                         o_id:$('#o_sn').val(),                                                                           
                                         opCode:$("#opCode").val(),                                      
-                                        opNote:$("#opNote").val(), 
-                                        opMark:$("#opMark").val(),                                    
+                                        opNote:$("#opNote").val(),                                    
                                     };
                                 $.post("<?php echo site_url('Order/confirm_order');?>",orderData, function (data) {
                                     if(data['reCode']==-1){

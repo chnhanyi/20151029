@@ -30,7 +30,7 @@
      }
      $.each(window._price, function(k, v) {
          if ($.isNumeric(v) && k != "discount") {
-             cur_price[k] = parseInt(v / 100);
+             cur_price[k] = (parseFloat(v / 100)).toFixed(1);
          }else{
              cur_price[k] = v ;
          }
@@ -233,7 +233,7 @@
          vm.infant_price = info.infant_price;
 
          vm.discount = 0;
-         vm.adult_price = info.child_1_price;
+         vm.adult_price = info.adult_price;
 
          vm.child_1_price = info.child_1_price;
          vm.child_2_price = info.child_2_price;
@@ -1291,13 +1291,7 @@
          vm.brokerage = (0).toFixed(2);
          vm.real_fees_amount = (0).toFixed(2);
 
-         vm.early_double_room_price = 0; //双人间 价格
-         vm.early_breakfast_price = 0; //早餐价格
-         vm.early_triple_room_price = 0; //单人间价格
-         vm.later_double_room_price = 0; //双人间 价格
-         vm.later_triple_room_price = 0; //单人间价格
-         vm.later_breakfast_price = 0; //早餐价格
-         vm.later_fare_price = 0; //交通费用
+
 
          function count() {
 

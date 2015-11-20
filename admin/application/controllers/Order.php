@@ -78,15 +78,21 @@
 		function get_order_detail(){
 		 	$o_id = $this->input->post("o_sn");
 
+		 	//查询订单的状态
 		 	$s4 = $this->Order_model->check_order_status($o_id);
+
+			//如果订单是取消状态，不处理
 			if($s4['o_orderStatus']==4 ){
 					return  false;
 			}
 
-		 	//更新订单的处理状态
-			$this->load->helper('cookie');
-			$opname = get_cookie("uin");
-			$num = $this->Order_model->update_order_status1($o_id,$opname);
+		 	//如果没有处理，更新订单的处理状态
+		 	if($s4['o_orderStatus']!=3){
+		 		$this->load->helper('cookie');
+				$opname = get_cookie("uin");
+				$num = $this->Order_model->update_order_status1($o_id,$opname);
+		 	}
+			
 
 
 			//加载订单的详细内容			
@@ -166,6 +172,7 @@
             //OP的审核笔记
             $data['opCode'] 		= $res['o_opCode'];
      		$data['opNote'] 		= $res['o_opNote'];
+     		$data['opMark'] 		= $res['o_opMark'];
 
 			//分房信息
 			$room_people = $this->Order_model->get_room_people($o_id);
@@ -191,6 +198,7 @@
 			$o_id 	= $this->input->post("o_id");
 			$data1['o_opNote'] = $this->input->post("opNote");
 			$data1['o_opCode'] = $this->input->post("opCode");
+			$data1['o_opMark'] = $this->input->post("opMark");
 			$num = $this->Order_model->check_order($o_id,$data1);
 						
 			if($num == 1){				
@@ -497,6 +505,7 @@
 
 			//找出发票的字段并组装
 			$res = $this->Order_model->get_detail($o_id);
+			$a_id=$res['a_id'];
 			$invoice_info=array();
 			     $invoice_info = $res['o_invoice_data'];
                  $invoice_info=stripslashes($invoice_info);
@@ -534,8 +543,13 @@
 			      
 
 			//加载打印发票页
-
-				$this->load->view("op/invoice_print.html",$data);
+                 //判断是否新西兰的agent或者月付的agent
+                 $delay=$this->Company_model->get_company($a_id);
+                 if($delay['a_area']==2||$delay['a_monthly']==1){
+                 	$this->load->view("op/invoice_print1.html",$data);
+                 }else{
+                 	$this->load->view("op/invoice_print2.html",$data);
+                 }				
 		}
 
 		//confirmation letter的打印和生成pdf
@@ -628,13 +642,8 @@
 			}
 
 			//额外的服务
-			$data['service']="";
-			if(isset($invoice_info['list'])==true && $invoice_info['list']!=null){
-                 	foreach ($invoice_info['list'] as $key => $value) {
-                 		$m=$key+1;
-                 		$data['service'].=$m.".".$value['item'];                 	
-                        }
-            }
+			$data['service']=$res['o_opMark'];;
+
 
             //获得公司的电话号码
             $a_id= $res['a_id'];

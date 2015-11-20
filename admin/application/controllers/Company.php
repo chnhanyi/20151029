@@ -37,6 +37,7 @@ class Company extends  MY_Controller{
 				$cc["a_monthly"]		=	$v['a_monthly'];
 				$cc["a_type"]		    =	$v['a_type']	;
 				$cc["a_commissionRate"]		=	$v['a_commissionRate'];
+				$cc["a_northRate"]		=	$v['a_northRate'];				
 				array_push($data['data'],$cc);
 			}
 			$this->response_data($data);
@@ -70,6 +71,7 @@ class Company extends  MY_Controller{
 			$data['a_monthly'] = $res['a_monthly'];
 			$data['a_type'] = $res['a_type'];
 			$data['a_commissionRate'] = $res['a_commissionRate'];
+			$data["a_northRate"]		=	$res['a_northRate'];		
 
 			$da['status'] = "success";
 			$da['reCode'] = 0;
@@ -90,6 +92,7 @@ class Company extends  MY_Controller{
 					$this->form_validation->set_rules('monthly','monthly','trim|integer|required');
 					$this->form_validation->set_rules('type','type','trim|integer|required');
 					$this->form_validation->set_rules('commissionRate','commissionRate','trim|numeric|required');
+					$this->form_validation->set_rules('a_northRate','North Rate','trim|numeric|required');
 
 					if ($this->form_validation->run() == false){						
 						$data['retCode'] = -1;
@@ -105,6 +108,7 @@ class Company extends  MY_Controller{
 						$data['a_monthly'] = $this->input->post("monthly",true);
 						$data['a_type']  = $this->input->post("type",true);
 						$data['a_commissionRate'] =$this->input->post("commissionRate",true);
+						$data['a_northRate'] =$this->input->post("a_northRate",true);
 							
 						$this->Company_model->insert_company($data);
 
@@ -130,6 +134,7 @@ class Company extends  MY_Controller{
 					$this->form_validation->set_rules('monthly','monthly','trim|integer|required');
 					$this->form_validation->set_rules('type','type','trim|integer|required');
 					$this->form_validation->set_rules('commissionRate','commissionRate','trim|numeric|required');
+					$this->form_validation->set_rules('a_northRate','North Rate','trim|numeric|required');
 
 					if ($this->form_validation->run() == false){						
 						$data['retCode'] = -1;
@@ -146,6 +151,7 @@ class Company extends  MY_Controller{
 						$data['a_monthly'] = $this->input->post("monthly",true);
 						$data['a_type']  = $this->input->post("type",true);
 						$data['a_commissionRate'] =$this->input->post("commissionRate",true);
+						$data['a_northRate'] =$this->input->post("a_northRate",true);
 
 						$this->Company_model->update_company($data,$a_id);	
 
