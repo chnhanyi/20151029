@@ -143,6 +143,7 @@ class User_model extends CI_Model {
 						A.a_monthly as companyMonthly,
 						A.a_type as companyType,
 						A.a_commissionRate as commissionRotate,
+						A.a_northRate as northRate,
 						B.s_name as  agentName,
 						B.s_email as agentEmail 
 					from

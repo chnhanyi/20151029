@@ -7,6 +7,7 @@
 			$this->load->model("Admin_model");
 			$this->load->helper("cookie");
 			$rest = $this->Admin_model->is_login();
+
 			if($rest){
 				$this->input->set_cookie("uin",$rest['username'],60*60*24*15);
 				$this->input->set_cookie("user_id",$rest['token'],60*60*24*15);

@@ -25,11 +25,12 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 					} else {
 						$userinfo = "";
 					}
+
 					
-					if(empty($username) || empty($username)){
-								return false; //cookie信息不正确
-							}
-								if (empty($userinfo)) { 
+					if (empty($userinfo)) {
+						if(empty($username) || empty($user_id)){
+							return false; //cookie信息错误，需要重新登录
+								}								
 									$this -> db -> select("a_id,a_userName,a_password,a_type,a_status,a_token");
 									$this -> db -> where("a_userName=", $username);
 									$res = $this -> db -> get(self::TBL_A);
@@ -40,9 +41,11 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 											$data['token'] = $user_id;											
 											return $data;
 										} else {
+											//  账号cookie信息不对，无法登录
 											return false;
 										}
 									}else{
+										//用户名错误，没有查询到有登录信息
 										return false;
 									}
 						} else {
@@ -54,9 +57,10 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 							return false;
 						}
 					}
+					
 				}
 
-				//判断是否登录
+				//判断是否永久登录
 				function login($username, $pwd, $checkforever) {
 					$this -> db -> select("a_userName,a_password,a_token,a_type,a_status");
 					$this -> db -> where("a_userName=", $username);

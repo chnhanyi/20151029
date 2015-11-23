@@ -174,7 +174,7 @@
 		 }
 
 		//查询数据库中当前两个团是否已经拼过了
-		 function is_Mgroup($r_id,$Nid,$Sid){		 	
+		 function is_Mgroup($Nid,$Sid){		 	
 		 	$this->db->where('t_Nid', $Nid);
 		 	$this->db->where('t_Sid', $Sid);
 			$query = $this->db->get(self::TBL_T);

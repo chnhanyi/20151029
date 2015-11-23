@@ -1258,14 +1258,6 @@
 
          vm.infant_price = 400;
 
-         vm.early_double_room_num = 0;
-         vm.early_triple_room_num = 0;
-         vm.early_breakfast_num = 0;
-
-         vm.later_double_room_num = 0;
-         vm.later_triple_room_num = 0;
-         vm.later_breakfast_num = 0;
-         vm.later_fare_num = 0;
 
          vm.discount = 0; //佣金折扣
          vm.currency =_price.currency; //货币种类
@@ -1275,17 +1267,6 @@
          vm.child_fees = 0; //儿童费用
          vm.infant_fees = 0; //儿童费用
 
-         vm.early_double_room_fees = 0;
-         vm.early_triple_room_fees = 0;
-         vm.early_breakfast_fees = 0;
-
-         vm.later_double_room_fees = 0;
-         vm.later_triple_room_fees = 0;
-         vm.later_breakfast_fees = 0;
-         vm.later_fare_fees = 0;
-
-         vm.early_fees = 0; //提前抵达费用
-         vm.later_fees = 0; //推迟离开费用
          vm.fees_amount = (0).toFixed(2); //向客人收取
          vm.fees_amount = (0).toFixed(2);
          vm.brokerage = (0).toFixed(2);
@@ -1306,7 +1287,7 @@
              vm.fees_amount = (vm.adult_fees + vm.child_1_fees + vm.child_2_fees + vm.infant_fees + vm.difference ).toFixed(2);
 
 
-             vm.brokerage = ((vm.adult_fees + vm.child_1_fees + vm.child_2_fees) * vm.discount).toFixed(2);
+             vm.brokerage = ((vm.adult_fees + vm.child_1_fees + vm.child_2_fees)*100 * vm.discount/100).toFixed(2);
              vm.real_fees_amount = (vm.fees_amount - parseFloat(vm.brokerage)).toFixed(2);
 
              vm_tour_order.order_fees = vm.real_fees_amount;
@@ -1334,30 +1315,7 @@
              count();
          });
 
-         vm.$watch("early_triple_room_num", function(a, b) {
-             count();
-         });
-         vm.$watch("early_double_room_num", function(a, b) {
-             count();
-         });
-         vm.$watch("early_breakfast_num", function(a, b) {
-             count();
-         });
 
-         vm.$watch("later_double_room_num", function(a, b) {
-             count();
-         });
-
-         vm.$watch("later_triple_room_num", function(a, b) {
-             count();
-         });
-
-         vm.$watch("later_breakfast_num", function(a, b) {
-             count();
-         });
-         vm.$watch("later_fare_num", function(a, b) {
-             count();
-         });
 
 
 

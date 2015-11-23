@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pacific Delight Booking System</title>
+<title><?php echo $invoice_no;?></title>
 <base href="<?php echo base_url();?>" />
 <style>
 html, body, div, ul, li, h1, h2, h3, h4, h5, h6,form, input, p, span, strong, em, a, img, table, th, tr,td{ margin:0; padding:0; border:none;}
@@ -29,26 +29,29 @@ body{ font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;fo
 .thank{ font-size:16px; font-weight:bold; line-height:25px; padding-left:20px;}
 .bottom{vertical-align: bottom;}
 .red{color:#F00;}
-.infoBox{height: 430px;}
-.contact{font-size: 18px;line-height: 50px;margin-left: 20px;}
+.infoBox{height: 560px;}
+.contact{font-size: 18px;line-height: 40px;margin-left: 20px;}
 .length{max-width: 600px;word-wrap:break-word;};
 .ag{font-size:22px; line-height:25px; font-weight:bold;margin-left: 20px;}
 table{width:90%; border:1px solid #666;margin:20px;}
 table th,table td{ border:1px solid #666; height:40px;}
 table td{ text-align:center;}
 .mt20{margin-top:20px;margin-left: 10px;}
+.ml50{margin-left: 50px;width: 760px;}
+.rightBar{height: 1230px;}
 </style>
 </head>
 
 <body>
 <div class="wrap clearfix">
-	<div class="fl">
+	<div class="fl ml50">
     	<h2>Booking Confirmmation<span class="thank">(Customer Copy)</span></h2>
         <img src="public/assets/images/bookingBg.jpg">
         <h3><span class="f28">Congratulations</span>, Your booking has been confirmed. </h3>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purpose.</p>
-        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to buy travel insurance .</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Thank you for chosing us, may you have a wonderful journey.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purposes.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">請務必提供一位聯繫人的手提電話號碼，以方便導遊在機場接機。</p>
+        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to purcharse the travel insurance .</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
         <h4>No. <?php echo $invoice_no;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tour Code: <?php echo $tour_code;?></h4>
         <h4><?php echo $c_name;?></h4>
         <h4><?php echo $e_name;?></h4>
@@ -85,6 +88,7 @@ table td{ text-align:center;}
          <p class="contact"><span class="red fb">Very Important:&nbsp;&nbsp;&nbsp;&nbsp;</span>Contacts: <?php echo $contacts;?>&nbsp;&nbsp;&nbsp;&nbsp;Mobile：<?php echo $mobile;?></p>
             <p class="f20"><?php echo $company_name;?></p>
             <p class="f20">TEL: <?php echo $company_tel;?></p>
+            <p class="f20">REF: </p>
             <p class="f20">CONSULTANT:</p>
             </div>
             <img src="public/assets/images/swty.jpg">
@@ -92,7 +96,7 @@ table td{ text-align:center;}
             <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>
             <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">Our Staff will welcome you at the arrival gate with this sign.</p>            
     </div>
-	<div class="rightBar fr"><img src="public/assets/images/bodyBg.jpg"></div>
+	<div class="fr"><img class="rightBar" src="public/assets/images/bodyBg.jpg"></div>
 
 </div>
 </body>

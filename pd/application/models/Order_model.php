@@ -106,6 +106,19 @@ class order_model extends CI_Model {
 		}
 		return false;
 	}
+	 /** 获取旅游团的类型
+	 * @param int $r_id 线路图的id
+	 * @return array  旅游线路的id
+	 */
+	public function get_group_type($r_id) {
+		$query = $this->db->query(sprintf("SELECT r_type FROM pd_route where r_id=%s LIMIT 1",$r_id));
+        $row = $query->row();
+		
+		if(!empty($row)){
+			return $row->r_type;
+		}
+		return false;
+	}
 	/** 根据线路信息，获取旅游团信息
 	 *  @param string $r_id  线路信息
 	 *  @return array 线路的日期信息
@@ -149,6 +162,12 @@ class order_model extends CI_Model {
 		$data = $result->result_array();
 		$price = $this->get_price($r_id);
 		$user_conf = $this->User_model->get_user_conf();
+		$group_type=$this->get_group_type($r_id);
+			if($group_type==1){
+				$discount = $user_conf['northRate'];
+			}else{
+				$discount = $user_conf['commissionRotate'];
+			}		
 		$prices = array();
 		foreach($data as $k => $v){
 			$p['adult_price'] = $price['AdultPrice'];
@@ -156,7 +175,7 @@ class order_model extends CI_Model {
 			$p['child_1_price'] = $price['ChildPrice1'];
 			$p['child_2_price'] = $price['ChildPrice2'];			
 			$p['room_difference_price'] = $price['SinglePrice'];
-			$p['discount'] = $user_conf['commissionRotate'];
+			$p['discount'] = $discount;
 			$p['remain_guest'] = $v['remain_guest'];
 			$p['tourCode'] = $v['t_tourCode'];
 			$prices[date_to_lxs($v['t_date'])] = $p;	 

@@ -16,7 +16,13 @@
 			$user_conf = $this->User_model->get_user_conf();
 			
 			$data['price'] = $this->Order_model->get_price(intval($id));
-			$data['discount'] = $user_conf['commissionRotate'];
+			$group_type=$this->Order_model->get_group_type(intval($id));
+
+			if($group_type==1){
+				$data['discount'] = $user_conf['northRate'];
+			}else{
+				$data['discount'] = $user_conf['commissionRotate'];
+			}			
 			$data['Currency'] = $user_conf['area'];
 			$this->load->view("order/add_order_two.html",$data);
 		}
@@ -186,7 +192,13 @@
 			}
 			//用户折扣率检测
 			$userinfo = $this->User_model->get_user_conf();
-			if($userinfo['commissionRotate'] != $data['o_discount']){
+			$group_type=$this->Order_model->get_group_type($data['r_id']);
+			if($group_type==1){
+				$discount = $userinfo['northRate'];
+			}else{
+				$discount = $userinfo['commissionRotate'];
+			}
+			if($discount != $data['o_discount']){
 				$this->response_data("discount is not valid",-110);
 			}
 			//验证一下库存
@@ -214,8 +226,10 @@
 				$this->response_data("fees is not valid",-111);
 			}		
 			//现在是正常的，算佣金
-			if($data['o_brokerage'] != $totalprice * $userinfo['commissionRotate']){
-				$this->response_data("brokerage is not valid",-112);	
+			$commission = ($totalprice * $discount)/100;
+			$commission =round($commission,2);
+			if($data['o_brokerage']/100 != $commission){
+				$this->response_data("brokerage is not valid,".$data['o_brokerage']."/".$totalprice."/".$discount."/".$commission,-112);	
 			}
 			return true;
 		}
