@@ -575,6 +575,7 @@
 				 $data['c_name']=$invoice_info['c_name'];
 				 $data['e_name']=$invoice_info['e_name'];
 				 $data['company_name']=$invoice_info['company_name'];
+				 $data['reference']=$res['o_agentReference'];
 
 			//总人数
 			$data['people'] ="";
