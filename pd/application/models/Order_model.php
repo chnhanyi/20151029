@@ -25,8 +25,7 @@ class order_model extends CI_Model {
 					r_Pdf_sa as routePdfsa,
 					r_auAdultPrice as AdultPrice,
 					r_auChildPrice1 as ChildPrice1,
-					r_auChildPrice2 as ChildPrice2,
-					r_auChildPrice3 as ChildPrice3,
+					r_auChildPrice2 as ChildPrice2,					
 					r_auInfantPrice as InfantPrice,
 					r_auSinglePrice as SinglePrice
 				from 
@@ -48,8 +47,7 @@ class order_model extends CI_Model {
 					r_Pdf_sa as routePdfsa,
 					r_nzAdultPrice as AdultPrice,
 					r_nzChildPrice1 as ChildPrice1,
-					r_nzChildPrice2 as ChildPrice2,
-					r_nzChildPrice3 as ChildPrice3,
+					r_nzChildPrice2 as ChildPrice2,					
 					r_nzInfantPrice as InfantPrice,
 					r_nzSinglePrice as SinglePrice
 				from 
@@ -71,8 +69,7 @@ class order_model extends CI_Model {
 					r_Pdf_sa as routePdfsa,
 					r_saAdultPrice as AdultPrice,
 					r_saChildPrice1 as ChildPrice1,
-					r_saChildPrice2 as ChildPrice2,
-					r_saChildPrice3 as ChildPrice3,
+					r_saChildPrice2 as ChildPrice2,					
 					r_saInfantPrice as InfantPrice,
 					r_saSinglePrice as SinglePrice
 				from 
@@ -94,6 +91,7 @@ class order_model extends CI_Model {
 		$user_conf = $this->User_model->get_user_conf();
 		$currency = $this->config->item('currency');
 		$currency_field = $currency[$user_conf['area']];
+
 		
 		$field = array();
 		while(list($k,$v) = each($currency_field) ){

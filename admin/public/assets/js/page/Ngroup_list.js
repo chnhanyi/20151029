@@ -166,7 +166,7 @@
             ].join("");		
                         
 			var oper_flight = ['<a ',
-                ' target="_blank"  href="index.php/Group/tourguide_list?id=', rowdata.t_id, '"',
+                ' target="_blank"  href="index.php/Table/tour_guide?id=', rowdata.t_id, '"',
                 style,
                 ' class="c-blue" title="To Tour Guide">Tour Guide List</a><br /><br />'
             ].join("");
@@ -174,7 +174,7 @@
             //var mark;                      
 
             var oper_hotel = ['<a ',
-                ' target="_blank"  href="index.php/Group/room_list?id=', rowdata.t_id, '"',
+                ' target="_blank"  href="index.php/Table/hotel?id=', rowdata.t_id, '"',
                 style,
                 ' class="c-orange" title="To Hotel">Room List</a><br /><br />'
 

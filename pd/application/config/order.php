@@ -14,8 +14,7 @@ $config['order_add_field'] = array(
 					'child_1_price'		=> 	'o_child1Price',//成年人1
 					'child_2_num'		=>	'o_childNumber2',//2到4岁占床
 					'child_2_price' 	=> 	'o_child2Price',//成年人2
-					'child_3_num'		=>	'o_childNumber3',//占床小孩
-					'child_3_price'		=>	'o_child3Price',//孩子三价格
+
 					
 					'total_people'		=>	'o_totalPeople', //总人数
 					),

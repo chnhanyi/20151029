@@ -114,8 +114,12 @@
                 vm.people_text += "Infant × " + vm.infant_num + ", ";
             }
 
-            if (vm.child_1_num + vm.child_2_num + vm.child_3_num > 0) {
-                vm.people_text += "Child ×" + (vm.child_1_num + vm.child_2_num + vm.child_3_num);
+            if (vm.child_1_num> 0) {
+                vm.people_text += "Child(No Bed) ×" + vm.child_1_num+ ", ";
+
+            }
+            if (vm.child_2_num > 0) {
+                vm.people_text += "Child(With Bed) ×" + vm.child_2_num;
 
             }
             // 人数信息 end

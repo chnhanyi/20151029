@@ -9,12 +9,14 @@ $config['acl']['manager'] = array(
     'Company',
     'Route',
     'Order',
+    'Table',
     'Staff'
 );  
 //operator权限映射    
 $config['acl']['operator'] = array(
 	'Admin',//登录和登出页面
 	'Order',
+    'Table',
 	'Group'
 );  
 
