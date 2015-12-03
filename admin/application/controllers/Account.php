@@ -4,7 +4,7 @@
 	class Account extends  MY_Controller{
 		public function __construct(){
 			parent::__construct();
-			$this->load->model('Order_model');
+			$this->load->model('Account_model');
 		}
 		//展示op订单列表
 		function index(){
@@ -15,60 +15,85 @@
 
 
 		function get_data(){			
-	        $rows 	= $this->input->get("rows");
+	        $limit 	= $this->input->get("rows");
 			$page 	= $this->input->get("page");
-			$count 	= $this->Order_model->count_Order();
-			$data['totalPages'] 	= ceil($count/$rows);
-			$data['currentPage'] 	= 1;
+
+			$start=($page-1)*$limit;
+			//获取搜索条件
+			$where 	= $this->get_where();
+
+			$count 	= $this->Account_model->count_Order($where);
+			$list 	= $this->Account_model->get_all_orders($where,$start,$limit);			
+
+			//把参数传给前端
+			if($count>0){
+				$data['totalPages'] = ceil($count/$limit);
+				}else{
+				$data['totalPages'] = 0;
+				}
+			if($page>$data['totalPages']){
+				$page=$data['totalPages'];
+				}
+			$data['currentPage'] 	= $page;
 			$data['totalRecords'] 	= $count;
-			$list 	= $this->Order_model->get_all_orders();
+
 			$data['data'] = array();
 			foreach($list as $v){
-				$cc['id'] 				=	$v['o_id'];
-				$cc['booking_time'] 	= 	$v['o_bookingTime'];
+				$cc['id'] 				=	$v['o_id'];				
 				$cc['order_sn'] 		= 	$v['o_sn'];
 				$cc['agent_reference'] 	= 	$v['o_agentReference'];
-				$cc["tour_code"]		=	$v['o_sn'];
-				$cc["tour_date"]		=	$this->toxdate($v['o_bookingTime']);
+				$cc["tour_code"]		=	$v['t_tourCode'];				
+				$cc["company_name"]		=	$v['a_name'];
+				$cc["company_tel"]		=	$v['a_tel'];				
 				$cc["total_guests"]		=	$v['o_totalNum']	;
 				$cc["adult_num"]		=	$v['o_adultNumber'];
-				$cc["child_num"] 		= $v["o_childNumber1"] + $v["o_childNumber2"] + $v["o_childNumber3"];
-				
-				$cc["infant_num"] 		= $v['o_infantNumber'];	
-				$cc["sales_total"] 		= $v["o_saleTotal"]/100;
-        		$cc["order_amount"] 	= $v['o_orderAmount']/100;
-        		$cc["order_status"] 	= $v['o_orderStatus'];
-        		$cc["payment_status"] 	= $v['o_paymentStatus'];
+				$cc["child_num1"] 		= 	$v["o_childNumber1"];
+				$cc["child_num2"] 		=   $v["o_childNumber2"];				
+				$cc["infant_num"] 		= 	$v['o_infantNumber'];	
+        		$cc["order_realSale"] 	= 	$v['o_realSale']/100;        		
+        		$cc["operator"] 	 	= 	$v['o_opName'];
+        		$cc["op_code"] 	 	    = 	$v['o_opCode'];
+        		$cc["commissionRate"] 	= 	$v['a_commissionRate'];
+        		$cc["northRate"] 	 	= 	$v['a_northRate'];
+        		$cc["paymentStatus"] 	 	= 	$v['o_paymentStatus'];
+        		
 				
 				array_push($data['data'],$cc);
 			}
 			$this->response_data($data);
 		}
 
-
-		//update订单信息
-		public  function update_order()
-		{
-			$data['id'] = $this->input->get("o_id");
-			$data['os'] = $this->input->get("sn");
-			$this->load->model("Ordermodel");
-			$this->Ordermodel->update_order($data);
-			$data['reCode'] = 0;
-			$data['status'] = "success";
-			$data['data'] = "更新成功";
-			return json_encode($data);
-		}
-		//查看订单详情
-		 public function listsorder(){
-		 	$this->load->helper("url");
-		 	$o_id = $this->input->get("o_id");
-			$this->load->model("Ordermodel");
-			$data['order'] = $this->Ordermodel->get_sn_info_details($o_id);
-			$data['guest'] = $this->Ordermodel->get_guest($o_id);
-			if(empty($data['order']) || empty($data['guest'])){
-				exit("请求错误");
+        //设置搜索条件
+		function get_where(){
+			$filter = $this->input->get("filters");
+			$where = array();
+			$filter = json_decode($filter);
+			if(is_object($filter)){
+				foreach($filter->rules as $v){
+					if($v->field =="start_date"){
+						$where["o_bookingTime".$this->select_condition($v->op)]=$this->toudate($v->data);
+					}else if($v->field =="end_date"){
+						$where["o_bookingTime".$this->select_condition($v->op)]=$this->toudate($v->data);
+					}else if($v->field == "order_status"){
+						$where['o_orderStatus'.$this->select_condition($v->op)]=$v->data;
+					}else if($v->field == "o_sn"){
+						$where['o_id'.$this->select_condition($v->op)]=$v->data;
+					}else if($v->field== "agent_name"){
+						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
+					}else if($v->field=="tour_code"){
+						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
+					}else if($v->field=="tour_date"){
+						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
+					}
+				}
 			}
-			$this->load->view("order/details.html",$data);
+			return $where;
+		} 
+
+		//修改订单的付款金额
+		 function modify_payment(){	 
+
+			$this->load->view("account/modify_payment.html");
 		 }
 	}
 

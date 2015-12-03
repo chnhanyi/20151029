@@ -161,15 +161,20 @@ class Table extends CI_Controller
                                 $company_res =  $this->Order_model->get_company_id($o_id);
                                 $company_id = $company_res[0]['a_id'];
                                 $area_res =  $this->Order_model->get_company_area($company_id);
+                                
                                 $invoice_res=$this->Order_model->get_order_detail($o_id);
                                 $area_id = $area_res[0]['a_area'];
+
 
                                 $c_name = $area_res[0]['a_name'];
                                                         
                                 if($area_id==2){
                                     $cc='NZAG:'.$c_name.'/ Invoice No:'.$invoice_res[0]['o_sn'] ;
+                                    //本单是携程的单子
+                                }elseif($area_id==3 && $company_id==37){
+                                    $cc=$c_name.'/ Invoice No:'.$invoice_res[0]['o_sn']."/ CTRIP,VERY VERY IMPORTANT,PLEASE DOUBLE CHECK!!" ;
                                 }else{
-                                    $cc='';
+                                    $cc=$c_name.'/ Invoice No:'.$invoice_res[0]['o_sn'] ;
                                 }
 
                                 //找出本订单的所有小孩详情

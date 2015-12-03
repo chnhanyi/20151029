@@ -22,21 +22,24 @@ a{ text-decoration:none; color:#333; outline:none; -webkit-outline:none;}
 a:hover{ text-decoration:underline; color:#F60;} 
 input:focus { outline: none; } 
 body{ font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px; color:#333;}
-.wrap{ width:950px; margin:50px auto;}
+.wrap{ width:950px;height: 1250px; margin:50px auto;}
 .wrap h2{ font-size:30px; padding:20px 0 10px 20px; letter-spacing:1px;}
 .wrap h3{ font-size:20px; padding:30px 0 20px 20px;}
 .wrap h4{ font-size:18px; padding:30px 0 0 20px; font-weight:500;}
 .thank{ font-size:16px; font-weight:bold; line-height:25px; padding-left:20px;}
 .bottom{vertical-align: bottom;}
 .red{color:#F00;}
-.infoBox{height: 560px;}
+.infoBox{height: 500px;}
+.flightBox{height: 620px;}
 .contact{font-size: 18px;line-height: 40px;margin-left: 20px;}
-.length{max-width: 600px;word-wrap:break-word;};
+.length{max-width: 600px;word-wrap:break-word;}
+.length1{max-width:300px;word-wrap:break-word;};
 .ag{font-size:22px; line-height:25px; font-weight:bold;margin-left: 20px;}
 table{width:90%; border:1px solid #666;margin:20px;}
 table th,table td{ border:1px solid #666; height:40px;}
 table td{ text-align:center;}
 .mt20{margin-top:20px;margin-left: 10px;}
+.pt40{padding-top:40px;}
 .ml50{margin-left: 50px;width: 760px;}
 .rightBar{height: 1230px;}
 </style>
@@ -45,13 +48,14 @@ table td{ text-align:center;}
 <body>
 <div class="wrap clearfix">
 	<div class="fl ml50">
-    	<h2>Booking Confirmmation<span class="thank">(Customer Copy)</span></h2>
+    	<h2>Booking Confirmation<span class="thank">(Customer Copy/客戶留存)</span></h2>
         <img src="public/assets/images/bookingBg.jpg">
         <h3><span class="f28">Congratulations</span>, Your booking has been confirmed. </h3>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">如您在南島行程第一天抵達CHC，請確保您能在15:30（紐西蘭時間）前出境并與導遊匯合。如您在南島行程最後一天乘機離開CHC，我們將確保最晚于14:30(紐西蘭时间)抵達CHC國際機場。<span class="red">國際航班您需要在登機前2個小時抵達機場辦理登機手續。</span>請您務必據此信息預定機票。</p>
         <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purposes.</p>
         <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">請務必提供一位聯繫人的手提電話號碼，以方便導遊在機場接機。</p>
         <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to purcharse the travel insurance .</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班延誤或臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
         <h4>No. <?php echo $invoice_no;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tour Code: <?php echo $tour_code;?></h4>
         <h4><?php echo $c_name;?></h4>
         <h4><?php echo $e_name;?></h4>
@@ -98,6 +102,54 @@ table td{ text-align:center;}
     </div>
 	<div class="fr"><img class="rightBar" src="public/assets/images/bodyBg.jpg"></div>
 
+</div>
+<div class="wrap pt40 clearfix">
+    <div class="fl ml50">
+        <h2>Booking Confirmation<span class="thank">(Customer Copy/客戶留存)</span></h2>
+        <img src="public/assets/images/bookingBg.jpg">
+        <h3><span class="f28">Congratulations</span>, Your booking has been confirmed. </h3>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">如您在南島行程第一天抵達CHC，請確保您能在15:30（紐西蘭時間）前出境并與導遊匯合。如您在南島行程最後一天乘機離開CHC，我們將確保最晚于14:30(紐西蘭时间)抵達CHC國際機場。<span class="red">國際航班您需要在登機前2個小時抵達機場辦理登機手續。</span>請您務必據此信息預定機票。</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purposes.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">請務必提供一位聯繫人的手提電話號碼，以方便導遊在機場接機。</p>
+        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to purcharse the travel insurance .</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班延誤或臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
+        <h4 class="fb">Flight Infomation</h4>
+                <?php if(empty($flight)==true){ ?>
+                    <p class="f20 red">Please provide your flight infomation./请您务必准确提供完整航班信息。</p>               
+                <?php }?>  
+        <div class="flightBox">
+        <table class="mt20" cellpadding="0" cellspacing="0">
+           <thead>
+                <tr>
+                    <th width="5%">ID</th>
+                    <th width="15%">Departure Date</th>
+                    <th width="12%">Flight No</th>                    
+                    <th width="15%">Flight Time</th>
+                    <th width="15%">Flight Route</th>
+                    <th width="38%">Customers</th>
+                </tr>
+           </thead>
+           <tbody>
+                <?php if(empty($flight)==false){foreach ($flight as $k => $v) :?>                     
+                <tr>                                   
+                    <td><?php echo $k+1; ?></td>                    
+                    <td><?php echo $v['f_date']; ?></td>                                
+                    <td><?php echo $v['f_no']; ?></td>                               
+                    <td><?php echo $v['f_time']; ?></td> 
+                    <td><?php echo $v['f_route']; ?></td>          
+                    <td class="length1"><?php echo $v['f_guest']; ?></td>
+                </tr>
+                <?php endforeach;}?>               
+           </tbody>
+        </table>
+
+            </div>
+            <img src="public/assets/images/swty.jpg">
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">紐西蘭緊急專線：+64-9-3079555</p>            
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">Our Staff will welcome you at the arrival gate with this sign.</p>            
+    </div>
+    <div class="fr"><img class="rightBar" src="public/assets/images/bodyBg.jpg"></div>
 </div>
 </body>
 </html>

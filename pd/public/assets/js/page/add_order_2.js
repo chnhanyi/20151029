@@ -1271,6 +1271,7 @@
          vm.fees_amount = (0).toFixed(2);
          vm.brokerage = (0).toFixed(2);
          vm.real_fees_amount = (0).toFixed(2);
+       
 
 
 
@@ -1287,7 +1288,9 @@
              vm.fees_amount = (vm.adult_fees + vm.child_1_fees + vm.child_2_fees + vm.infant_fees + vm.difference ).toFixed(2);
 
 
-             vm.brokerage = ((vm.adult_fees + vm.child_1_fees + vm.child_2_fees)*100 * vm.discount/100).toFixed(2);
+             vm.brokerage = (Math.round((vm.adult_fees + vm.child_1_fees + vm.child_2_fees)*100 * vm.discount)/100).toFixed(2);
+
+
              vm.real_fees_amount = (vm.fees_amount - parseFloat(vm.brokerage)).toFixed(2);
 
              vm_tour_order.order_fees = vm.real_fees_amount;

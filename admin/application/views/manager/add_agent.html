@@ -253,7 +253,7 @@
 															<select name="company" id="company" ms-controller="companys" class="t-can_disabled form-control" ms-duplex="selected" data-duplex-changed="selectchange">
 																<option value="0">Please select a company</option>
                                                                     <?php foreach($data as $v) :?>
-                                                                        <option value="<?php echo $v['a_id'];?>"><?php echo $v['a_city']."/".$v['a_name'];?></option>
+                                                                        <option value="<?php echo $v['a_id'];?>"><?php echo $v['a_name']."/".$v['a_city'];?></option>
                                                                     <?php endforeach;?>
 															</select>
 														</div>

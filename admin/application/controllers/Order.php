@@ -354,7 +354,7 @@
 							    $nt['name'] = $data['infantName'];
 							    $nt['price'] = $data['infantPrice'];
 							    $nt['unit'] = $data['infantNumber'];
-							    $nt['total'] =$data['infantPrice_invo']*$data['infantNumber'];				   
+							    $nt['total'] =$data['infantPrice']*$data['infantNumber'];				   
 							    array_push($data['invoice_list'],$nt);
 						    }
 
@@ -468,9 +468,8 @@
 			$o_id= $this->input->post("o_id",true);
 			$this->load->helper('cookie');
 			$opname = get_cookie("uin");
+
 			//获取新增数据
-			$date=$this->input->post("date",true);
-			$tour_date=$this->toudate($date);
 			$invoice_data= $this->input->post("data",true);
 			
 			$data=json_encode($invoice_data);
@@ -642,8 +641,12 @@
 				 $data['room'].="Twin×".$twin_room_num;
 			}
 
+			//航班信息
+			$flight = $this->Order_model->get_order_flight($o_id);
+			$data['flight']=$flight;	
+
 			//额外的服务
-			$data['service']=$res['o_opMark'];;
+			$data['service']=$res['o_opMark'];
 
 
             //获得公司的电话号码

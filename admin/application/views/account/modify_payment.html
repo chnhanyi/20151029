@@ -33,7 +33,7 @@
 		<!-- 业务css end -->
 
 		<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="public/assets/css/ace-ie.min.css" />
 		<![endif]-->
 
 		<!-- inline styles related to this page -->
@@ -120,7 +120,7 @@
 						} catch (e) {}
 					</script>
 					<!-- nav start -->
-						<ul class="nav nav-list">
+					<ul class="nav nav-list">
 						<li class="active open">
 							<a href="javascript:void(0)" class="dropdown-toggle">
 								<i class="icon-file-alt"></i>
@@ -130,59 +130,9 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-                               <li>
-									<a href="<?php echo site_url('Order/manager'); ?>">
-										<i class="icon-double-angle-right"></i> Order List
-									</a>
-								</li>
-                                <li >
-									<a href="<?php echo site_url('News/index'); ?>">
-										<i class="icon-double-angle-right"></i> News List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('News/add_news'); ?>">
-										<i class="icon-double-angle-right"></i> Add News
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Route/index'); ?>">
-										<i class="icon-double-angle-right"></i> Route List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Route/add_route'); ?>">
-										<i class="icon-double-angle-right"></i> Add Route
-									</a>
-								</li>
-                                 <li>
-									<a href="<?php echo site_url('Company/index'); ?>">
-										<i class="icon-double-angle-right"></i> Company List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Company/add_company'); ?>">
-										<i class="icon-double-angle-right"></i> Add Company
-									</a>
-								</li>
-								<li  class="active">
-									<a href="<?php echo site_url('Agent/index'); ?>">
-										<i class="icon-double-angle-right"></i> Agent List
-									</a>
-								</li>
                                 <li>
-									<a href="<?php echo site_url('Agent/add_agent'); ?>">
-										<i class="icon-double-angle-right"></i> Add Agent
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Staff/index'); ?>">
-										<i class="icon-double-angle-right"></i> Staff List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Staff/add_staff'); ?>">
-										<i class="icon-double-angle-right"></i> Add Staff
+									<a href="<?php echo site_url('Account/index'); ?>">
+										<i class="icon-double-angle-right"></i> Order List
 									</a>
 								</li>
                                 <li >
@@ -221,7 +171,7 @@
 							</li>
 
 							<li>
-								Modify Agent
+								Edit Company
 							</li>
 						</ul><!-- .breadcrumb -->
 					</div>
@@ -239,81 +189,153 @@
 										        <div class="col-xs-4">
 
 										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
-										        	 Agent Info
+										        	 Company Info
 										         </div>
 									         </h4>
 
-										<section class="t-step clearfix"  ms-controller="edit_agent">
-											<div class="form-horizontal t-content col-xs-12" role="form">
-                                            <input type="hidden" name="id" id="s_id" ms-duplex="s_id">
-                                                 <!--  线路名称 Tour Name start -->
+										<section class="t-step clearfix" ms-controller="edit_company">
+											<div class="form-horizontal t-content col-xs-12" role="form"  >
+                                            <input type="hidden" name="id" id="id" ms-duplex="a_id">
+                                                 <!--  线路中文名称 Tour Name start -->
 												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Company Name </label>
-													<div class="col-sm-9">														
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Area </label>
+
+													<div class="col-sm-8">
 														<div class="col-xs-10 col-sm-8">
-															<select name="company" id="a_id" ms-duplex-number="a_id" class="t-can_disabled form-control" ms-duplex="selected" data-duplex-changed="selectchange">																
-                                                                    <?php foreach($data as $v) :?>
-                                                                        <option value="<?php echo $v['a_id'];?>"><?php echo $v['a_name']."/".$v['a_city'];?></option>
-                                                                    <?php endforeach;?>
-															</select>
-														</div>
-													</div>
-												</div>
-												<!--  线路名称 Tour Name end  -->
-                                                
-												
-												<!--  线路中文名称 Tour Name start -->
-												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Agent Name </label>
-
-													<div class="col-sm-9">
-														<div class="col-xs-10 col-sm-5">
-															<input type="text" name="name" id="name"  class="form-control t-can_disabled" placeholder="peter" ms-duplex="s_name">
-														</div>
-													</div>
-												</div>
-												<!--  线路中文名称 Tour Name end  -->  
-                                                
-                                                <!--  线路英文名称 Tour Name start -->
-												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Email </label>
-
-													<div class="col-sm-9">
-														<div class="col-xs-10 col-sm-5">
-															<input type="text" name="email" id="email" class="form-control t-can_disabled" ms-duplex="s_email">
-													     </div>
-													</div>
-												</div>
-												<!--  线路英文名称 Tour Name end  --> 
-                                                
-                                                <!--  线路英文名称 Tour Name start -->
-												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Password </label>
-
-													<div class="col-sm-9">
-														<div class="col-xs-10 col-sm-5">
-															<input type="text" name="password" id="pwd" class="form-control t-can_disabled" >
-													     </div>
-													</div>
-												</div>
-												<!--  线路英文名称 Tour Name end  -->      
-                                                
-                                                <!--  线路中文名称 Tour Name start -->
-												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Status</label>
-
-													<div class="col-sm-9">
-														<div class="col-xs-10 col-sm-5">
-															<select name="status" id="status" ms-duplex-number="s_status">
-                                                              <option value ="1">Active</option>
-                                                              <option value ="0">Frozen</option>                                                                             
+															<select name="area" id="area" ms-duplex-number="a_area">
+                                                              <option value ="1" >Australia</option>
+                                                              <option value ="2">New Zealand</option>
+                                                              <option value ="3">South East Asia</option>                                                            
                                                             </select>
 														</div>
 													</div>
 												</div>
-												<!--  线路中文名称 Tour Name end  -->                                                  
-                                                                                               
-                                                                                                                                       
+												<!--  线路中文名称 Tour Name end  --> 
+                                                
+                                                <!--  公司名称 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> City </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" name="city" id="city" ms-duplex="a_city">
+														</div>
+													</div>
+												</div>
+												<!--  公司名称 Tour Name end  --> 
+                                                
+                                                <!--  公司名称 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> District </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" name="district" id="district" ms-duplex="a_district">
+														</div>
+													</div>
+												</div>
+												<!--  公司名称 Tour Name end  -->  
+                                                
+												
+												<!--  公司名称 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Company Name </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" name="name" id="name" ms-duplex="a_name">
+														</div>
+													</div>
+												</div>
+												<!--  公司名称 Tour Name end  -->  
+                                               
+                                                
+                                                <!--  旅游团代码 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Company Address</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8" >
+															<input type="text" class="form-control t-can_disabled" name="address" id="address" ms-duplex="a_address">
+														</div>
+													</div>
+												</div>
+												<!--  旅游团代码 TourCode end  -->    
+
+										
+                                                <!--  抵达和离开城市 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Telephone and Fax Number</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled" name="tel" id="tel" ms-duplex="a_tel">
+														</div>
+													</div>
+												</div>
+												<!--  抵达和离开城市 TourCode end  -->  
+                                                
+                                                 <!-- 是否拼房 Share Room -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1">Monthly Paid</label>                                       							<div class="col-sm-8">
+														<div class="col-sm-12">
+															<div class="control-group" style=" margin-top: -7px">
+																<div class="radio t-dib">
+																	<label>
+																		<input  value="true" name="monthly" id="monthly"  type="checkbox" class="ace t-can_disabled" ms-duplex-checked="a_monthly">
+																		<span class="lbl">  Yes</span>
+																	</label>
+																</div>                                                             
+
+															</div>
+                                                            
+														</div>													
+
+													</div>
+												</div>
+												<!--是否拼房 Share Room   -->
+                                                
+                                                <!--  公司类别名称 Tour Name start -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Company Type</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<select name="type" id="type" ms-duplex-number="a_type">                                                           
+                                                              <option value ="1" selected>Standarded Cooperate</option>
+                                                              <option value ="2">Friendly Cooperate</option>
+                                                              <option value ="3">Deeply Cooperate</option>               
+                                                            </select>
+														</div>
+													</div>
+												</div>
+												<!--  公司类别名称 Tour Name end  -->  
+                                                
+                                                <!--  折扣率 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Commission Rate</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled"  name="commissionRate" id="commissionRate" ms-duplex="a_commissionRate">
+														</div>
+													</div>
+												</div>
+												<!--  折扣率 TourCode end  -->  
+
+												<!--  折扣率 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> North Rate</label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-8">
+															<input type="text" class="form-control t-can_disabled"  id="a_northRate" ms-duplex="a_northRate">
+														</div>
+													</div>
+												</div>
+												<!--  折扣率 TourCode end  -->  
+                                                
+                                                 
 												<!--  -->
                                                 <div class="hr hr-18 dotted hr-double"></div>
 
@@ -321,7 +343,7 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
 													<div class="col-sm-3 pull-right">
-														<button class="btn btn-lg btn-primary t-can_disabled" id="editAgent"><i class="icon-ok "></i>Submit</button>														
+														<a class="btn btn-lg btn-primary t-can_disabled" id="editCompany"><i class="icon-ok "></i>Submit</a>														
 													</div>
 												</div>
 												<!--第一步操作 end  -->
@@ -373,20 +395,28 @@
 		<script src="public/assets/js/page/app.js"></script>
 		<!-- 具体业务代码 -->
         <script src="public/assets/js/page/jquery.ynf.js"></script>
-		<script src="public/assets/js/page/edit_agent.js"></script>
+		<script src="public/assets/js/page/modules/laydate.js"></script>
+		<script src="public/assets/js/page/modules/jquery.date_input.pack.js"></script>
+		<script src="public/assets/js/page/edit_company.js"></script>
         
         						<script>
-						  	$('#editAgent').click(function(e) {
+						  	$('#editCompany').click(function(e) {
 						        //e.preventDefault();
-								var agentData = {
-									    s_id:$('#s_id').val(),
-										a_id:$('#a_id').val(),
+								var companyData = {
+									    id:$('#id').val(),
+										area:$('#area').val(),
+										city:$('#city').val(),
+										district:$('#district').val(),
 										name:$('#name').val(),										
-										email:$('#email').val(),
-										pwd:$('#pwd').val(),
-										status:$('#status').val(),
+										address:$('#address').val(),
+										tel:$('#tel').val(),										
+										monthly:$("#monthly").is(":checked") ? 1 : 0,
+										type:$("#type").val(),
+										commissionRate:$('#commissionRate').val(),
+										a_northRate:$('#a_northRate').val(),
+										
 									};
-								$.post("<?php echo site_url('Agent/update_agent');?>",agentData, function (data) {
+								$.post("<?php echo site_url('Company/update_company');?>",companyData, function (data) {
 									if(data['retCode']==-1){
 											//没有通过输入验证											
 											var txt= data['data'];
@@ -398,12 +428,11 @@
 											alert(txt);
 											//window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);	
 											//重定位到公司列表页
-											location.href="<?php echo site_url('Agent/index') ;?>";
+											location.href="<?php echo site_url('Company/index') ;?>";
 										}
 								},"json");
 						    });
 						  </script>
-
 
 		</div>
 	</body>

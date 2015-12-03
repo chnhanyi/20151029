@@ -127,7 +127,7 @@
             }],
 
             viewrecords: true,
-            rowNum: 200,
+            rowNum: 500,
             rowList: [10, 20, 30, 50],
             pager: pager_selector,
             altRows: true,
@@ -170,28 +170,28 @@
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
 
             var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
 
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
                 style,
                 ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
 
             ].join("");
             
             var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
                 style,
                 ' class="c-black" title="Add Flight Info">Add Flight</a><br /><br />'
 
             ].join("");    
 			
 			var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order_show?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
 
@@ -234,28 +234,28 @@
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
 
             var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
 
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
                 style,
                 ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
 
             ].join("");
             
             var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/add_flight?id=', rowdata.id, '"',
                 style,
                 ' class="c-black" title="Add Flight Info">Add Flight</a><br /><br />'
 
             ].join("");    
             
             var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order_show?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
 
@@ -282,28 +282,28 @@
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
 
             var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
 
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
                 style,
                 ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
 
             ].join("");
             
             var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
                 style,
                 ' class="c-black" title="Edit Flight Info">Edit Flight</a><br /><br />'
 
             ].join("");    
             
             var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order_show?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
 
@@ -345,28 +345,28 @@
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
 
             var oper_check = ['<a ',
-                ' target="_self"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/check_order?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Confirm Order">Confirm Order</a><br /><br />'
 
             ].join("");
 
             var oper_invoice = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/edit_contacts?id=', rowdata.id, '"',
                 style,
                 ' class="c-red" title="Edit Contacts">Edit Contacts</a><br /><br />'
 
             ].join("");
             
             var oper_flight = ['<a ',
-                ' target="_self"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order/edit_flight?id=', rowdata.id, '"',
                 style,
                 ' class="c-black" title="Edit Flight Info">Edit Flight</a><br /><br />'
 
             ].join("");    
             
             var oper_notice = ['<a ',
-                ' target="_self"  href="./index.php/Order_show?id=', rowdata.id, '"',
+                ' target="_blank"  href="./index.php/Order_show?id=', rowdata.id, '"',
                 style,
                 ' class="c-green" title="Add Departure Notice">DEPT Notice</a><br /><br />'
 

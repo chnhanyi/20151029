@@ -187,21 +187,21 @@
 										forcheck:$("#for_login").is(":checked") ? 1 : 0
 									};
 								$.post("<?php echo site_url('Admin/login');?>",loginData, function (data) {
-										if(data['retCode']==-1){
-											//没有通过输入验证											
-											$('.tip').append(data['data']).show(300).delay(3000).hide(300);
-										}else if(data['retCode']==0){
+										if(data['status']==0){
 											//账号被冻结，无法使用
-											$('.tip').append("Your Account is Frozen!").show(300).delay(3000).hide(300);											
-										}else if(data['retCode']==1 && data['status']==1){
+											alert("Your Account is Frozen!")
+										}else if(data['retCode']==1 & data['status']==1){
 											//Manager
 											location.href="<?php echo site_url('Order/manager') ;?>";
-										}else if(data['retCode']==2 && data['status']==1){
+										}else if(data['retCode']==2 & data['status']==1){
 											//Operator
 										 	location.href="<?php echo site_url('Order/index') ;?>";
-										}else if(data['retCode']==3 && data['status']==1){
+										}else if(data['retCode']==3 & data['status']==1){
 											//Accoutant
-											location.href="<?php echo site_url('Order/account') ;?>";											
+											location.href="<?php echo site_url('Account/index') ;?>";
+											}else if(data['retCode']==4 & data['status']==1){
+											//Controller
+											location.href="<?php echo site_url('Control/index') ;?>";										
 										}else {
 											$('.tip').append("Wrong Username or Password, Login Failed!").show(300).delay(3000).hide(300);
 										}
