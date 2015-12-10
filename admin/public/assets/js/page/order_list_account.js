@@ -61,6 +61,7 @@
                 index: 'id',
                 width: 25,
                 editable: false,
+                search:false,
                 // formatter: user_name_formatter,
             }, {
                 name: 'order_sn',
@@ -81,35 +82,37 @@
                 name: 'commissionRate',
                 index: 'commissionRate',
                 width: 50,
+                search:false,
            }, {
                 name: 'northRate',
                 index: 'northRate',
                 width: 50,                 
-
+                search:false,
             },{
                 name: 'operator',
                 index: 'operator',
                 width: 50,
                 sortable: true, 
+                search:false,
 			}, {                
                 name: 'order_realSale',
                 index: 'order_realSale',
                 width: 60,
                 sortable: false,
-                editable: false, 
-
+                editable: false,
 			},{
                 name: 'paymentStatus',
                 index: 'paymentStatus',
                 width: 80,
-                formatter: payment_status_formatter
+                formatter: payment_status_formatter                
             }, {
                 name: 'oper',
                 index: '',
                 width: 80,
                 sortable: false,
                 editable: false,
-                formatter: oper_formatter
+                search:false,
+                formatter: oper_formatter                
 			}],
 
             viewrecords: true,
@@ -282,10 +285,9 @@
             edit: false,
             add: false,
             del: false,
-            refresh: true,
+            refresh: false,
             search: true,
-            searchicon: 'icon-search orange',
-            refreshicon: 'icon-refresh green',
+            searchicon: 'icon-search orange',            
             view: false,
             
         }, {

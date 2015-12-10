@@ -51,7 +51,7 @@
 		<![endif]-->
 	</head>
 
-	<body>
+	<body style="font-size:16px;">
 		<div class="navbar navbar-default" id="navbar">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
@@ -92,10 +92,7 @@
 						</li>
 					</ul><!-- /.ace-nav -->
 				</div>
-
-			 
-			</div>
-			<!-- navbar-container end  -->
+			</div><!-- navbar-container end  -->
 		</div>
 
 		<div class="main-container" id="main-container">
@@ -124,88 +121,14 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-                                 <li class="active">
-									<a href="<?php echo site_url('Order/manager'); ?>">
-										<i class="icon-double-angle-right"></i> Order List
+                               <li  class="active">
+									<a href="<?php echo site_url('Boss/index'); ?>">
+										<i class="icon-double-angle-right"></i>訂單列表
 									</a>
-								</li>
-								<li>
-									<a href="<?php echo site_url('Group/managerNgroup'); ?>">
-										<i class="icon-double-angle-right"></i>Normal Group List
-									</a>
-								</li>
-								<li>
-									<a href="<?php echo site_url('Group/managerMgroup'); ?>">
-										<i class="icon-double-angle-right"></i>Merge Group List
-									</a>
-								</li>
-                                <li >
-									<a href="<?php echo site_url('News/index'); ?>">
-										<i class="icon-double-angle-right"></i> News List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('News/add_news'); ?>">
-										<i class="icon-double-angle-right"></i> Add News
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Route/index'); ?>">
-										<i class="icon-double-angle-right"></i> Route List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Route/add_route'); ?>">
-										<i class="icon-double-angle-right"></i> Add Route
-									</a>
-								</li>
-                                 <li>
-									<a href="<?php echo site_url('Company/index'); ?>">
-										<i class="icon-double-angle-right"></i> Company List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Company/add_company'); ?>">
-										<i class="icon-double-angle-right"></i> Add Company
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Agent/index'); ?>">
-										<i class="icon-double-angle-right"></i> Agent List
-									</a>
-								</li>
-                                <li>
-									<a href="<?php echo site_url('Agent/add_agent'); ?>">
-										<i class="icon-double-angle-right"></i> Add Agent
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Statistics/index'); ?>">
-										<i class="icon-double-angle-right"></i> Agent  Log
-									</a>
-								</li> 
-								<li >
-									<a href="<?php echo site_url('Staff/index'); ?>">
-										<i class="icon-double-angle-right"></i> Staff  List
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Staff/add_staff'); ?>">
-										<i class="icon-double-angle-right"></i> Add Staff
-									</a>
-								</li>
-								<li >
-									<a href="<?php echo site_url('Statistics/index'); ?>">
-										<i class="icon-double-angle-right"></i> Staff  Log
-									</a>
-								</li>
-                                <li >
-									<a href="<?php echo site_url('Statistics/index'); ?>">
-										<i class="icon-double-angle-right"></i> Sales Statistics
-									</a>
-								</li>                                  
+								</li>	
 							</ul>
 						</li>
+						
 					</ul>
 					<!-- nav end -->
 
@@ -231,7 +154,7 @@
 							</li>
 
 							<li>
-								Staff List
+								Order List
 							</li>
 						</ul><!-- .breadcrumb -->
 
@@ -240,33 +163,19 @@
 
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-12">
+							<div class="col-xs-8">
 								<!-- PAGE CONTENT BEGINS 这里存放内容-->
 									<div class="result-wrap">
 									  <div class="result-content">
 
-									  	     <div class="col-xs-12">
-                                             <div class="row ynf-table-nav" id="ynf_table_nav">
-
-											           <div class="input-group col-xs-4 ynf-bd-r-1">
-											             <div class="control-group clearfix select-input-search" data-y-role="select_input_search" >
-											                    <div class="col-xs-5">
-											                        <select class="form-control" data-y-role ="search_select" >
-											                            <option value="o_sn">Company Name</option>											                            
-											                        </select>											                        
-											                    </div>
-											                    <div class="col-xs-7 input-group"  style="padding-left:0px">
-											                        <input type="text" data-y-role="search_input" class="form-control search-query" placeholder="">
-											                        <span class="input-group-btn">
-											                            <button type="button" data-y-role="search_btn"  class="btn btn-purple btn-sm">&nbsp;<i class="icon-search icon-on-right bigger-110"></i></button>
-											                        </span>
-
-											                    </div>
-											                </div>
-											           </div>
-											        </div>											    
+									  	     <div class="col-xs-8">
+									  	     <!-- 统计数据 start -->
+											        <div class="row">
+										                <p class="f20">
+										                      今天共收到張訂單，總銷售額NZD：$，AUD：$,共報名人，其中，南島團報名人，北島團報名人。澳洲報名人，纽西蘭報名人，其它報名人。
+										                  </p>
+                                                   </div>											    
 											    
-											    											    
 											    <table id="ynf_list"></table>
 											    <div id="ynf_list_pager"></div>
 											</div>
@@ -312,8 +221,7 @@
 		 <script >
 		   (function(){
 		       var table = { } ; 
-		       table.url = "index.php/Staff/staff_list";
-		       table.editurl = "index.php/Staff/staff_list";
+		       table.url = "/index.php/Boss/get_data";		       
 		       YNF_CONFIG.table = table ; 
 
 		   })();
@@ -323,7 +231,9 @@
 		<script src="public/assets/js/page/modules/grid.locale-en.js"></script>
 
 		<script src="public/assets/js/page/jquery.ynf.js"></script>
-		<script src="public/assets/js/page/staff_list.js"></script>
+		<script src="public/assets/js/page/order_list_boss.js"></script>
+		
+
 	 </div>
 </body>
 </html>

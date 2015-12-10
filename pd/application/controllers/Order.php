@@ -83,7 +83,7 @@
 			$fieldConfig = array(
 				"r_id" 			=> array("k" => "router_id","reg" =>"isNumber","message" =>"router id is not valid number"), //旅游团信息
 				"o_bookingTime" => array("k" => "cur_date","reg"=>"isDate","message" => "bookingTime is not valid date"), 		//预定的时间
-				"t_tourCode" => array("k" => "tourCode","reg"=>"isTourCode","message" => "tourCode is not valid date"), 		//预定的时间
+				"t_tourCode" => array("k" => "tourCode","reg"=>"isTourCode","message" => "tourCode is not valid date"), 		//团号
 				"o_adultNumber" => array("k" => "adult_num","reg"=>"isNumber","message"=>"audit number is not valid number"), 	//成人数量
 				"o_adultPrice"  => array("k" => "adult_price","reg"=>"isNumber","message"=>"audit price is not valid price"), 	//成人价格
 				"o_infantNumber" =>array("k" => "infant_num","reg"=>"isNumber","message"=>"infant Number is not valid number"), 	//婴儿数量

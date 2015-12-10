@@ -41,9 +41,8 @@
 				$cc["double_num"] 		= 	$v["o_double"];					
 				$cc["triple_num"] 		= 	$v['o_triple'];	
 				$cc["total_room"] 		= 	$v["o_single"]+$v["o_double"]+$v['o_twin']+$v['o_triple'];	
-				
-        		$cc["order_amount"] 	= 	$v['o_orderAmount']/100;
-				
+				$cc["op_name"] 		    = 	$v['o_opName'];	
+        		$cc["order_amount"] 	= 	$v['o_orderAmount']/100;				
 				$cc['order_status']     = 	$v['o_orderStatus'];
 				$cc['payment_status']   = 	$v['o_paymentStatus'];
 				
@@ -51,31 +50,29 @@
 			}
 			$this->response_data($data);
 		}
+
+		//获取搜索条件
 		function get_where(){
-			$filter = $this->input->get("filters");
-			$where = array();
-			$filter = json_decode($filter);
-			if(is_object($filter)){
-				foreach($filter->rules as $v){
-					if($v->field =="start_date"){
-						$where["o_bookingTime".$this->select_condition($v->op)]=$this->toudate($v->data);
-					}else if($v->field =="end_date"){
-						$where["o_bookingTime".$this->select_condition($v->op)]=$this->toudate($v->data);
-					}else if($v->field == "order_status"){
-						$where['o_orderStatus'.$this->select_condition($v->op)]=$v->data;
-					}else if($v->field == "o_sn"){
-						$where['o_id'.$this->select_condition($v->op)]=$v->data;
-					}else if($v->field== "agent_name"){
-						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
-					}else if($v->field=="tour_code"){
-						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
-					}else if($v->field=="tour_date"){
-						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
+			$field = $this->input->get("searchField");
+			$string = $this->input->get("searchString");
+			$where=array();
+			if(empty($field)==false && empty($string)==false){				
+					if($field =="order_sn"){
+						$where = array('pd_order.o_sn' => $string);
+					}elseif($field =="user"){
+						$where = array('pd_agent.s_email' => $string);						
+					}elseif($field =="tour_code"){
+						$where = array('pd_order.t_tourCode' => $string);	
+					}elseif($field =="agent_reference"){
+						$where = array('pd_order.o_agentReference' => $string);
+			        }elseif($field =="tour_date"){
+			        	$date=$this->toxdate($string);
+						$where = array('pd_order.o_bookingTime' => $date);
 					}
 				}
-			}
 			return $where;
-		} 
+		}
+
 		private function select_condition($v){
 			switch($v){
 				case "eq":

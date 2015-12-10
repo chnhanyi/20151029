@@ -44,8 +44,8 @@ class Table extends CI_Controller
 
         //本旅游团各订单的信息
         $objSheet->setCellValue('B6', 'ID')->setCellValue('C6', 'Room Type')->setCellValue('E6', 'Customers');
-
         $j=7;
+        $index=1;
             foreach($query['room_list'] as $key=>$val){                    
                     $objSheet->getStyle('B'.$j)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);                    
                     $objSheet->getStyle('B'.$j)->getFill()->getStartColor()->setARGB('438eb9');
@@ -64,8 +64,7 @@ class Table extends CI_Controller
 
                     $objSheet->setCellValue("B".$j,$val['agent']);
                     $j++;
-                        foreach($val['room'] as $k=>$v){
-                            $index=$k+1;
+                        foreach($val['room'] as $v){                            
                             $room="";
                                     if($v["room_type"]==1){ 
                                          $room="Single";
@@ -77,8 +76,10 @@ class Table extends CI_Controller
                                          $room="Twin";
                                     }
                             $objSheet->setCellValue("B".$j,$index)->setCellValue("C".$j,$room)->setCellValue("E".$j,$v['guests']);
-                            $j++;                
+                            $j++;
+                            $index++;                
                         }
+                    $j++;
             }       
         $objWriter = IOFactory :: createWriter($objPHPExcel, 'Excel2007'); 
         // Sending headers to force the user to download the file
@@ -246,19 +247,30 @@ class Table extends CI_Controller
         $objSheet->setCellValue('B4', 'Child:')->setCellValue('C4', $query['child_detail']);
         $objSheet->setCellValue('B5', 'Room:')->setCellValue('C5', $query['room_request']);
 
-        //本旅游团各订单的信息
-        $objSheet->setCellValue('B7', 'ID')->setCellValue('C7', 'Room Type')->setCellValue('E7', 'Customers');      
-        $j=8;
+        //本旅游团各订单的信息           
+        $j=7;
+        $index=1;
             foreach($query['order'] as $v){
-                   //联系人信息
-                    $objSheet->setCellValue("B".$j,'Contacts:')->setCellValue("C".$j,$v['contact']['contacts'])->setCellValue("E".$j,$v['contact']['mobile']);                    
+                   //本订单的Agent信息
+                    $objSheet->getStyle('B'.$j)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);                    
+                    $objSheet->getStyle('B'.$j)->getFill()->getStartColor()->setARGB('438eb9');
+                    $objSheet->getStyle('C'.$j)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);                    
+                    $objSheet->getStyle('C'.$j)->getFill()->getStartColor()->setARGB('438eb9');
+                    $objSheet->getStyle('D'.$j)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);                    
+                    $objSheet->getStyle('D'.$j)->getFill()->getStartColor()->setARGB('438eb9');
+                    $objSheet->getStyle('E'.$j)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);                    
+                    $objSheet->getStyle('E'.$j)->getFill()->getStartColor()->setARGB('438eb9');
+
+                    $objSheet->setCellValue("B".$j,$v['contact']['agent']);
                     $j++;
 
-                    //游客的姓名性别信息
-                    $objSheet->setCellValue("B".$j,'ID')->setCellValue("C".$j,'Customer Name')->setCellValue("E".$j,'Gender')->setCellValue("F".$j,'Type');
+                   //联系人信息
+                    $objSheet->setCellValue("B".$j,'Contacts:')->setCellValue("C".$j,$v['contact']['contacts'])->setCellValue("E".$j,$v['contact']['mobile']); 
+                    $objSheet->setCellValue("H".$j,'Room:')->setCellValue("I".$j,$v["roomInfo"]['room_order']);                       
                     $j++;
-                        foreach($v["guest_list"] as $k=>$g){
-                            $index=$k+1;
+
+                    //游客的姓名性别信息                                              
+                        foreach($v["guest_list"] as $g){                            
                             $gender="";
                             $type="";
                                     if($g["g_gender"]==1){ 
@@ -278,20 +290,13 @@ class Table extends CI_Controller
                                     }
                             $objSheet->setCellValue("B".$j,$index)->setCellValue("C".$j,$g["g_firstname"]."/".$g["g_lastname"])->setCellValue("E".$j,$gender)->setCellValue("F".$j,$type);
                             $j++;
+                            $index++;
                          }
 
-                    //游客的房间信息
-                        $objSheet->setCellValue("B".$j,'Room Info:')->setCellValue("C".$j,$v["roomInfo"]['room_order']);                    
-                    $j++; 
-
-                    // 航班信息 
-                    $objSheet->setCellValue("B".$j,'ID')->setCellValue("C".$j,'Flight Date')->setCellValue("D".$j,'Flight No.')->setCellValue("E".$j,'Flight Route')
-                    ->setCellValue("F".$j,'Flight Time')->setCellValue("G".$j,'Customers');
-                    $j++;
-                        foreach($v["flightInfo"] as $n => $f){
-                            $index=$n+1;                            
-                            $objSheet->setCellValue("B".$j,$index)->setCellValue("C".$j,$f["g_arriveDate"])->setCellValue("D".$j,$f["a_flightno"])->setCellValue("E".$j,$f["a_airport"])
-                            ->setCellValue("F".$j,$f["a_time"])->setCellValue("G".$j,$f["arrivedName"]);
+                    // 航班信息                    
+                        foreach($v["flightInfo"] as $f){                                                       
+                            $objSheet->setCellValue("B".$j,$f["g_arriveDate"])->setCellValue("C".$j,$f["a_flightno"])->setCellValue("D".$j,$f["a_airport"])
+                            ->setCellValue("E".$j,$f["a_time"])->setCellValue("F".$j,$f["arrivedName"]);
                             $j++;
                          }
 
@@ -384,8 +389,25 @@ class Table extends CI_Controller
 
                                 $o_id = $v['o_id'];
 
-                            //获取本订单的联系人信息和OP的审核信息
+                                //找出本订单的agent
                                 $data1= array();
+                                $company_res =  $this->Order_model->get_company_id($o_id);
+                                $company_id = $company_res[0]['a_id'];
+                                $area_res =  $this->Order_model->get_company_area($company_id);                                
+                                $invoice_res=$this->Order_model->get_order_detail($o_id);                                
+
+                                $c_name = $area_res[0]['a_name'];
+                                                        
+                                if($company_id==37){
+                                    $data1['agent']=$c_name.'/ Invoice No:'.$invoice_res[0]['o_sn']."/ CTRIP,VERY VERY IMPORTANT,PLEASE DOUBLE CHECK!!" ;
+                                }else{
+                                    $data1['agent']=$c_name.'/ Invoice No:'.$invoice_res[0]['o_sn'] ;
+                                }
+
+
+
+
+                            //获取本订单的联系人信息和OP的审核信息                                
                                 $order_details = $this->Order_model->get_order_detail($o_id);
                                 
 
@@ -456,6 +478,7 @@ class Table extends CI_Controller
                                     $data4 = $gd;
                                         $order2= array();
                                             
+                                                    
                                                     $order2["contact"]= $data1;
                                                     $order2["roomInfo"]= $data2;
                                                     $order2["guest_list"]=$data3;

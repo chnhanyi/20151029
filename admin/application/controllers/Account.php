@@ -5,13 +5,12 @@
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('Account_model');
+			$this->load->library('form_validation');
 		}
 		//展示op订单列表
 		function index(){
 			$this->load->view("account/order_list.html");
 		}
-
-
 
 
 		function get_data(){			
@@ -55,7 +54,7 @@
         		$cc["op_code"] 	 	    = 	$v['o_opCode'];
         		$cc["commissionRate"] 	= 	$v['a_commissionRate'];
         		$cc["northRate"] 	 	= 	$v['a_northRate'];
-        		$cc["paymentStatus"] 	 	= 	$v['o_paymentStatus'];
+        		$cc["paymentStatus"] 	= 	$v['o_paymentStatus'];
         		
 				
 				array_push($data['data'],$cc);
@@ -65,36 +64,78 @@
 
         //设置搜索条件
 		function get_where(){
-			$filter = $this->input->get("filters");
-			$where = array();
-			$filter = json_decode($filter);
-			if(is_object($filter)){
-				foreach($filter->rules as $v){
-					if($v->field =="start_date"){
-						$where["o_bookingTime".$this->select_condition($v->op)]=$this->toudate($v->data);
-					}else if($v->field =="end_date"){
-						$where["o_bookingTime".$this->select_condition($v->op)]=$this->toudate($v->data);
-					}else if($v->field == "order_status"){
-						$where['o_orderStatus'.$this->select_condition($v->op)]=$v->data;
-					}else if($v->field == "o_sn"){
-						$where['o_id'.$this->select_condition($v->op)]=$v->data;
-					}else if($v->field== "agent_name"){
-						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
-					}else if($v->field=="tour_code"){
-						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
-					}else if($v->field=="tour_date"){
-						$where['o_orderStatus '.$this->select_condition($v->op)]=$this->db->escape($v->data);
+			$field = $this->input->get("searchField");
+			$string = $this->input->get("searchString");
+			$where=array();
+			if(empty($field)==false && empty($string)==false){				
+					if($field =="order_sn"){
+						$where = array('pd_order.o_sn' => $string);						
+					}elseif($field =="tour_code"){
+						$where = array('pd_order.t_tourCode' => $string);	
+					}elseif($field =="company"){
+						$where = array('pd_company.a_name' => $string);
+			        }elseif($field =="order_realSale"){
+						$where = array('pd_order.o_realSale' => $string);
 					}
 				}
-			}
 			return $where;
 		} 
 
-		//修改订单的付款金额
-		 function modify_payment(){	 
-
+		//加载修改订单的付款金额的页面
+		 function modify_payment(){ 
 			$this->load->view("account/modify_payment.html");
 		 }
+
+		 		//修改订单的付款金额
+		 function get_payment(){
+		    $o_id = $this->input->post("o_id");
+
+		    //获得本单的金额和付款状态
+		    $res=$this->Account_model->get_payment($o_id);	    
+
+		    $data = array();
+		    $data['invoice']=$res[0]['o_sn'];
+		    $data['amount']=$res[0]['o_realSale']/100;
+		    $data['payment']=$res[0]['o_paymentStatus'];
+		    $data['o_id']=$o_id;
+
+					$da['status'] = "success";
+					$da['reCode'] = 0;
+					$da['data'] = $data;
+					$this->response_data($da);
+		 }
+
+		 	//更新公司的付款信息
+			function update_payment(){
+			     #设置验证规则
+		            $this->form_validation->set_rules('id','id','trim|integer|required');
+					$this->form_validation->set_rules('amount','amount','trim|numeric|required');
+					$this->form_validation->set_rules('payment','payment','trim|integer|required');
+
+					if ($this->form_validation->run() == false){						
+						$data['retCode'] = -1;
+						$data['data'] = validation_errors();
+						$data['status'] = "fail";				
+			         } else{
+			         	$o_id = $this->input->post("id",true);	
+						$realSale = $this->input->post("amount",true);
+						$data['o_realSale'] = $realSale*100;
+						$data['o_paymentStatus'] = $this->input->post("payment",true);					
+
+						$this->Account_model->update_payment($o_id,$data);	
+
+						$data['retCode'] = 1;
+						$data['data'] = "Update Success";					
+						$data['status'] = "success";
+						}
+						$this->output->set_header('Content-Type: application/json; charset=utf-8');
+						echo json_encode($data);
+
+					}
+
+
+
+
 	}
 
 ?>

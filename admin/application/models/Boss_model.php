@@ -2,7 +2,7 @@
     if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
-	class Order_model extends CI_Model{
+	class Boss_model extends CI_Model{
         const TBL_O = "order"; 
         const TBL_T = "tourGroup";
              
@@ -12,31 +12,18 @@
 		 	return $this->db->insert(self::TBL_O,$data);			
 		}
 		
-		//获取所有的订单信息
-		//public function get_all_orders($where,$start,$limit){
-		//	$query =$this->db->query('SELECT pd_order.o_id, pd_order.o_bookTime, pd_order.o_sn, pd_order.o_agentReference, pd_order.o_totalNum, pd_order.o_adultNumber, 
-		//		pd_order.o_childNumber1, pd_order.o_childNumber2, pd_order.o_infantNumber, pd_order.o_orderAmount, pd_order.o_orderStatus, 
-		//		pd_order.o_flight,pd_order.o_opName, pd_order.o_opCode, pd_order.o_deptNotice, pd_agent.s_name,pd_agent.s_email, pd_company.a_name,pd_company.a_tel, pd_tourGroup.t_tourCode
-		//				FROM pd_order, pd_company, pd_agent, pd_tourGroup
-		//				WHERE pd_tourGroup.r_id = pd_order.r_id
-		//				AND pd_tourGroup.t_date = pd_order.o_bookingTime
-		//				AND pd_agent.s_id = pd_order.user_id
-		//				AND pd_company.a_id = pd_agent.a_id
-		//				GROUP BY pd_order.t_tourCode,pd_order.o_id
-		//				ORDER BY pd_order.o_id DESC '); 				
-		//	return $query->result_array();
-		//}
 
 		//获取所有符合要求的订单信息
 		public function get_all_orders($where,$start,$limit){
-			$this->db->select('pd_order.o_id, pd_order.o_bookTime, pd_order.o_sn, pd_order.o_agentReference, pd_order.o_totalNum, pd_order.o_adultNumber, 
-				pd_order.o_childNumber1, pd_order.o_childNumber2, pd_order.o_infantNumber, pd_order.o_orderAmount, pd_order.o_orderStatus, 
-				pd_order.o_flight,pd_order.o_opName, pd_order.o_opCode, pd_order.o_deptNotice, pd_agent.s_name,pd_agent.s_email, pd_company.a_name,pd_company.a_tel, pd_tourGroup.t_tourCode');
+			$now=date("Y-m-d",strtotime("-1 day"));			
+			$this->db->select('pd_order.o_id, pd_order.o_bookTime, pd_order.o_sn, pd_order.o_agentReference, pd_order.o_totalNum, 
+				pd_order.o_orderAmount, pd_order.o_orderStatus, pd_order.o_bookTime,pd_company.a_name,
+				pd_order.o_opName, pd_order.o_opCode, pd_tourGroup.t_tourCode');
 			$this->db->from('pd_order');
-			$this->db->join('pd_company','pd_order.a_id=pd_company.a_id');
-			$this->db->join('pd_agent','pd_agent.s_id = pd_order.user_id');
+			$this->db->join('pd_company','pd_order.a_id=pd_company.a_id');					
 			$this->db->join('pd_tourGroup','pd_tourGroup.t_tourCode = pd_order.t_tourCode');			
 			$this->db->where($where);
+			$this->db->where("Date(pd_order.o_bookTime)",$now);	
 			$this->db->order_by('pd_order.o_id','desc');
 			$this->db->limit($limit,$start);
 			$query =$this->db->get(); 				
@@ -45,7 +32,9 @@
 
 		#统计订单的总数
 		function count_order($where){
+			$now=date("Y-m-d",strtotime("-1 day"));			
 			$this->db->where($where);			
+			$this->db->where("Date(pd_order.o_bookTime)",$now);			
 			$this->db->from(self::TBL_O);
 			return $this->db->count_all_results();
 		}
@@ -193,13 +182,12 @@
         }
 
         //更新发票的信息和发票点击次数，OPname等
-        function update_invoice_info($o_id,$opname,$newhit,$data,$orderSale){
+        function update_invoice_info($o_id,$opname,$newhit,$data){
         	$status = 3;
         	$updata = array(
         		'o_invoice_hit' => $newhit,
         		'o_invoice_data' => $data,
                 'o_orderStatus' => $status,
-                'o_orderSale' => $orderSale,
                 'o_opName' => $opname
             );            
         	$this->db->where('o_id', $o_id);

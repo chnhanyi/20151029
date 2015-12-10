@@ -61,12 +61,14 @@
                 index: 'id',
                 width: 25,
                 editable: false,
+                search:false,
                 // formatter: user_name_formatter,
             }, { 
                 name: 'booking_time',
                 index: 'booking_time',
                 width: 80,
                 editable: false,
+                search:false,
                 // formatter: user_name_formatter,
             }, {
                 name: 'order_sn',
@@ -74,8 +76,8 @@
                 width: 80,
                 formatter:order_sn_formatter
             }, {
-				name: 'agent_name',
-                index: 'agent_name',
+				name: 'agent_email',
+                index: 'agent_email',
                 width: 240,
                 formatter:agent_formatter            
             }, {
@@ -89,13 +91,15 @@
                 width: 80,
                 sortable: false,
                 editable: false,
+                search:false,
                 formatter: total_people_formatter
 			}, {                
                 name: 'order_amount',
                 index: 'order_amount',
                 width: 60,
                 sortable: false,
-                editable: false,  
+                editable: false,
+                search:false,  
 			},{
                 name: 'o_flight',
                 index: 'o_flight',
@@ -112,6 +116,7 @@
                 name: 'deptNotice',
                 index: 'deptNotice',
                 width: 80,
+                search:false,
 			},{
                 name: 'operator',
                 index: 'operator',
@@ -123,6 +128,7 @@
                 fixed: true,
                 sortable: false,
                 resize: false,
+                search:false,
                 formatter: oper_formatter,
             }],
 
@@ -597,11 +603,10 @@
             edit: false,
             add: false,
             del: false,
-            refresh: true,
-            search: false,
-            refreshicon: 'icon-refresh green',
-            view: true,
-            viewicon: 'icon-zoom-in grey',
+            refresh: false,
+            search: true,
+            searchicon: 'icon-search orange', 
+            view: false,
         }, {
             recreateForm: true,
             beforeShowForm: function(e) {

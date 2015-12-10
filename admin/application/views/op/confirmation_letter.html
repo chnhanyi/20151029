@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title><?php echo $invoice_no;?></title>
+<title>Confirmation_letter_<?php echo $invoice_no;?></title>
 <base href="<?php echo base_url();?>" />
 <style>
 html, body, div, ul, li, h1, h2, h3, h4, h5, h6,form, input, p, span, strong, em, a, img, table, th, tr,td{ margin:0; padding:0; border:none;}
 .fb{ font-weight:bold;}
 .f16{ font-size:16px; font-weight:bold;}
-.f18{ font-size:18px;font-weight:bold;}
+.f18{ font-size:18px;margin-left: 20px;}
 .f20{ font-size:18px;font-weight:bold; line-height:35px;margin-left: 20px; }
 .f28{ font-size:28px; font-weight:bold;}
+.title{font-size:18px; line-height:25px;margin-left: 20px;}
 .fl{ float:left;}
 .fr{ float:right;}
 .clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden; font-size:0;}
@@ -29,8 +30,9 @@ body{ font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;fo
 .thank{ font-size:16px; font-weight:bold; line-height:25px; padding-left:20px;}
 .bottom{vertical-align: bottom;}
 .red{color:#F00;}
-.infoBox{height: 500px;}
-.flightBox{height: 620px;}
+.infoBox{height: 800px;}
+.flightBox{height: 230px;}
+.noticeBox{height: 480px;}
 .contact{font-size: 18px;line-height: 40px;margin-left: 20px;}
 .length{max-width: 600px;word-wrap:break-word;}
 .length1{max-width:300px;word-wrap:break-word;};
@@ -51,15 +53,10 @@ table td{ text-align:center;}
     	<h2>Booking Confirmation<span class="thank">(Customer Copy/客戶留存)</span></h2>
         <img src="public/assets/images/bookingBg.jpg">
         <h3><span class="f28">Congratulations</span>, Your booking has been confirmed. </h3>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">如您在南島行程第一天抵達CHC，請確保您能在15:30（紐西蘭時間）前出境并與導遊匯合。如您在南島行程最後一天乘機離開CHC，我們將確保最晚于14:30(紐西蘭时间)抵達CHC國際機場。<span class="red">國際航班您需要在登機前2個小時抵達機場辦理登機手續。</span>請您務必據此信息預定機票。</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purposes.</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">請務必提供一位聯繫人的手提電話號碼，以方便導遊在機場接機。</p>
-        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to purcharse the travel insurance .</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班延誤或臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
-        <h4>No. <?php echo $invoice_no;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tour Code: <?php echo $tour_code;?></h4>
-        <h4><?php echo $c_name;?></h4>
-        <h4><?php echo $e_name;?></h4>
-        <h4>Tour Date：<?php echo $tour_date;?></h4>
+        <p class="title">No. <?php echo $invoice_no;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tour Code: <?php echo $tour_code;?></p>
+        <p class="title"><?php echo $c_name;?></p>
+        <p class="title"><?php echo $e_name;?></p>
+        <p class="title">Tour Date：<?php echo $tour_date;?></p>
         <div class="infoBox">
         <table class="mt20" cellpadding="0" cellspacing="0">
            <thead>
@@ -89,35 +86,11 @@ table td{ text-align:center;}
 				<?php }?>                
            </tbody>
         </table>
-         <p class="contact"><span class="red fb">Very Important:&nbsp;&nbsp;&nbsp;&nbsp;</span>Contacts: <?php echo $contacts;?>&nbsp;&nbsp;&nbsp;&nbsp;Mobile：<?php echo $mobile;?></p>
-            <p class="f20"><?php echo $company_name;?></p>
-            <p class="f20">TEL: <?php echo $company_tel;?></p>
-            <p class="f20">REF: <?php echo $reference;?></p>
-            <p class="f20">CONSULTANT:</p>
-            </div>
-            <img src="public/assets/images/swty.jpg">
-            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">紐西蘭緊急專線：+64-9-3079555</p>            
-            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>
-            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">Our Staff will welcome you at the arrival gate with this sign.</p>            
-    </div>
-	<div class="fr"><img class="rightBar" src="public/assets/images/bodyBg.jpg"></div>
-
-</div>
-<div class="wrap pt40 clearfix">
-    <div class="fl ml50">
-        <h2>Booking Confirmation<span class="thank">(Customer Copy/客戶留存)</span></h2>
-        <img src="public/assets/images/bookingBg.jpg">
-        <h3><span class="f28">Congratulations</span>, Your booking has been confirmed. </h3>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">如您在南島行程第一天抵達CHC，請確保您能在15:30（紐西蘭時間）前出境并與導遊匯合。如您在南島行程最後一天乘機離開CHC，我們將確保最晚于14:30(紐西蘭时间)抵達CHC國際機場。<span class="red">國際航班您需要在登機前2個小時抵達機場辦理登機手續。</span>請您務必據此信息預定機票。</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purposes.</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">請務必提供一位聯繫人的手提電話號碼，以方便導遊在機場接機。</p>
-        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to purcharse the travel insurance .</p>
-        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班延誤或臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
-        <h4 class="fb">Flight Infomation</h4>
+                <h4 class="fb">Flight Infomation</h4>
                 <?php if(empty($flight)==true){ ?>
                     <p class="f20 red">Please provide your flight infomation./请您务必准确提供完整航班信息。</p>               
                 <?php }?>  
-        <div class="flightBox">
+        
         <table class="mt20" cellpadding="0" cellspacing="0">
            <thead>
                 <tr>
@@ -143,7 +116,35 @@ table td{ text-align:center;}
            </tbody>
         </table>
 
+         <p class="contact"><span class="red fb">Very Important:&nbsp;&nbsp;&nbsp;&nbsp;</span>Contacts: <?php echo $contacts;?>&nbsp;&nbsp;&nbsp;&nbsp;Mobile：<?php echo $mobile;?></p>
+            <p class="f20"><?php echo $company_name;?></p>
+            <p class="f20">TEL: <?php echo $company_tel;?></p>
+            <p class="f20">REF: <?php echo $reference;?></p>
+            <p class="f20">CONSULTANT:____________________</p>
             </div>
+            <img src="public/assets/images/swty.jpg">
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">紐西蘭緊急專線：+64-9-3079555</p>            
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>
+            <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">Our Staff will welcome you at the arrival gate with this sign.</p>            
+    </div>
+	<div class="fr"><img class="rightBar" src="public/assets/images/bodyBg.jpg"></div>
+
+</div>
+<div class="wrap pt40 clearfix">
+    <div class="fl ml50">
+        <h2>Booking Confirmation<span class="thank">(Customer Copy/客戶留存)</span></h2>
+        <img src="public/assets/images/bookingBg.jpg">
+        <h3><span class="f28">Important Notice/重要信息</span></h3>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">If you arrive in Christchurch on the first day of the South Island itinerary, it is imperative that you arrive before and exit at 15:30 (New Zealand time) to meet the tour guide. We schedule our arrival time at the Christchurch international airport will be at the latest 14:30 NZ time. <span class="red">For international flights, it is imperative that you would be there 2 hours in advance for the check in procedure.</span> Please book your tickets according to the above infomation.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">如您在南島行程第一天抵達CHC，請確保您能在15:30（紐西蘭時間）前出境并與導遊匯合。如您在南島行程最後一天乘機離開CHC，我們將確保最晚于14:30(紐西蘭时间)抵達CHC國際機場。<span class="red">國際航班您需要在登機前2個小時抵達機場辦理登機手續。</span>請您務必據此信息預定機票。</p>        
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">Please make sure you have provided an acitve mobile number for pick up purposes.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">請務必提供一位聯繫人的手提電話號碼，以方便導遊在機場接機。</p>
+        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">To have a more pleasant trip, we strongly recommend you to purcharse the travel insurance .</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">為避免您不必要的損失（例如：航班延誤或臨時調整），我們強烈建議您在出發前購買旅遊保險。</p>
+        <p class="thank"><img class="bottom" src="public/assets/images/icon_right.gif">We will try our best to meet your room type preference, however the room types available might not be able to cater to all desires, due to the situation during the peak season of New Zealand travel.</p>
+        <p class="thank"><img  class="bottom" src="public/assets/images/icon_right.gif">我們將全力滿足您所預定的房型，但在旺季，雙人房和大床房在個別情況下將因酒店客觀原因而無法保障，請見諒。</p>
+        <div class="noticeBox"></div>
+
             <img src="public/assets/images/swty.jpg">
             <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">紐西蘭緊急專線：+64-9-3079555</p>            
             <p class="f16"><img  class="bottom" src="public/assets/images/icon_right.gif">我們的員工將在機場出口處手持帶有此標誌的接機牌恭迎您的大駕光臨.</p>

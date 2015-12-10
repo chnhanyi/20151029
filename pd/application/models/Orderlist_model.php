@@ -13,7 +13,7 @@ class orderlist_model extends CI_Model {
 					SELECT  pd_order.o_id,pd_order.o_sn,pd_order.o_bookingTime,pd_order.o_agentReference,pd_order.o_totalNum,
 					pd_order.o_adultNumber,pd_order.o_childNumber1,pd_order.o_childNumber2,pd_order.o_infantNumber,
 					pd_order.o_triple,pd_order.o_double,pd_order.o_single,pd_order.o_twin,pd_order.o_orderAmount,
-					pd_order.o_orderStatus,pd_order.o_paymentStatus,
+					pd_order.o_orderStatus,pd_order.o_paymentStatus,pd_order.o_opName,
 	                pd_agent.s_name,pd_route.r_cName,pd_route.r_eName
 	                FROM pd_route,pd_order,pd_agent
 	                WHERE pd_order.user_id=pd_agent.s_id
@@ -35,6 +35,7 @@ class orderlist_model extends CI_Model {
 		$list = $this->db->count_all_results();
 		return $list;
 	}
+	
 	//选择订单详细
 	function get_detail($o_id){
 		$this->load->model("User_model");

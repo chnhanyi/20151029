@@ -14,7 +14,7 @@
 
          var defaults_grid_args = {
             viewrecords: true,
-            rowNum: 20,
+            rowNum: 50,
             rowList: [10, 20, 30, 50],
             pager: ynf_modal_list_pager_selector,
             altRows: true,
@@ -42,10 +42,10 @@
             url: table.url,
             editurl: table.editurl, //nothing is saved
             jsonReader: {
-                root: "data.data",
-                page: "data.currentPage",
-                total: "data.totalPages",
-                records: "data.totalRecords",
+                root: "data",
+                page: "currentPage",
+                total: "totalPages",
+                records: "totalRecords",
                 repeatitems: false
             },
             datatype: "json",
@@ -53,101 +53,53 @@
             height: 500,
             caption: "Order List",
             autowidth: true,
-            colNames: ["ID", "Invoice No","Dept notice","User Name","My Reference", "Tour Name","Tour Date","Total Pax", "Total Rooms","Nett", "Order Status" ,"Operator", "Payment Status","Operation"],
+            colNames: ["Boook Time","Invoice No","Agent","Tour Code","Total Pax", "Nett", "Status", "Operator"],
 
             colModel: [
 			{
-                name: 'id',
-                index: 'id',
-                width: 30,
-                editable: false,
-                search:false,
-                // formatter: user_name_formatter,
+                name: 'bookingTime',
+                index: 'bookingTime',
+                width: 100,  
             }, {
                 name: 'order_sn',
                 index: 'order_sn',
-                width: 60,
-                formatter:order_sn_formatter
-			}, { 
-                name: 'd_notice',
-                index: 'd_notice',
-                width: 100,
-                editable: false,
-                search:false,
-                // formatter: user_name_formatter,
-			}, { 
-                name: 'user',
-                index: 'user',
-                width: 60,
-                editable: false,                
-                // formatter: user_name_formatter,
-            }, {
-                name: 'agent_reference',
-                index: 'agent_reference',
                 width: 80,
-                align: "center",
+                formatter:order_sn_formatter
             }, {
-                name: 'tour_name',
-                index: 'tour_name',
-                width: 150,
-                search:false,
-                formatter: tour_name_formatter,
-            
+				name: 'company_name',
+                index: 'company_name',
+                width: 100,               
             }, {
-                name: 'tour_date',
-                index: 'tour_date',
-                width: 80
+                name: 'tour_code',
+                index: 'tour_code',
+                width: 100,                
             }, {
-                name: 'total_guest',
-                index: 'total_guest',
-                width: 100,
+                name: 'total_guests',
+                index: 'total_guests',
+                width: 60,
                 sortable: false,
                 editable: false,
-                search:false,
-                formatter: total_people_formatter
-            }, {
-                name: 'total_room',
-                index: 'total_room',
-                width: 80,
-                search:false,                
-                formatter: total_room_formatter
+                align:'center',                
 			}, {                
                 name: 'order_amount',
                 index: 'order_amount',
                 width: 60,
                 sortable: false,
-                editable: false,
-                search:false,
-                // formatter:money_paid_formatter
+                editable: false, 
             },{
                 name: 'order_status',
                 index: 'order_status',
-                width: 60,
+                width: 70,
                 sortable: true,
                 formatter: order_status_formatter
 			},{
-                name: 'op_name',
-                index: 'op_name',
-                width: 60
-            }, {
-                name: 'payment_status',
-                index: 'payment_status',
+                name: 'operator',
+                index: 'operator',
                 width: 60,
-                sortable: true,
-                formatter: payment_status_formatter
-			},{
-                name: 'oper',
-                index: '',
-                width: 120,
-                fixed: true,
-                sortable: false,
-                resize: false,
-                search:false,
-                formatter: oper_formatter
             }],
 
             viewrecords: true,
-            rowNum: 20,
+            rowNum: 50,
             rowList: [10, 20, 30, 50],
             pager: pager_selector,
             altRows: true,
@@ -178,31 +130,38 @@
 
         });
 
-        function oper_formatter(cellvalue, options, rowdata) {
+        function oper_formatter(cellvalue, options, rowdata) {                        
+
             var oper_html_arr = [];
-            // 订单状态，订单状态，1待付款，2待发货，3待收货，4待评价，5交易完成；-1已取消，-2已过期
+           
             var style = 'style="font-size:16px;text-decoration:none; display:inline-block; margin-left:5px; cursor:pointer " ';
 
-            var oper_view = ['<a ',
-                ' target="_blank"  href="/index.php/Order_show/show_order_detail?o_sn=', rowdata.id, '"',
+            var oper_check = ['<a ',
+                ' target="_self"  href="./index.php/Boss/check_order?id=', rowdata.id, '"',
                 style,
-                ' class="c-blue" title="查看订单">View Details</a><br />'
+                ' class="c-green" title="Order">Details</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+
             ].join("");
-             var mark;
-            
-            
+
+            var invoice_print = ['<a ',
+                ' target="_blank"  href="./index.php/Boss/invoice_print?id=', rowdata.id, '"',
+                style,
+                ' class="c-red" title="Invoice">Invoice</a>'
+
+            ].join("");  
 
 
-            oper_html_arr.push(oper_view);
+            oper_html_arr.push(oper_check); 
+            oper_html_arr.push(invoice_print);
+  
 
-
-            return oper_html_arr.join("");
+            return oper_html_arr.join("");            
 
         }
 
         function order_sn_formatter(cellvalue, options, rowdata) {
             var html = [
-            '<span class="black">',cellvalue,'</span>'
+            '<span class="blue">',cellvalue,'</span>'
             ].join("");
              
              return html;
@@ -211,36 +170,14 @@
 
         function tour_name_formatter(cellvalue, options, rowdata) {
                var html = [
-            '<span class="black">',rowdata.tour_cName,'</span><br />',
-            '<span class="orange">',rowdata.tour_eName,'</span><br />'
+            '<span class="orange">',cellvalue,'</span>'
             ].join("");
              
              return html;
         }
 
-         function total_people_formatter(cellvalue, options, rowdata) {
-               var html = [
-            '<span class="black">Total ',rowdata.total_guests,'</span><br />',
-            '<span class="orange">Adult ',rowdata.adult_num,'</span><br />',
-            '<span class="black">Tnfant ',rowdata.infant_num,'</span><br />',
-            '<span class="orange">Child(No Bed) ',rowdata.child_num1,'</span><br />',
-            '<span class="blue">Child(With Bed) ',rowdata.child_num2,'</span><br />'
-            ].join("");
-             
-             return html;
-          }
 
-          function total_room_formatter(cellvalue, options, rowdata) {
-               var html = [
-            '<span class="black">Total ',rowdata.total_room,'</span><br />',
-            '<span class="orange">Twin ',rowdata.twin_num,'</span><br />',
-            '<span class="black">Single ',rowdata.single_num,'</span><br />',
-            '<span class="orange">Double ',rowdata.double_num,'</span><br />',
-            '<span class="blue">Triple ',rowdata.triple_num,'</span><br />'
-            ].join("");
-             
-             return html;
-          }
+
 
 
         function order_status_formatter(cellvalue, options, rowdata) {
@@ -383,10 +320,11 @@
             edit: false,
             add: false,
             del: false,
-            refresh: false,
-            search: true,
-            searchicon: 'icon-search orange', 
-            view: false,
+            refresh: true,
+            search: false,
+            refreshicon: 'icon-refresh green',
+            view: true,
+            viewicon: 'icon-zoom-in grey',
         }, {
             recreateForm: true,
             beforeShowForm: function(e) {

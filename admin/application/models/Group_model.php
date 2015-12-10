@@ -13,26 +13,51 @@
 		}
 		
 		//获取所有的单独旅游团
-		public function get_all_Ngroups(){
-			$query = $this->db->query("SELECT pd_tourGroup.t_id, pd_tourGroup.t_date, pd_tourGroup.t_pro, pd_tourGroup.t_tourCode, pd_tourGroup.t_capacity,
-			 pd_tourGroup.t_currentpax, pd_tourGroup.t_bus, pd_tourGroup.t_room, pd_tourGroup.a_userName, 
-			 SUM( pd_order.o_adultNumber ) AS adultNumber,
-			 SUM( pd_order.o_infantNumber ) AS infantNumber, 
-			 SUM( pd_order.o_childNumber1 ) AS childNumber1, 
-			 SUM( pd_order.o_childNumber2 ) AS childNumber2, 
-			 SUM( pd_order.o_totalNum ) AS totalNumber, 
-			 SUM( pd_order.o_triple ) AS triple, 
-			 SUM( pd_order.o_double ) AS doubleroom, 
-			 SUM( pd_order.o_twin ) AS twin, 
-			 SUM( pd_order.o_single ) AS single
-				FROM pd_tourGroup				
-				LEFT JOIN pd_order
-				ON pd_order.t_tourCode like concat('%',pd_tourGroup.t_tourCode,'%')	
-				AND pd_order.o_orderStatus <> 4 			
-				WHERE pd_tourGroup.t_type = 1				 				
-				GROUP BY pd_tourGroup.t_tourCode,pd_tourGroup.t_date
-				ORDER BY pd_tourGroup.t_date DESC");
-			return $query->result_array();
+		public function get_all_Ngroups($string,$start,$limit){
+			if(empty($string)==false){
+					$sql="SELECT pd_tourGroup.t_id, pd_tourGroup.t_date, pd_tourGroup.t_pro, pd_tourGroup.t_tourCode, pd_tourGroup.t_capacity,
+					 pd_tourGroup.t_currentpax, pd_tourGroup.t_bus, pd_tourGroup.t_room, pd_tourGroup.a_userName, 
+					 SUM( pd_order.o_adultNumber ) AS adultNumber,
+					 SUM( pd_order.o_infantNumber ) AS infantNumber, 
+					 SUM( pd_order.o_childNumber1 ) AS childNumber1, 
+					 SUM( pd_order.o_childNumber2 ) AS childNumber2, 
+					 SUM( pd_order.o_totalNum ) AS totalNumber, 
+					 SUM( pd_order.o_triple ) AS triple, 
+					 SUM( pd_order.o_double ) AS doubleroom, 
+					 SUM( pd_order.o_twin ) AS twin, 
+					 SUM( pd_order.o_single ) AS single
+						FROM pd_tourGroup				
+						LEFT JOIN pd_order
+						ON pd_order.t_tourCode like concat('%',pd_tourGroup.t_tourCode,'%')	
+						AND pd_order.o_orderStatus <> 4 			
+						WHERE pd_tourGroup.t_type = 1
+						AND pd_tourGroup.t_tourCode like '%".$string.
+						"%' GROUP BY pd_tourGroup.t_tourCode,pd_tourGroup.t_date
+						ORDER BY pd_tourGroup.t_date DESC 
+						LIMIT ".$start.",".$limit;
+					}else{
+					$sql="SELECT pd_tourGroup.t_id, pd_tourGroup.t_date, pd_tourGroup.t_pro, pd_tourGroup.t_tourCode, pd_tourGroup.t_capacity,
+					 pd_tourGroup.t_currentpax, pd_tourGroup.t_bus, pd_tourGroup.t_room, pd_tourGroup.a_userName, 
+					 SUM( pd_order.o_adultNumber ) AS adultNumber,
+					 SUM( pd_order.o_infantNumber ) AS infantNumber, 
+					 SUM( pd_order.o_childNumber1 ) AS childNumber1, 
+					 SUM( pd_order.o_childNumber2 ) AS childNumber2, 
+					 SUM( pd_order.o_totalNum ) AS totalNumber, 
+					 SUM( pd_order.o_triple ) AS triple, 
+					 SUM( pd_order.o_double ) AS doubleroom, 
+					 SUM( pd_order.o_twin ) AS twin, 
+					 SUM( pd_order.o_single ) AS single
+						FROM pd_tourGroup				
+						LEFT JOIN pd_order
+						ON pd_order.t_tourCode like concat('%',pd_tourGroup.t_tourCode,'%')							 
+						AND pd_order.o_orderStatus <> 4 			
+						WHERE pd_tourGroup.t_type = 1
+						GROUP BY pd_tourGroup.t_tourCode,pd_tourGroup.t_date
+						ORDER BY pd_tourGroup.t_date DESC
+						LIMIT ".$start.",".$limit;					
+					}
+				$query = $this->db->query($sql);
+				return $query->result_array();
 		}
 
 		//获取所有的拼接旅游团
@@ -82,7 +107,7 @@
             $sql = sprintf("
 					SELECT  pd_route.r_cName,pd_tourGroup.t_id,pd_tourGroup.t_date, pd_tourGroup.t_tourCode,pd_tourGroup.t_capacity,pd_tourGroup.t_currentpax
 	                FROM pd_tourGroup INNER JOIN pd_route ON pd_tourGroup.r_id = pd_route.r_id
-	                WHERE pd_route.r_type=1 and t_date >= %s
+	                WHERE pd_route.r_type=1 and t_date >= '%s'
 					GROUP BY pd_tourGroup.t_date, pd_route.r_cName
 					ORDER BY pd_route.r_cName DESC					
 					",$nowDate);          
@@ -96,7 +121,7 @@
             $sql = sprintf("
 					SELECT pd_route.r_cName,pd_tourGroup.t_id,pd_tourGroup.t_date, pd_tourGroup.t_tourCode,pd_tourGroup.t_capacity,pd_tourGroup.t_currentpax
              	   FROM pd_tourGroup INNER JOIN pd_route ON pd_tourGroup.r_id = pd_route.r_id
-                	WHERE pd_route.r_type=2 and t_date >= %s
+                	WHERE pd_route.r_type=2 and t_date >= '%s'
 					GROUP BY pd_tourGroup.t_date, pd_route.r_cName
 					ORDER BY pd_route.r_cName DESC					
 					",$nowDate);          
@@ -122,14 +147,15 @@
 			return $query->result_array();
 		}
 
-
-
 		#统计单独旅游团的总数
-		function count_Ngroup(){
+		function count_Ngroup($where){
 			$this->db->where('t_type',1);
+			$this->db->where($where);
 			$this->db->FROM(self::TBL_T);
 			return $this->db->count_all_results();
 		}
+
+
 		#统计拼接旅游团的总数
 		function count_Mgroup(){
 			$this->db->where('t_type',2);

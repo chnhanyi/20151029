@@ -10,6 +10,7 @@
 			$this->load->model('Company_model');
 			$this->load->model('Agent_model');
 			$this->load->model('Route_model');
+			$this->load->library('form_validation');
 		}
 		//展示op订单列表
 		function index(){
@@ -24,13 +25,28 @@
 
 
 		function get_data(){			
-	        $rows 	= $this->input->get("rows");
+	        $limit 	= $this->input->get("rows");
 			$page 	= $this->input->get("page");
-			$count 	= $this->Order_model->count_Order();
-			$data['totalPages'] 	= ceil($count/$rows);
-			$data['currentPage'] 	= 1;
+
+			$start=($page-1)*$limit;
+			//获取搜索条件
+			$where 	= $this->get_where();
+
+			$count 	= $this->Order_model->count_Order($where);
+			$list 	= $this->Order_model->get_all_orders($where,$start,$limit);			
+
+			//把参数传给前端
+			if($count>0){
+				$data['totalPages'] = ceil($count/$limit);
+				}else{
+				$data['totalPages'] = 0;
+				}
+			if($page>$data['totalPages']){
+				$page=$data['totalPages'];
+				}
+			$data['currentPage'] 	= $page;
 			$data['totalRecords'] 	= $count;
-			$list 	= $this->Order_model->get_all_orders();
+
 			$data['data'] = array();
 			foreach($list as $v){
 				$cc['id'] 				=	$v['o_id'];
@@ -56,6 +72,45 @@
 			}
 			$this->response_data($data);
 		}
+
+
+		//设置搜索条件
+		function get_where(){
+			$field = $this->input->get("searchField");
+			$string = $this->input->get("searchString");
+			$where=array();
+			if(empty($field)==false && empty($string)==false){				
+					if($field =="order_sn"){
+						$where = array('pd_order.o_sn' => $string);						
+					}elseif($field =="tour_code"){
+						$where = array('pd_order.t_tourCode' => $string);	
+					}elseif($field =="agent_email"){
+						$where = array('pd_agent.s_email' => $string);
+			        }elseif($field =="o_flight"){
+			        	  $string = strtolower($string);
+			        	if($tring=="yes"){
+			        		$where = array('pd_order.o_flight' => 0);
+			        	}else{
+			        		$where = array('pd_order.o_flight' => 1);
+			        	}						
+					}elseif($field =="order_status"){
+						$string = strtolower($string);
+			        		if($tring=="pending"){
+			        		$where = array('pd_order.o_orderStatus' => 1);
+				        	}elseif($string=="processing"){
+				        		$where = array('pd_order.o_orderStatus' => 2);
+				        	}elseif($string=="processed"){
+				        		$where = array('pd_order.o_orderStatus' => 3);
+				        	}elseif($string=="terminate"){
+				        		$where = array('pd_order.o_orderStatus' => 4);
+				        	}
+					}elseif($field =="operator"){
+						$where = array('pd_order.o_opName' => $string);
+					}
+				}
+			return $where;
+		} 
+
 
 
 
@@ -471,7 +526,11 @@
 
 			//获取新增数据
 			$invoice_data= $this->input->post("data",true);
-			
+
+            //将实际销售金额存入数据库
+			$orderSale=$invoice_data['orderAmount'];
+        
+			//将发票数据转成json格式后，存入数据库
 			$data=json_encode($invoice_data);
 			$data=addslashes($data);
 
@@ -481,7 +540,7 @@
             $newhit=(int)$hit+1;
 		
             //更新发票信息和订单的审核人、审核状态
-            $num1 = $this->Order_model->update_invoice_info($o_id,$opname,$newhit,$data);
+            $num1 = $this->Order_model->update_invoice_info($o_id,$opname,$newhit,$data,$orderSale);
 
             //判断是否更新成功，向页面发送消息
             $re_data=array();
@@ -790,10 +849,10 @@
 			$contact = array();
 
 			//获取该订单的ID和联系人信息
-			$o_id= $this->input->post("id",true);
-			$contact['o_contacts']= $this->input->post("id",true);
-			$contact['o_mobile']= $this->input->post("id",true);
-			$contact['o_email']= $this->input->post("id",true);
+			$o_id= $this->input->post("o_id",true);
+			$contact['o_contacts']= $this->input->post("name",true);
+			$contact['o_mobile']= $this->input->post("phone",true);
+			$contact['o_email']= $this->input->post("email",true);
 
 
 			//在数据库中更新联系人信息			

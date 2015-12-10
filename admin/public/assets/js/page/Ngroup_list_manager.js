@@ -60,6 +60,7 @@
                 index: 't_id',
                 width: 20,
                 editable: false,
+                search:false,
                 // formatter: user_name_formatter,
 			}, { 
                 name: 't_tourCode',
@@ -72,51 +73,60 @@
                 index: 't_date',
                 width: 60,
                 editable: false,
+                search:false,
                 // formatter: user_name_formatter,
             }, {
                 name: 't_promo',
                 index: 't_promo',
                 width: 50,
+                search:false,
 				formatter: t_promo_formatter,
             }, {
                 name: 't_capacity',
                 index: 't_capacity',
                 width: 50,
                 align: "center",
+                search:false,
             }, {
                 name: 't_vacancy',
                 index: 't_vacancy',
                 width:50,
 				align: "center",
+                search:false,
 				formatter: vacancy_formatter,
             }, {
                 name: 't_bus',
                 index: 't_bus',
-                width: 60
+                width: 60,
+                search:false,
 			}, {
                 name: 't_currentpax',
                 index: 't_currentpax',
                 width: 100,
-				formatter: t_currentpax_formatter,
+                search:false,
+				formatter: t_currentpax_formatter,                
             }, {
                 name: 't_room',
                 index: 't_room',
                 width: 80,
-
+                search:false,
 			}, {
                 name: 't_currentroom',
                 index: 't_currentroom',
                 width: 80,
+                search:false,
 				formatter: t_currentroom_formatter,
 			}, {
                 name: 'a_userName',
                 index: 'a_userName',
-                width:50,               
+                width:50,
+                search:false,               
 			},{
                 name: 'oper',
                 index: '',
                 width: 120,
                 fixed: true,
+                search:false,
                 formatter: oper_formatter,
             }],
 
@@ -159,7 +169,7 @@
 		                
 
             var oper_modify = ['<a ',
-                ' target="_blank"  href="index.php/Group/edit_group?id=', rowdata.t_id, '"',
+                ' target="_blank"  href="index.php/Group/edit_capacity?id=', rowdata.t_id, '"',
                 style,
                 ' class="c-orange" title="modify">Modify</a><br /><br />'
 
@@ -283,12 +293,10 @@
         jQuery(grid_selector).jqGrid('navGrid', pager_selector, { //navbar options
             edit: false,
             add: false,
-            del: false,
-            refresh: true,
-            search: false,
-            refreshicon: 'icon-refresh green',
-            view: true,
-            viewicon: 'icon-zoom-in grey',
+            del: false,            
+            search: true,
+            searchicon: 'icon-search orange',
+            view: false,            
         }, {
             recreateForm: true,
             beforeShowForm: function(e) {

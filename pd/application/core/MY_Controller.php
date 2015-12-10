@@ -56,6 +56,16 @@
 		/**
 		 *  @pa
 		 */
+
+		function toxtourcode($tourcode){
+			if($tourcode!=""){
+			$d = explode("+", $tourcode);
+			return $d;
+			}
+		}
+		/**
+		 *  @pa
+		 */
 		protected function checkType($reg,$v,$message){
 			if(preg_match($reg, $v)){
 				return true;

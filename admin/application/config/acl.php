@@ -30,7 +30,13 @@ $config['acl']['controller'] = array(
 $config['acl']['accountant'] = array(  
     'Admin',
     'Account'
-);  
+); 
+
+//boss权限映射  
+$config['acl']['boss'] = array(  
+    'Admin',
+    'Boss'
+);
 
 //visitor权限映射  
 $config['acl']['visitor'] = array(  

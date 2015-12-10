@@ -15,20 +15,53 @@
 		}
 
 
-				//显示单独团的旅游团列表页面
+				//给op显示单独团的旅游团列表页面
 				    function index(){			
 							$this->load->view("op/Ngroup_list.html");
 						}
 
+				//给Manager显示单独团的旅游团列表页面
+				    function managerNgroup(){			
+							$this->load->view("manager/Ngroup_list.html");
+						}
+
+
 					function Ngroup_list(){
-					        $rows 	= $this->input->get("rows");					        
+							$limit 	= $this->input->get("rows");
 							$page 	= $this->input->get("page");
-							$count 	= $this->Group_model->count_Ngroup();							
-							$data['totalPages'] 	= ceil($count/$rows);
-							$data['currentPage'] 	= 1;
+
+							$start=($page-1)*$limit;
+
+							//获取搜索条件
+							$field = $this->input->get("searchField");
+							$string = $this->input->get("searchString");							
+							if(empty($field)==false && empty($string)==false){
+									$string=strtoupper($string);
+									$where = array('pd_tourGroup.t_tourCode' => $string);
+									
+								}else{
+									$where=array();
+								}
+
+							$count 	= $this->Group_model->count_Ngroup($where);
+							$list 	= $this->Group_model->get_all_Ngroups($string,$start,$limit);			
+
+							//把参数传给前端
+							if($count>0){
+								$data['totalPages'] = ceil($count/$limit);
+								}else{
+								$data['totalPages'] = 0;
+								}
+							if($page>$data['totalPages']){
+								$page=$data['totalPages'];
+								}
+							$data['currentPage'] 	= $page;
 							$data['totalRecords'] 	= $count;
-							$list 	= $this->Group_model->get_all_Ngroups();
+
+
 							$data['data'] = array();
+
+
 							foreach($list as $v){
 								$cc['t_id'] 			=	$v['t_id'];
 								$cc['t_date'] 	        = 	$v['t_date'];
@@ -55,11 +88,17 @@
 							$this->response_data($data);
 
 						}
+
 					
 
 					//显示拼接团的列表页面
 				    function Mindex(){			
 							$this->load->view("op/Mgroup_list.html");
+						}
+
+					//给Manager显示拼接团的旅游团列表页面
+				    function managerMgroup(){			
+							$this->load->view("manager/Mgroup_list.html");
 						}
 
 					function Mgroup_list(){
@@ -94,7 +133,7 @@
 							$this->response_data($data);
 
 						}
-				//显示编辑南岛或者北岛旅游团页面
+				//显示编辑南岛或者北岛旅游团页面(op)
 				function edit_group(){			
 				        $list 	= $this->Route_model->get_12_routes();
 						$data['data'] = array();
@@ -105,6 +144,19 @@
 						}
 
 						$this->load->view("op/edit_group.html",$data);
+				}
+
+				//显示编辑南岛或者北岛旅游团页面(manager)，修改团的容量
+				function edit_capacity(){			
+				        $list 	= $this->Route_model->get_12_routes();
+						$data['data'] = array();
+						foreach($list as $v){
+							$cc['r_id'] 			=	$v['r_id'];
+							$cc['r_cName'] 	    	= 	$v['r_cName'];
+							array_push($data['data'],$cc);
+						}
+
+						$this->load->view("manager/edit_group.html",$data);
 				}
 
 				//显示选定的南岛或者北岛旅游团的信息
@@ -134,7 +186,7 @@
 				function update_group(){
 						#设置验证规则
 						$this->form_validation->set_rules('t_id','Tour ID','trim|integer|required');				
-						$this->form_validation->set_rules('capacity','Capacity','trim|integer|required');
+						//$this->form_validation->set_rules('capacity','Capacity','trim|integer|required');
 						$this->form_validation->set_rules('bus','Bus','required');
 						$this->form_validation->set_rules('room','Room','required');
 						
@@ -145,7 +197,7 @@
 						$data['status'] = "fail";				
 			         } else{
 							$t_id = $this->input->post("t_id",true);							
-							$data['t_capacity'] = $this->input->post("capacity",true);
+							//$data['t_capacity'] = $this->input->post("capacity",true);
 							$data['t_bus'] = $this->input->post("bus",true);			
 							$data['t_room'] = $this->input->post("room",true);
 							$data['a_userName'] = $username = get_cookie("uin");	
@@ -159,6 +211,32 @@
 						$this->output->set_header('Content-Type: application/json; charset=utf-8');
 						echo json_encode($data);
 					}
+
+
+				//更新南岛或者北岛旅游团的库存
+				function update_capacity(){
+						#设置验证规则
+						$this->form_validation->set_rules('t_id','Tour ID','trim|integer|required');				
+						$this->form_validation->set_rules('capacity','Capacity','trim|integer|required');
+
+					if ($this->form_validation->run() == false){						
+						$data['retCode'] = -1;
+						$data['data'] = validation_errors();
+						$data['status'] = "fail";				
+			         } else{
+							$t_id = $this->input->post("t_id",true);							
+							$data['t_capacity'] = $this->input->post("capacity",true);								
+
+							$this->Group_model->update_group($t_id,$data);
+				
+							$data['retCode'] = 1;
+							$data['data'] = "Update Success";					
+							$data['status'] = "success";
+						}
+						$this->output->set_header('Content-Type: application/json; charset=utf-8');
+						echo json_encode($data);
+					}
+				
 				
 
 					//增加南岛或者北岛旅游团，加载模板
@@ -179,7 +257,7 @@
 						#设置验证规则
 						$this->form_validation->set_rules('r_id','Tour Name','trim|integer|required');						
 						$this->form_validation->set_rules('date','Tour Date','trim|required');						
-						$this->form_validation->set_rules('capacity','Capacity','trim|integer|required');
+						//$this->form_validation->set_rules('capacity','Capacity','trim|integer|required');
 						$this->form_validation->set_rules('bus','Bus','trim|required');
 						$this->form_validation->set_rules('room','Room','trim|required');
 						$this->form_validation->set_rules('groupB','Group B','trim|integer|required');
@@ -202,7 +280,7 @@
 							$r_code = $res["r_code"];
 							$groupB = $this->input->post("groupB",true);	
 							$data['t_tourCode'] = $this->get_tourCode($r_code,$date,$groupB);
-							$data['t_capacity'] = $this->input->post("capacity",true);
+							$data['t_capacity'] = 30;
 							$data['t_bus'] = $this->input->post("bus",true);			
 							$data['t_room'] = $this->input->post("room",true);
 							$data['a_userName'] = $username = get_cookie("uin");

@@ -232,70 +232,68 @@ class order_model extends CI_Model {
 	 */
 	public function insert_order($data,$person,$room) {
 		$this -> db -> trans_begin();
-		$r_id = $data['r_id'];
-		$r_time = $data['o_bookingTime'];
+		$tour_code = $data['t_tourCode'];		
 		$total = $data['o_infantNumber'] +$data['o_childNumber1'] + $data['o_childNumber2']  + $data['o_adultNumber'];
 
-		$sqlt = sprintf("select t_type from pd_tourGroup where r_id = %s and t_date = '%s'",$r_id,$r_time);
+		$sqlt = sprintf("select t_type from pd_tourGroup where t_tourCode = '%s'",$tour_code);
 		$type_res  = $this->db->query($sqlt);
 		$row = $type_res->row();
 		$type= $row->t_type;
 
 			if($type == 1){
-						$db = $this -> db -> query("select * from pd_tourGroup where r_id =" . $r_id . " and t_date='" . $r_time . "' for update");						
+						$db = $this -> db -> query("select * from pd_tourGroup where t_tourCode ='". $tour_code ."' for update");					
 						$dbs = $db -> result();
-						if ($dbs[0] -> t_capacity - $dbs[0] -> t_currentpax > $total) {
-							$where = array("r_id" => $r_id, "t_date" => $r_time);
-							$this -> db -> where($where);
+						if ($dbs[0] -> t_capacity - $dbs[0] -> t_currentpax > $total) {							
+							$this -> db -> where('t_tourCode',$tour_code);
 							$dd['t_currentpax'] = $dbs[0] -> t_currentpax + $total;
 							$this -> db -> update("pd_tourGroup", $dd);
 						}
 				}elseif($type == 2){
+					    //拆分团号
+							$res3 = $this->toxtourcode($tour_code); 				
+							$tour_code1 =$res3[0] ;
+							$tour_code2 =$res3[1] ;
+					    //组织SQL语句
 					    $sql = sprintf("
 							SELECT min(remain_guest) AS current  FROM
 								(
 								SELECT (
-								pd1.t_capacity - pd1.t_currentpax
+								t_capacity - t_currentpax
 								) AS remain_guest
-								FROM pd_tourGroup pd1
-								JOIN pd_tourGroup pd2 ON pd2.t_Nid = pd1.t_id
-								AND pd2.r_id = %s and pd2.t_date >= %s
+								FROM pd_tourGroup
+								WHERE t_tourCode = '%s'
 								UNION 
 								SELECT  (
-								pd1.t_capacity - pd1.t_currentpax
+								t_capacity - t_currentpax
 								) AS remain_guest
-								FROM pd_tourGroup pd1
-								JOIN pd_tourGroup pd2 ON pd2.t_Sid = pd1.t_id
-								AND pd2.r_id = %s and pd2.t_date >= %s
+								FROM pd_tourGroup
+								WHERE t_tourCode = '%s'
 								) as combine						
-							",$r_id,$r_time,$r_id,$r_time);
+							",$tour_code1,$tour_code2);
 						    	$remain_res  = $this->db->query($sql);
 								$row1 = $remain_res->row();
 								$remain= $row1->current;													
-						if ($remain > $total) {
-							//减去北岛团的库存
-							$db1 = $this -> db -> query("select pd1.t_id, pd1.t_currentpax from pd_tourGroup pd1 JOIN pd_tourGroup pd2 ON pd2.t_Nid = pd1.t_id
-							AND pd2.r_id =" . $r_id . " AND pd2.t_date='" . $r_time . "' for update");						
+						if ($remain > $total) {														
+							//更新单独团1（南岛或北岛）的库存
+							$db1 = $this -> db -> query("select t_currentpax from pd_tourGroup where t_tourCode='". $tour_code1."' for update");						
 							$dbs1 = $db1 -> result();							
-							$this -> db -> where('t_id',$dbs1[0] -> t_id);
+							$this -> db -> where('t_tourCode',$tour_code1);
 							$dd1['t_currentpax'] = $dbs1[0] -> t_currentpax + $total;
 							$this -> db -> update("pd_tourGroup", $dd1);
 
-							//减去南岛团的库存
-							$db2 = $this -> db -> query("select pd1.t_id, pd1.t_currentpax from pd_tourGroup pd1 JOIN pd_tourGroup pd2 ON pd2.t_Sid = pd1.t_id
-							AND pd2.r_id =" . $r_id . " AND pd2.t_date='" . $r_time . "' for update");						
+							//更新单独团2（南岛或北岛）的库存
+							$db2 = $this -> db -> query("select t_currentpax from pd_tourGroup where t_tourCode='". $tour_code2."' for update");						
 							$dbs2 = $db2 -> result();							
-							$this -> db -> where('t_id',$dbs2[0] -> t_id);
+							$this -> db -> where('t_tourCode',$tour_code2);
 							$dd2['t_currentpax'] = $dbs2[0] -> t_currentpax + $total;
 							$this -> db -> update("pd_tourGroup", $dd2);
 
-                            //减去本团的库存
-							$db = $this -> db -> query("select * from pd_tourGroup where r_id =" . $r_id . " and t_date='" . $r_time . "' for update");						
+                            //更新本团的库存
+							$db = $this -> db -> query("select * from pd_tourGroup where t_tourCode ='". $tour_code ."' for update");						
 							$dbs = $db -> result();
-							$where = array("r_id" => $r_id, "t_date" => $r_time);
-							$this -> db -> where($where);
-							$dd['t_currentpax'] = $dbs[0] -> t_currentpax + $total;
-							$this -> db -> update("pd_tourGroup", $dd);
+							$this -> db -> where('t_tourCode',$tour_code);
+							$dd3['t_currentpax'] = $dbs[0] -> t_currentpax + $total;
+							$this -> db -> update("pd_tourGroup", $dd3);
 						}
 			}
 						$this -> db -> insert("pd_order", $data);
@@ -396,6 +394,13 @@ class order_model extends CI_Model {
 		$result = $this->db->get("pd_order");
 		return $result->row_array();
 	}
+    //拆分拼团的tourcode
+		function toxtourcode($tourcode){
+			if($tourcode!=""){
+			$d = explode("+", $tourcode);
+			return $d;
+			}
+		}
 	//获取总数量
 	public function cancel_order($id){
 		$this->load->model("User_model");

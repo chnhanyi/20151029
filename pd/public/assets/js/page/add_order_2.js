@@ -580,7 +580,7 @@
              });
              return false;
          }
-         if (data.adult_num == 0) {
+         if (!data.adult_num || data.adult_num == 0) {
              _.modal({
                  "title": "Error Tips",
                  cont: "You must enter at least 1 adult"

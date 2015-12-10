@@ -87,7 +87,7 @@
 							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
 								<li>
-									<a href="<?php echo site_url('Common/logout') ?>">
+									<a href="<?php echo site_url('admin/logout') ?>">
 										<i class="icon-off"></i> Logout
 									</a>
 								</li>
@@ -131,8 +131,78 @@
 							</a>
 							<ul class="submenu">
                                 <li>
-									<a href="<?php echo site_url('Account/index'); ?>">
+									<a href="<?php echo site_url('Order/manager'); ?>">
 										<i class="icon-double-angle-right"></i> Order List
+									</a>
+								</li>
+								<li class="active">
+									<a href="<?php echo site_url('Group/managerNgroup'); ?>">
+										<i class="icon-double-angle-right"></i>Normal Group List
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url('Group/managerMgroup'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group List
+									</a>
+								</li>
+                                <li >
+									<a href="<?php echo site_url('News/index'); ?>">
+										<i class="icon-double-angle-right"></i> News List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('News/add_news'); ?>">
+										<i class="icon-double-angle-right"></i> Add News
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Route/index'); ?>">
+										<i class="icon-double-angle-right"></i> Route List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Route/add_route'); ?>">
+										<i class="icon-double-angle-right"></i> Add Route
+									</a>
+								</li>
+                                 <li>
+									<a href="<?php echo site_url('Company/index'); ?>">
+										<i class="icon-double-angle-right"></i> Company List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Company/add_company'); ?>">
+										<i class="icon-double-angle-right"></i> Add Company
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Agent/index'); ?>">
+										<i class="icon-double-angle-right"></i> Agent List
+									</a>
+								</li>
+                                <li>
+									<a href="<?php echo site_url('Agent/add_agent'); ?>">
+										<i class="icon-double-angle-right"></i> Add Agent
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Statistics/index'); ?>">
+										<i class="icon-double-angle-right"></i> Agent  Log
+									</a>
+								</li> 
+								<li >
+									<a href="<?php echo site_url('Staff/index'); ?>">
+										<i class="icon-double-angle-right"></i> Staff  List
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Staff/add_staff'); ?>">
+										<i class="icon-double-angle-right"></i> Add Staff
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Statistics/index'); ?>">
+										<i class="icon-double-angle-right"></i> Staff  Log
 									</a>
 								</li>
                                 <li >
@@ -171,7 +241,7 @@
 							</li>
 
 							<li>
-								Edit Company
+								Edit Group
 							</li>
 						</ul><!-- .breadcrumb -->
 					</div>
@@ -186,60 +256,91 @@
 										   
 										<h4 class="smaller  header green clearfix "> 
 
-										        <div class="col-xs-4">
+										        <div class="col-xs-2">
 
 										             <i class="icon-hand-right icon-animated-hand-pointer"></i>
-										        	 Modify Payment Info
+
+										        	 Group Info
+
 										         </div>
 									         </h4>
 
-										<section class="t-step clearfix" ms-controller="modify_payment">
-											<div class="form-horizontal t-content col-xs-12" role="form"  > 
-											<input type="hidden" name="id" id="id" ms-duplex="o_id">                                               
-                                                
-                                                <!--  发票号码 Tour Name start -->
+										<section class="t-step clearfix"  ms-controller="edit_group">
+											<div class="form-horizontal t-content col-xs-12" role="form">
+                                            <input type="hidden" name="id" id="t_id" ms-duplex="t_id">
+
+												
+												<!--  线路名称 Tour Name start -->
 												<div class="form-group">
-													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Invoice No </label>
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Tour Name </label>
+
+													<div class="col-sm-8">
+														<!-- <input type="text"   placeholder="Username" class="col-xs-10 col-sm-5"> -->
+														<div class="col-xs-10 col-sm-8">
+															<select name="r_id" id="r_id" disabled  ms-duplex-number="r_id"  ms-duplex="selected" class="t-can_disabled form-control">																
+                                                                    <?php foreach($data as $v) :?>
+                                                                        <option value="<?php echo $v['r_id'];?>"><?php echo $v['r_cName'];?></option>
+                                                                    <?php endforeach;?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<!--  线路名称 Tour Name end  -->                                              
+                                                
+
+												<!--  出行日期 TourDate start  -->
+												<div class="form-group">
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Tour Date </label>
+
+													<div class="col-sm-8">
+														<!-- <input type="text"   placeholder="Username" class="col-xs-10 col-sm-5"> -->
+
+														<div class="col-xs-10 col-sm-5">
+														       <div class="t-info-data">{{t_date}}</div>
+														</div>
+
+													</div>
+												</div>
+
+												<!--出行日期 TourDate end  -->      
+
+										
+                                                <!--  旅游团人数 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Capacity </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-5">
+														    <input type="text" class="form-control t-can_disabled"  id="capacity" ms-duplex="t_capacity">
+														</div>
+													</div>
+												</div>
+												<!--  旅游团人数 TourCode end  -->  
+                                                
+                                                <!--  车辆配备 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Bus Reservation </label>
+
+													<div class="col-sm-8">
+														<div class="col-xs-10 col-sm-5">
+														    <div class="t-info-data">{{t_bus}}</div>															
+														</div>
+													</div>
+												</div>
+												<!--  车辆配备 TourCode end  -->  
+                                               
+                                                <!--  房间配备 TourCode start -->
+												<div class="form-group" >
+													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Room Reservation </label>
 
 													<div class="col-sm-8">
 														<div class="col-xs-10 col-sm-8">
-														    <div class="t-info-data">{{invoice}}</div>															
+															<div class="t-info-data">{{t_room}}</div>
 														</div>
 													</div>
 												</div>
-												<!--  发票号码 Tour Name end  -->  
+												<!--  房间配备 TourCode end  -->  
                                                 
-												
-												<!--  收款金额 Tour Name start -->
-												<div class="form-group">
-													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Paid Amount </label>
-													<div class="col-sm-8">
-														<div class="col-xs-10 col-sm-8">
-															<input type="text" class="form-control t-can_disabled" id="amount" ms-duplex="amount">
-														</div>
-													</div>
-												</div>
-												<!--  收款金额 Tour Name end  --> 
-                                                
-                                                 <!-- 付款状态 Share Room -->
-												<div class="form-group" >
-													<label class="col-sm-4 control-label no-padding-right" for="form-field-1">Payment Status</label>   
-													    <div class="col-sm-8">
-															<div class="col-xs-10 col-sm-8">
-															<select select id="payment" ms-duplex-number="payment" class="t-can_disabled form-control" ms-duplex="selected" data-duplex-changed="selectchange">
-                                                              <option value ="1">1.Wating for Payment</option>
-                                                              <option value ="2">2.On Time Payment</option>
-                                                              <option value ="3">3.Delayed Payment</option>
-                                                              <option value ="4">4.Overdue Payment</option>
-                                                              <option value ="5">5.Overdue NonPayment</option>
-                                                              <option value ="6">6.Paid Monthly</option>                
-                                                            </select>
-														</div>
-													    </div>
-												</div>
-												<!--付款状态 Share Room   -->
-                                                
-                                                 
 												<!--  -->
                                                 <div class="hr hr-18 dotted hr-double"></div>
 
@@ -247,7 +348,7 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
 													<div class="col-sm-3 pull-right">
-														<a class="btn btn-lg btn-primary t-can_disabled" id="editPayment"><i class="icon-ok "></i>Submit</a>														
+														<button class="btn btn-lg btn-primary t-can_disabled" id="editGroup"><i class="icon-ok "></i>Submit</button>														
 													</div>
 												</div>
 												<!--第一步操作 end  -->
@@ -285,11 +386,7 @@
 		<script type="text/javascript" src="public/assets/js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="public/assets/js/avalon.min.js"></script>
 		<script src="public/assets/js/bootstrap.min.js"></script>
-		<!--
-		  <script src="public/assets/js/typeahead-bs2.min.js"></script>
-		  -->
-		<!-- page specific plugin scripts -->
-		<!-- ace scripts -->
+		<script src="public/assets/js/date-time/bootstrap-datepicker.min.js"></script>
 
 		<script src="public/assets/js/ace-elements.min.js"></script>
 		<script src="public/assets/js/ace.min.js"></script>
@@ -298,20 +395,32 @@
 		<script src="public/assets/js/seajs-2.3.0/seajs.js"></script>
 		<script src="public/assets/js/page/app.js"></script>
 		<!-- 具体业务代码 -->
-        <script src="public/assets/js/page/jquery.ynf.js"></script>
 		<script src="public/assets/js/page/modules/laydate.js"></script>
-		<script src="public/assets/js/page/modules/jquery.date_input.pack.js"></script>
-		<script src="public/assets/js/page/modify_payment.js"></script>
-        
-        						<script>
-						  	$('#editPayment').click(function(e) {
-						        //e.preventDefault();
-								var companyData = {
-									    id:$('#id').val(),
-										amount:$('#amount').val(),										
-										payment:$('#payment').val(),
+        <script src="public/assets/js/page/jquery.ynf.js"></script>
+        <script src="public/assets/js/page/edit_group.js"></script>
+        <script type="text/javascript">
+			jQuery(function($) {
+				$('#capacity').keydown(function () {  
+						
+						var e = $(this).event || window.event;  
+						var code = parseInt(e.keyCode);  
+						if (code >= 96 && code <= 105 || code >= 48 && code <= 57 || code == 8) {  
+							return true;  
+						} else {  
+							return false;  
+						}  
+					});  							
+
+				});
+		</script>
+         <script>
+						  	$('#editGroup').click(function(e) {
+								 
+								var groupData = {									
+									    t_id:$('#t_id').val(),
+										capacity:$('#capacity').val(),																			
 									};
-								$.post("<?php echo site_url('Account/update_payment');?>",companyData, function (data) {
+								$.post("<?php echo site_url('Group/update_capacity');?>",groupData, function (data) {
 									if(data['retCode']==-1){
 											//没有通过输入验证											
 											var txt= data['data'];
@@ -323,11 +432,13 @@
 											alert(txt);
 											//window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);	
 											//重定位到公司列表页
-											location.href="<?php echo site_url('Account/index') ;?>";
+											location.href="<?php echo site_url('Group/managerNgroup') ;?>";
 										}
 								},"json");
+								 
 						    });
 						  </script>
+
 
 		</div>
 	</body>

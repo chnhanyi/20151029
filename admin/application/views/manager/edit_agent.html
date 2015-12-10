@@ -130,9 +130,19 @@
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-                               <li>
+                                <li class="active">
 									<a href="<?php echo site_url('Order/manager'); ?>">
 										<i class="icon-double-angle-right"></i> Order List
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url('Group/managerNgroup'); ?>">
+										<i class="icon-double-angle-right"></i>Normal Group List
+									</a>
+								</li>
+								<li>
+									<a href="<?php echo site_url('Group/managerMgroup'); ?>">
+										<i class="icon-double-angle-right"></i>Merge Group List
 									</a>
 								</li>
                                 <li >
@@ -165,7 +175,7 @@
 										<i class="icon-double-angle-right"></i> Add Company
 									</a>
 								</li>
-								<li  class="active">
+								<li >
 									<a href="<?php echo site_url('Agent/index'); ?>">
 										<i class="icon-double-angle-right"></i> Agent List
 									</a>
@@ -176,13 +186,23 @@
 									</a>
 								</li>
 								<li >
+									<a href="<?php echo site_url('Statistics/index'); ?>">
+										<i class="icon-double-angle-right"></i> Agent  Log
+									</a>
+								</li> 
+								<li >
 									<a href="<?php echo site_url('Staff/index'); ?>">
-										<i class="icon-double-angle-right"></i> Staff List
+										<i class="icon-double-angle-right"></i> Staff  List
 									</a>
 								</li>
 								<li >
 									<a href="<?php echo site_url('Staff/add_staff'); ?>">
 										<i class="icon-double-angle-right"></i> Add Staff
+									</a>
+								</li>
+								<li >
+									<a href="<?php echo site_url('Statistics/index'); ?>">
+										<i class="icon-double-angle-right"></i> Staff  Log
 									</a>
 								</li>
                                 <li >
@@ -251,7 +271,7 @@
 													<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Company Name </label>
 													<div class="col-sm-9">														
 														<div class="col-xs-10 col-sm-8">
-															<select name="company" id="a_id" ms-duplex-number="a_id" class="t-can_disabled form-control" ms-duplex="selected" data-duplex-changed="selectchange">																
+															<select name="company" id="a_id" ms-duplex-number="a_id" class="t-can_disabled form-control" ms-duplex="selected" data-duplex-changed="selectchange">
                                                                     <?php foreach($data as $v) :?>
                                                                         <option value="<?php echo $v['a_id'];?>"><?php echo $v['a_name']."/".$v['a_city'];?></option>
                                                                     <?php endforeach;?>
@@ -268,7 +288,7 @@
 
 													<div class="col-sm-9">
 														<div class="col-xs-10 col-sm-5">
-															<input type="text" name="name" id="name"  class="form-control t-can_disabled" placeholder="peter" ms-duplex="s_name">
+															<input type="text" name="name" id="name"  class="form-control t-can_disabled" ms-duplex="s_name">
 														</div>
 													</div>
 												</div>

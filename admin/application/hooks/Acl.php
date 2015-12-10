@@ -34,6 +34,9 @@ class Acl{
                                 case 4:
                                     $role_name="controller";
                                     break;
+                                case 5:
+                                    $role_name="boss";
+                                    break;
                             }
             }else{
                   $role_name="visitor";
