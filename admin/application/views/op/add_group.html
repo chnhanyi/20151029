@@ -295,22 +295,8 @@
 														</div>
 													</div>
 												</div>
-												<!--  房间配备 TourCode end  -->  
-                                                
-                                                <!--  B 团 group B start -->
-												<div class="form-group">
-													<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Group B </label>
-
-													<div class="col-sm-8">														
-														<div class="col-xs-5 col-sm-5">
-															<select id="groupB" class="t-can_disabled form-control">
-                                                                        <option value="0">No</option>
-                                                                        <option value="1">Yes</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<!--  B 团 group B  end  -->
+												<!--  房间配备 TourCode end  -->                                                  
+                                               
 												 <div class="hr hr-18 dotted hr-double"></div>  
 
 												<!-- 第一步操作 start  -->
@@ -392,8 +378,7 @@
 									    r_id:$('#r_id').val(),																			 
 										date:$("#date").val(),
 										bus:$('#bus').val(),
-										room:$('#room').val(),
-										groupB:$('#groupB').val(),										
+										room:$('#room').val(),																			
 									};
 								$.post("<?php echo site_url('Group/insert_group');?>",groupData, function (data) {
 									if(data['retCode']==-1){

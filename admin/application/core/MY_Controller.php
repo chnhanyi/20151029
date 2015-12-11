@@ -45,15 +45,11 @@
 		}
 
         //生成旅游团的代码tourCode
-		function get_tourCode($r_code,$date,$groupB){
-			if($date!="" && $r_code!="" && $groupB == 0){
+		function get_tourCode($r_code,$date){
+			if($date!="" && $r_code!=""){
 			$d = explode("-", $date);
             $yy = substr($d[0],2);
 			return "PD".$yy.$r_code.$d[1].$d[2];			
-			}elseif($date!="" && $r_code!="" && $groupB == 1){
-				$d = explode("-", $date);
-           	 $yy = substr($d[0],2);
-				return "PD".$yy.$r_code.$d[1].$d[2]."B";				
 			}else{
 			return 0;
 			} 

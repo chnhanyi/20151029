@@ -880,17 +880,18 @@
 
 			$this->load->helper('cookie');
 			$opname = get_cookie("uin");
+
 			//检查是否已经是取消状态
 			$res4 = $this->Order_model->check_order_status($o_id);
 			if($res4['o_orderStatus']==4 ){
 					$data['reCode'] = -1;
 				    $data['status'] = "failed";
-				    $data['data'] = "This Order has aleady Terminated !";
+				    $data['data'] = "This Order has aleady Cancelled !";
 			}else{
 
 			$num1 = $this->Order_model->update_order_status3($o_id,$opname);
 
-			//把订单中的数字加回去
+			//把订单中的数字加回去			
 			$res = $this->Order_model->get_detail($o_id);
 			$pax = $res['o_totalNum'] ;
 			$tour_code = $res['t_tourCode'] ;
@@ -909,7 +910,9 @@
 				$tour_code2 =$res3[1] ;
 				$num3 =$this->Order_model->update_currentpax($tour_code1,$pax);
 				$num4 =$this->Order_model->update_currentpax($tour_code2,$pax);
-			}	 
+			}
+
+
 
 			if($num1 == 1 && $num2 == 1 && $num3 == 1 && $num4 == 1){				
 					$data['reCode'] = 1;

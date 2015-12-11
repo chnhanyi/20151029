@@ -205,8 +205,8 @@
 
              var oper_terminate = ['<a ',                
                 style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
+                ' class="c-red Cancel" title="Cancel" data-id=',rowdata.id,
+                '>Cancel</a><br /><br />'].join("");
 
             var invoice_print = ['<a ',
                 ' target="_blank"  href="./index.php/Order/invoice_print?id=', rowdata.id, '"',
@@ -269,8 +269,8 @@
 
              var oper_terminate = ['<a ',                
                 style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
+                ' class="c-red Cancel" title="Cancel" data-id=',rowdata.id,
+                '>Cancel</a><br /><br />'].join("");
 
 
             oper_html_arr.push(oper_check); 
@@ -317,8 +317,8 @@
 
              var oper_terminate = ['<a ',                
                 style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
+                ' class="c-red Cancel" title="Cancel" data-id=',rowdata.id,
+                '>Cancel</a><br /><br />'].join("");
 
             var invoice_print = ['<a ',
                 ' target="_blank"  href="./index.php/Order/invoice_print?id=', rowdata.id, '"',
@@ -380,8 +380,8 @@
 
              var oper_terminate = ['<a ',                
                 style,
-                ' class="c-red Terminate" title="Terminate" data-id=',rowdata.id,
-                '>Terminate</a><br /><br />'].join("");
+                ' class="c-red Cancel" title="Cancel" data-id=',rowdata.id,
+                '>Cancel</a><br /><br />'].join("");
  
 
             oper_html_arr.push(oper_check); 
@@ -477,7 +477,7 @@
                     result = '<span class="green">Confirmed</span>';
                     break;
                 case '4':
-                    result = '<span class="red">Terminated</span>';
+                    result = '<span class="red">Cancelled</span>';
                     break;
             }
 

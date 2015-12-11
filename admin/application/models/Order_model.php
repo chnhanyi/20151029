@@ -251,18 +251,16 @@
         } 
 
         //取消订单，把本订单的客人数量加回去
-        function update_currentpax($tour_code,$pax){
-        	$status = 4;
+        function update_currentpax($tour_code,$pax){        	
+        	$this->db->trans_start();
         	$db = $this -> db -> query("select * from pd_tourGroup where t_tourCode='" . $tour_code. "' for update");						
-			$dbs = $db -> result();
-			$where['t_tourCode']=$tour_code;
-			$this -> db -> where($where);
-			$dd['t_currentpax'] = $dbs[0] -> t_currentpax - $pax;
-			if($this -> db -> update("pd_tourGroup", $dd)){
-
+			$dbs = $db -> result();			
+			$currentpax = $dbs[0] -> t_currentpax - $pax;
+			$db = $this -> db -> query("update pd_tourGroup set t_currentpax=" . $currentpax. " where t_tourCode='" . $tour_code. "'");
+			$this->db->trans_complete();
+			if($this->db->trans_status() === FALSE){
 				return  1;
-			}
-				else{
+			}else{
 				return  0;	
 				}  	
         } 

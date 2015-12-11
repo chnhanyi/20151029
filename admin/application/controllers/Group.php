@@ -260,7 +260,7 @@
 						//$this->form_validation->set_rules('capacity','Capacity','trim|integer|required');
 						$this->form_validation->set_rules('bus','Bus','trim|required');
 						$this->form_validation->set_rules('room','Room','trim|required');
-						$this->form_validation->set_rules('groupB','Group B','trim|integer|required');
+						//$this->form_validation->set_rules('groupB','Group B','trim|integer|required');
 						
 
 					if($this->form_validation->run() == true){
@@ -277,9 +277,8 @@
 							$data['t_type'] = 1;
 							$data['t_pro'] = 1;	
 							$res = $this->Route_model->get_route($data['r_id']);
-							$r_code = $res["r_code"];
-							$groupB = $this->input->post("groupB",true);	
-							$data['t_tourCode'] = $this->get_tourCode($r_code,$date,$groupB);
+							$r_code = $res["r_code"];								
+							$data['t_tourCode'] = $this->get_tourCode($r_code,$date);
 							$data['t_capacity'] = 30;
 							$data['t_bus'] = $this->input->post("bus",true);			
 							$data['t_room'] = $this->input->post("room",true);
