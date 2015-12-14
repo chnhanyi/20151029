@@ -259,9 +259,9 @@
 			$db = $this -> db -> query("update pd_tourGroup set t_currentpax=" . $currentpax. " where t_tourCode='" . $tour_code. "'");
 			$this->db->trans_complete();
 			if($this->db->trans_status() === FALSE){
-				return  1;
+				return  0;
 			}else{
-				return  0;	
+				return  1;	
 				}  	
         } 
 

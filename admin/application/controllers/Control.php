@@ -16,14 +16,29 @@
 			$this->load->view("controller/order_list.html");
 		}
 
-		function get_data(){			
-	        $rows 	= $this->input->get("rows");
+		function get_data(){
+			$limit 	= $this->input->get("rows");
 			$page 	= $this->input->get("page");
-			$count 	= $this->Order_model->count_Order();
-			$data['totalPages'] 	= ceil($count/$rows);
-			$data['currentPage'] 	= 1;
+
+			$start=($page-1)*$limit;
+			//获取搜索条件
+			$where 	= $this->get_where();
+
+			$count 	= $this->Order_model->count_Order($where);
+			$list 	= $this->Order_model->get_all_orders($where,$start,$limit);			
+
+			//把参数传给前端
+			if($count>0){
+				$data['totalPages'] = ceil($count/$limit);
+				}else{
+				$data['totalPages'] = 0;
+				}
+			if($page>$data['totalPages']){
+				$page=$data['totalPages'];
+				}
+			$data['currentPage'] 	= $page;
 			$data['totalRecords'] 	= $count;
-			$list 	= $this->Order_model->get_all_orders();
+
 			$data['data'] = array();
 			foreach($list as $v){
 				$cc['id'] 				=	$v['o_id'];				
@@ -48,6 +63,43 @@
 			}
 			$this->response_data($data);
 		}
+
+		//设置搜索条件
+		function get_where(){
+			$field = $this->input->get("searchField");
+			$string = $this->input->get("searchString");
+			$where=array();
+			if(empty($field)==false && empty($string)==false){				
+					if($field =="order_sn"){
+						$where = array('pd_order.o_sn' => $string);						
+					}elseif($field =="tour_code"){
+						$where = array('pd_order.t_tourCode' => $string);	
+					}elseif($field =="agent_email"){
+						$where = array('pd_agent.s_email' => $string);
+			        }elseif($field =="o_flight"){
+			        	  $string = strtolower($string);
+			        	if($tring=="yes"){
+			        		$where = array('pd_order.o_flight' => 0);
+			        	}else{
+			        		$where = array('pd_order.o_flight' => 1);
+			        	}						
+					}elseif($field =="order_status"){
+						$string = strtolower($string);
+			        		if($tring=="pending"){
+			        		$where = array('pd_order.o_orderStatus' => 1);
+				        	}elseif($string=="processing"){
+				        		$where = array('pd_order.o_orderStatus' => 2);
+				        	}elseif($string=="processed"){
+				        		$where = array('pd_order.o_orderStatus' => 3);
+				        	}elseif($string=="terminate"){
+				        		$where = array('pd_order.o_orderStatus' => 4);
+				        	}
+					}elseif($field =="operator"){
+						$where = array('pd_order.o_opName' => $string);
+					}
+				}
+			return $where;
+		} 
 
 
 
@@ -341,13 +393,36 @@
 						}
 
 					function Ngroup_list(){
-					        $rows 	= $this->input->get("rows");					        
+					        $limit 	= $this->input->get("rows");
 							$page 	= $this->input->get("page");
-							$count 	= $this->Group_model->count_Ngroup();							
-							$data['totalPages'] 	= ceil($count/$rows);
-							$data['currentPage'] 	= 1;
+
+							$start=($page-1)*$limit;
+
+							//获取搜索条件
+							$field = $this->input->get("searchField");
+							$string = $this->input->get("searchString");							
+							if(empty($field)==false && empty($string)==false){
+									$string=strtoupper($string);
+									$where = array('pd_tourGroup.t_tourCode' => $string);
+									
+								}else{
+									$where=array();
+								}
+
+							$count 	= $this->Group_model->count_Ngroup($where);
+							$list 	= $this->Group_model->get_all_Ngroups($string,$start,$limit);			
+
+							//把参数传给前端
+							if($count>0){
+								$data['totalPages'] = ceil($count/$limit);
+								}else{
+								$data['totalPages'] = 0;
+								}
+							if($page>$data['totalPages']){
+								$page=$data['totalPages'];
+								}
+							$data['currentPage'] 	= $page;
 							$data['totalRecords'] 	= $count;
-							$list 	= $this->Group_model->get_all_Ngroups();
 							$data['data'] = array();
 							foreach($list as $v){
 								$cc['t_id'] 			=	$v['t_id'];
